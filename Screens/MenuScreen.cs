@@ -92,11 +92,12 @@ namespace GameJamTest.MenuSystem
         
         public override void Draw(GameTime gameTime)
         {
-            
+            //draw the black background layer
             spriteBatch.Begin();
             spriteBatch.Draw(staticBackground, new Rectangle(0, 0, game.GraphicsDevice.PresentationParameters.BackBufferWidth, game.GraphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
             spriteBatch.End();
 
+            //draw the star scrolling backgrounds
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
             scroll3.Draw(spriteBatch);
             scroll4.Draw(spriteBatch);
@@ -104,6 +105,7 @@ namespace GameJamTest.MenuSystem
             scroll2.Draw(spriteBatch);
             spriteBatch.End();
 
+            //draw the text on the screen
             spriteBatch.Begin();
             spriteBatch.DrawString(titleFont, "Game Title: The Subtitling", new Vector2(20, 45), Color.White);
             spriteBatch.DrawString(titleFont, "Press space bar to start game", new Vector2(50, 70), Color.White);
