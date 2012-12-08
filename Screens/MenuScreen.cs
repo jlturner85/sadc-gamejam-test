@@ -45,7 +45,7 @@ namespace GameJamTest.MenuSystem
             // TODO: Add your initialization code here
             content = game.Content;
             titleFont = content.Load<SpriteFont>("Fonts/TitleFont");
-            DrawnBackground.Initialize(this.content);
+            ParallaxBackground.Initialize(this.content);
             base.Initialize();
         }
 
@@ -62,7 +62,7 @@ namespace GameJamTest.MenuSystem
                 mainGame.setCurrentScreen(2);        
             }
 
-            DrawnBackground.Update(gameTime);
+            ParallaxBackground.Update(gameTime);
             base.Update(gameTime);
         }
         

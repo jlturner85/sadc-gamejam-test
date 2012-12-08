@@ -15,11 +15,9 @@ namespace GameJamTest.GameObjects.Player
         private GameKeyboard keyboard;
 
         public PlayerShip(Game game, GameScreen screen)
-            : base(game, screen)
+            : base(game, screen, new Vector2(100, 100))
         {
-            this.Screen = screen;
             this.keyboard = new GameKeyboard();
-            this.Position = new Vector2(100, 100);
             this.Layer = Layer.PLAYER;
         }
 
@@ -60,7 +58,9 @@ namespace GameJamTest.GameObjects.Player
                 velocity = Vector2.Add(velocity, new Vector2(1, 0));
             }
 
-            this.Position = Vector2.Add(this.Position, velocity);
+            this.Velocity = velocity;
+
+            base.Update(gameTime);
 
             if (keyboard.Fire.IsPressed())
             {

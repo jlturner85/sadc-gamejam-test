@@ -12,14 +12,22 @@ namespace GameJamTest.GameObjects
     public class GameJamComponent : DrawableGameComponent
     {
         private Vector2 position;
+        private Vector2 velocity;
         private Texture2D sprite;
         private Layer layer;
         private GameScreen screen;
 
-        public GameJamComponent(Game game, GameScreen screen)
+        public GameJamComponent(Game game, GameScreen screen, Vector2 position)
+            : this(game, screen, position, new Vector2(0, 0))
+        {
+        }
+
+        public GameJamComponent(Game game, GameScreen screen, Vector2 position, Vector2 velocity)
             : base(game)
         {
             this.Screen = screen;
+            this.Position = position;
+            this.Velocity = velocity;
         }
 
         public bool Collide(GameJamComponent that)
@@ -34,6 +42,17 @@ namespace GameJamTest.GameObjects
             this.Screen.RemoveComponent(this);
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            this.Position = Vector2.Add(this.Position, this.Velocity);
+
+            if (this.Position.X < -100 || this.Position.X > Game1.SCREEN_WIDTH + 100 ||
+                this.Position.Y < -100 || this.Position.Y > Game1.SCREEN_HEIGHT + 100)
+            {
+                this.Destroy();
+            }
+        }
+
         public override void Draw(GameTime gameTime)
         {
             (Game as Game1).SpriteBatch.Draw(this.Sprite, this.Position, Color.White);
@@ -43,6 +62,12 @@ namespace GameJamTest.GameObjects
         {
             get { return this.position; }
             set { this.position = value; }
+        }
+
+        public Vector2 Velocity
+        {
+            get { return this.velocity; }
+            set { this.velocity = value; }
         }
 
         public Texture2D Sprite

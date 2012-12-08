@@ -23,6 +23,9 @@ namespace GameJamTest
     public class Game1 : Microsoft.Xna.Framework.Game
     {
 
+        public const int SCREEN_WIDTH = 800;
+        public const int SCREEN_HEIGHT = 500;
+
         //Gamestate Constants
         public const int splashScreenID = 0;
         public const int menuScreenID = 1;
@@ -128,7 +131,7 @@ namespace GameJamTest
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            DrawnBackground.Draw(this);
+            ParallaxBackground.Draw(this);
 
             this.SpriteBatch.Begin();
             switch (currentScreen)

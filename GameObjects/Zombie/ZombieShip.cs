@@ -12,13 +12,9 @@ namespace GameJamTest.GameObjects.Zombie
 {
     class ZombieShip : GameJamComponent
     {
-        private GameScreen screen;
-
         public ZombieShip(Game game, GameScreen screen, Vector2 position)
-            : base(game, screen)
+            : base(game, screen, position)
         {
-            this.screen = screen;
-            this.Position = position;
             this.Layer = Layer.ZOMBIE;
             this.Sprite = Sprites.Zombie;
         }
@@ -26,7 +22,7 @@ namespace GameJamTest.GameObjects.Zombie
         private void Fire()
         {
             Vector2 bulletPos = Vector2.Add(this.Position, new Vector2(0, 3));
-            screen.AddComponent(new Bullet(Game, Screen, Team.PLAYER, bulletPos, new Vector2(-3, 0)));
+            this.Screen.AddComponent(new Bullet(Game, Screen, Team.PLAYER, bulletPos, new Vector2(-3, 0)));
         }
 
         public override void Update(GameTime gameTime)
