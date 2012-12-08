@@ -112,5 +112,13 @@ namespace GameJamTest.Assets
                 rowNumber * FrameHeight, FrameWidth, FrameHeight), Color.White);
         }
 
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, float rotation, float scale)
+        {
+            int rowNumber = index / framesPerRow;
+            spriteBatch.Draw(texture, position, new Rectangle((index - (rowNumber * framesPerRow)) * FrameWidth,
+                rowNumber * FrameHeight, FrameWidth, FrameHeight), Color.White, rotation,
+                Vector2.Zero, scale, SpriteEffects.None, 1.0f);
+        }
+
     }
 }
