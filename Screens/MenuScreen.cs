@@ -13,7 +13,7 @@ using GameJamTest.Util;
 namespace GameJamTest.MenuSystem
 {
     /// <summary>
-    /// This is a game component that implements IUpdateable.
+    /// This is a game component that implements IUpdateable.  stuff stuff
     /// </summary>
     public class MenuScreen : Microsoft.Xna.Framework.DrawableGameComponent
     {
