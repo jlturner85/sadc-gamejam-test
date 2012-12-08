@@ -13,6 +13,7 @@ namespace GameJamTest.Assets
 {
     class Backgrounds
     {
+        //backgrounds
         public Texture2D texture;
         public Rectangle rectangle;
 
