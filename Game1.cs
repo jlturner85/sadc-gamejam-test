@@ -23,8 +23,8 @@ namespace GameJamTest
     public class Game1 : Microsoft.Xna.Framework.Game
     {
 
-        public const int SCREEN_WIDTH = 800;
-        public const int SCREEN_HEIGHT = 500;
+        public const int SCREEN_WIDTH = 1280;
+        public const int SCREEN_HEIGHT = 720;
 
         //Gamestate Constants
         public const int splashScreenID = 0;
@@ -47,11 +47,20 @@ namespace GameJamTest
             splashScreen = new SplashScreen(this);
             gameScreen = new GameScreen(this);
             graphics = new GraphicsDeviceManager(this);
-            //graphics.PreferredBackBufferHeight = 720;
-            //graphics.PreferredBackBufferWidth = 1280;
-            //Components.Add(new PlayerShip(this));
+            graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
+            graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
+            
         }
 
+        public int getScreenWidth()
+        {
+            return SCREEN_WIDTH;
+        }
+
+        public int getScreenHeight()
+        {
+            return SCREEN_HEIGHT;
+        }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic

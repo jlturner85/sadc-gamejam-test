@@ -47,7 +47,7 @@ namespace GameJamTest.MenuSystem
             content = game.Content;
             titleFont = content.Load<SpriteFont>("Fonts/TitleFont");
             menuTickSound = content.Load<SoundEffect>("SoundEffects/fire_laser1");
-            ParallaxBackground.Initialize(this.content);
+            ParallaxBackground.Initialize(this.content,(Game1)game);
             base.Initialize();
         }
 
