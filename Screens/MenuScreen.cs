@@ -68,6 +68,7 @@ namespace GameJamTest.MenuSystem
         
         public override void Draw(GameTime gameTime)
         {
+            //draw the text on the screen
             spriteBatch.Begin();
             spriteBatch.DrawString(titleFont, "Game Title: The Subtitling", new Vector2(20, 45), Color.White);
             spriteBatch.DrawString(titleFont, "Press space bar to start game", new Vector2(50, 70), Color.White);
