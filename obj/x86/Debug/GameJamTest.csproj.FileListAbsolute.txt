@@ -15,3 +15,6 @@ C:\Users\Turner\Desktop\GameJam\sadc-gamejam-test\obj\x86\Debug\ResolveAssemblyR
 C:\Users\Turner\Desktop\GameJam\sadc-gamejam-test\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Turner\Desktop\GameJam\sadc-gamejam-test\obj\x86\Debug\GameJamTest.exe
 C:\Users\Turner\Desktop\GameJam\sadc-gamejam-test\obj\x86\Debug\GameJamTest.pdb
+C:\Users\Turner\Desktop\GameJam\sadc-gamejam-test\bin\x86\Debug\Content\Backgrounds\black.xnb
+C:\Users\Turner\Desktop\GameJam\sadc-gamejam-test\bin\x86\Debug\Content\Backgrounds\starfield1.xnb
+C:\Users\Turner\Desktop\GameJam\sadc-gamejam-test\bin\x86\Debug\Content\Backgrounds\starfield2.xnb

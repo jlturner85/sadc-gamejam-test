@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Backgrounds.cs" />
     <Compile Include="Assets\Sprites.cs" />
     <Compile Include="Player\GameKeyboard.cs" />
     <Compile Include="Player\PlayerShip.cs" />
