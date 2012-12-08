@@ -9,14 +9,17 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-using GameJamTest.Player;
+using GameJamTest.Assets;
+using GameJamTest.GameObjects;
+using GameJamTest.GameObjects.Player;
+using GameJamTest.GameObjects.Zombie;
 
 namespace GameJamTest.Screens
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class GameScreen : Microsoft.Xna.Framework.DrawableGameComponent
+    public class GameScreen : DrawableGameComponent
     {
         private bool initialized = false;
 
@@ -24,13 +27,27 @@ namespace GameJamTest.Screens
         private ContentManager content;
 
         private List<GameComponent> components;
+        private List<GameComponent> newComponents;
+        private List<GameComponent> oldComponents;
 
         public GameScreen(Game game)
             : base(game)
         {
             this.game = game;
             this.components = new List<GameComponent>();
-            this.components.Add(new PlayerShip(game));
+            this.components.Add(new PlayerShip(game, this));
+            this.newComponents = new List<GameComponent>();
+            this.oldComponents = new List<GameComponent>();
+        }
+
+        public void AddComponent(GameComponent component)
+        {
+            this.newComponents.Add(component);
+        }
+
+        public void RemoveComponent(GameComponent component)
+        {
+            this.oldComponents.Add(component);
         }
 
         /// <summary>
@@ -45,6 +62,8 @@ namespace GameJamTest.Screens
                 foreach (GameComponent component in this.components)
                 {
                     component.Initialize();
+                    this.newComponents.Add(new ZombieShip(Game, this, new Vector2(300, 150)));
+                    this.newComponents.Add(new ZombieShip(Game, this, new Vector2(550, 250)));
                 }
 
                 initialized = true;
@@ -59,21 +78,43 @@ namespace GameJamTest.Screens
         {
             this.Initialize();
 
+            DrawnBackground.Update(gameTime);
+
             foreach (GameComponent component in this.components)
             {
                 component.Update(gameTime);
             }
+
+            this.components.AddRange(this.newComponents);
+            this.newComponents = new List<GameComponent>();
+
+            foreach (GameComponent oldComponent in this.oldComponents)
+            {
+                this.components.Remove(oldComponent);
+            }
+            this.oldComponents = new List<GameComponent>();
         }
 
         public override void Draw(GameTime gameTime)
         {
             this.Initialize();
 
-            foreach (GameComponent component in this.components)
+            foreach (Layer layer in Layers.Values())
             {
-                DrawableGameComponent drawable = component as DrawableGameComponent;
-                drawable.Draw(gameTime);
+                foreach (GameComponent component in this.components)
+                {
+                    GameJamComponent drawable = component as GameJamComponent;
+                    if (drawable.Layer == layer)
+                    {
+                        drawable.Draw(gameTime);
+                    }
+                }
             }
+        }
+
+        public List<GameComponent> Components
+        {
+            get { return this.components; }
         }
     }
 }

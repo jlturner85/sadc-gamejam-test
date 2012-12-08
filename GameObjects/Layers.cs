@@ -11,6 +11,7 @@ namespace GameJamTest.GameObjects
         {
             List<Layer> values = new List<Layer>();
             values.Add(Layer.BULLET);
+            values.Add(Layer.ZOMBIE);
             values.Add(Layer.PLAYER);
             return values;
         }
@@ -18,6 +19,6 @@ namespace GameJamTest.GameObjects
 
     public enum Layer
     {
-        BULLET, PLAYER
+        BULLET, ZOMBIE, PLAYER
     }
 }
