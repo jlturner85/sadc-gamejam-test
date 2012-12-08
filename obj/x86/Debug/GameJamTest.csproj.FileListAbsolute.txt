@@ -1,0 +1,7 @@
+C:\Users\Turner\Documents\Visual Studio 2010\Projects\GameJamTest\GameJamTest\GameJamTest\bin\x86\Debug\GameJamTest.exe
+C:\Users\Turner\Documents\Visual Studio 2010\Projects\GameJamTest\GameJamTest\GameJamTest\bin\x86\Debug\GameJamTest.pdb
+C:\Users\Turner\Documents\Visual Studio 2010\Projects\GameJamTest\GameJamTest\GameJamTest\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Turner\Documents\Visual Studio 2010\Projects\GameJamTest\GameJamTest\GameJamTest\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Turner\Documents\Visual Studio 2010\Projects\GameJamTest\GameJamTest\GameJamTest\obj\x86\Debug\GameJamTest.exe
+C:\Users\Turner\Documents\Visual Studio 2010\Projects\GameJamTest\GameJamTest\GameJamTest\obj\x86\Debug\GameJamTest.pdb
+C:\Users\Turner\Documents\Visual Studio 2010\Projects\GameJamTest\GameJamTest\GameJamTest\bin\x86\Debug\Content\Fonts\TitleFont.xnb

@@ -8,20 +8,34 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-
+using GameJamTest.MenuSystem;
+using GameJamTest.Util;
 // hello from tom
 namespace GameJamTest
 {
+    
     /// <summary>
     /// This is the main type for your game
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+
+        //Gamestate Constants
+        private const int splashScreen = 0;
+        private const int menu = 1;
+        private const int game = 2;
+
+        private int currentScreen = menu;
+
+        //Screens
+        private MenuScreen menuScreen;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         public Game1()
         {
+            menuScreen = new MenuScreen(this);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
@@ -37,6 +51,9 @@ namespace GameJamTest
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            menuScreen.Initialize();
+            GameServices.AddService<GraphicsDevice>(GraphicsDevice);
+            GameServices.AddService<ContentManager>(Content);
         }
 
         /// <summary>
@@ -47,7 +64,7 @@ namespace GameJamTest
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            
             // TODO: use this.Content to load your game content here
         }
 
@@ -70,10 +87,24 @@ namespace GameJamTest
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+            switch (currentScreen)
+            {
+                case menu:
+                    menuScreen.Update(gameTime);
+                    break;
+                case splashScreen:
+                    break;
+                case game:
+                    break;
+                default:
+                    break;
+                   
 
+            }
             // TODO: Add your update logic here
             //Test Test
             base.Update(gameTime);
+            
         }
 
         /// <summary>
@@ -85,8 +116,22 @@ namespace GameJamTest
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            switch (currentScreen)
+            {
+                case menu:
+                    menuScreen.Draw(gameTime);
+                    break;
+                case splashScreen:
+                    break;
+                case game:
+                    break;
+                default:
+                    base.Draw(gameTime);
+                    break;
 
-            base.Draw(gameTime);
+
+            }
+            
         }
     }
 }
