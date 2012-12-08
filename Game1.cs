@@ -33,8 +33,8 @@ namespace GameJamTest
         //Screens
         private MenuScreen menuScreen;
         private SplashScreen splashScreen;
-        private GameScreen gameScreen; 
-
+        private GameScreen gameScreen;
+        private Song menuMusic;
         GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
@@ -63,7 +63,7 @@ namespace GameJamTest
             splashScreen.Initialize();
             GameServices.AddService<GraphicsDevice>(GraphicsDevice);
             GameServices.AddService<ContentManager>(Content);
-        }
+        }    
         public void setCurrentScreen(int currentScreen)
         {
             this.currentScreen = currentScreen;
@@ -76,7 +76,10 @@ namespace GameJamTest
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            menuMusic = Content.Load<Song>("Music/menumusic");
+            AudioManager.playMusic(menuMusic);
             Sprites.LoadContent(this.Content);
+
         }
 
         /// <summary>
