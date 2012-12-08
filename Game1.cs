@@ -8,15 +8,17 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+
+using GameJamTest.Assets;
 using GameJamTest.MenuSystem;
 using GameJamTest.Util;
 using GameJamTest.Screens;
-// hello from tom
+
 namespace GameJamTest
 {
     
     /// <summary>
-    /// This is the main type for your game fernando testing
+    /// This is the main type for your game
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
@@ -27,21 +29,23 @@ namespace GameJamTest
         public const int gameScreenID = 2;
 
         private int currentScreen = menuScreenID;
-
         
         //Screens
         private MenuScreen menuScreen;
-        private SplashScreen splashScreen; 
+        private SplashScreen splashScreen;
+        private GameScreen gameScreen; 
 
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        private SpriteBatch spriteBatch;
 
         public Game1()
         {
             menuScreen = new MenuScreen(this);
             splashScreen = new SplashScreen(this);
+            gameScreen = new GameScreen(this);
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+
+            //Components.Add(new PlayerShip(this));
         }
 
         /// <summary>
@@ -52,7 +56,7 @@ namespace GameJamTest
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            Content.RootDirectory = "GameJamTestContent";
 
             base.Initialize();
             menuScreen.Initialize();
@@ -72,8 +76,7 @@ namespace GameJamTest
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-            // TODO: use this.Content to load your game content here
+            Sprites.LoadContent(this.Content);
         }
 
         /// <summary>
@@ -104,6 +107,7 @@ namespace GameJamTest
                     splashScreen.Update(gameTime);
                     break;
                 case gameScreenID:
+                    gameScreen.Update(gameTime);
                     break;
                 default:
                     break;
@@ -123,8 +127,7 @@ namespace GameJamTest
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
+            this.SpriteBatch.Begin();
             switch (currentScreen)
             {
                 case menuScreenID:
@@ -134,14 +137,18 @@ namespace GameJamTest
                     splashScreen.Draw(gameTime);
                     break;
                 case gameScreenID:
+                    gameScreen.Draw(gameTime);
                     break;
                 default:
                     base.Draw(gameTime);
                     break;
-
-
             }
-            
+            this.SpriteBatch.End();
+        }
+
+        public SpriteBatch SpriteBatch
+        {
+            get { return this.spriteBatch; }
         }
     }
 }
