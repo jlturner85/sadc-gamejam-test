@@ -15,7 +15,7 @@ namespace GameJamTest
 {
     
     /// <summary>
-    /// This is the main type for your game
+    /// This is the main type for your game fernando testing
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
