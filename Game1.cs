@@ -27,8 +27,8 @@ namespace GameJamTest
         public const int splashScreenID = 0;
         public const int menuScreenID = 1;
         public const int gameScreenID = 2;
-
-        private int currentScreen = menuScreenID;
+        private int splashScreenTime = 0;
+        private int currentScreen = splashScreenID;
         
         //Screens
         private MenuScreen menuScreen;
@@ -44,7 +44,8 @@ namespace GameJamTest
             splashScreen = new SplashScreen(this);
             gameScreen = new GameScreen(this);
             graphics = new GraphicsDeviceManager(this);
-
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = 1280;
             //Components.Add(new PlayerShip(this));
         }
 
@@ -63,6 +64,7 @@ namespace GameJamTest
             splashScreen.Initialize();
             GameServices.AddService<GraphicsDevice>(GraphicsDevice);
             GameServices.AddService<ContentManager>(Content);
+            
         }    
         public void setCurrentScreen(int currentScreen)
         {
@@ -107,6 +109,12 @@ namespace GameJamTest
                     menuScreen.Update(gameTime);
                     break;
                 case splashScreenID:
+                    splashScreenTime += (int)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (splashScreenTime > 5)
+                    {
+                        currentScreen = menuScreenID;
+                        break;
+                    }
                     splashScreen.Update(gameTime);
                     break;
                 case gameScreenID:

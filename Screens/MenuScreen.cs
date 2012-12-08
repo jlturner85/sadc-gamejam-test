@@ -21,6 +21,7 @@ namespace GameJamTest.MenuSystem
         ContentManager content;
         Game game;
         Game1 mainGame;
+        SoundEffect menuTickSound;
         private SpriteFont titleFont;
         
         //get the graphics device, used for drawing objects
@@ -45,6 +46,7 @@ namespace GameJamTest.MenuSystem
             // TODO: Add your initialization code here
             content = game.Content;
             titleFont = content.Load<SpriteFont>("Fonts/TitleFont");
+            menuTickSound = content.Load<SoundEffect>("SoundEffects/fire_laser1");
             DrawnBackground.Initialize(this.content);
             base.Initialize();
         }
@@ -58,7 +60,7 @@ namespace GameJamTest.MenuSystem
             //if the space bar is pressed, load the gamescreen
             KeyboardState keyState = Keyboard.GetState();
             if(keyState.IsKeyDown(Keys.Space)){
-
+                AudioManager.playSoundEffect(menuTickSound);
                 mainGame.setCurrentScreen(2);        
             }
 
