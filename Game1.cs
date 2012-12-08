@@ -30,6 +30,7 @@ namespace GameJamTest
         public const int splashScreenID = 0;
         public const int menuScreenID = 1;
         public const int gameScreenID = 2;
+        public const int creditScreenID = 3;
         private int splashScreenTime = 0;
         private int currentScreen = splashScreenID;
         
@@ -37,6 +38,7 @@ namespace GameJamTest
         private MenuScreen menuScreen;
         private SplashScreen splashScreen;
         private GameScreen gameScreen;
+        private CreditsScreen creditsScreen;
         private Song menuMusic;
         GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -46,6 +48,7 @@ namespace GameJamTest
             menuScreen = new MenuScreen(this);
             splashScreen = new SplashScreen(this);
             gameScreen = new GameScreen(this);
+            creditsScreen = new CreditsScreen(this);
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
@@ -73,6 +76,7 @@ namespace GameJamTest
 
             base.Initialize();
             menuScreen.Initialize();
+            creditsScreen.Initialize();
             splashScreen.Initialize();
             GameServices.AddService<GraphicsDevice>(GraphicsDevice);
             GameServices.AddService<ContentManager>(Content);
@@ -132,6 +136,9 @@ namespace GameJamTest
                 case gameScreenID:
                     gameScreen.Update(gameTime);
                     break;
+                case creditScreenID:
+                    creditsScreen.Update(gameTime);
+                    break;
                 default:
                     break;
                    
@@ -164,6 +171,9 @@ namespace GameJamTest
                     break;
                 case gameScreenID:
                     gameScreen.Draw(gameTime);
+                    break;
+                case creditScreenID:
+                    creditsScreen.Draw(gameTime);
                     break;
                 default:
                     base.Draw(gameTime);

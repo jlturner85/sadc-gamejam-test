@@ -23,7 +23,7 @@ namespace GameJamTest.MenuSystem
         Game1 mainGame;
         SoundEffect menuTickSound;
         private SpriteFont titleFont;
-        
+        private Texture2D texasSymbol;
         //get the graphics device, used for drawing objects
         private SpriteBatch spriteBatch;
         public MenuScreen(Game game)
@@ -45,8 +45,9 @@ namespace GameJamTest.MenuSystem
             spriteBatch = new SpriteBatch(game.GraphicsDevice);
             // TODO: Add your initialization code here
             content = game.Content;
-            titleFont = content.Load<SpriteFont>("Fonts/TitleFont");
+            titleFont = content.Load<SpriteFont>("Fonts/titlefont");
             menuTickSound = content.Load<SoundEffect>("SoundEffects/fire_laser1");
+            texasSymbol = content.Load<Texture2D>("Sprites/Texas3");
             ParallaxBackground.Initialize(this.content,(Game1)game);
             base.Initialize();
         }
@@ -70,11 +71,17 @@ namespace GameJamTest.MenuSystem
         
         public override void Draw(GameTime gameTime)
         {
+            
             //draw the text on the screen
             spriteBatch.Begin();
-            spriteBatch.DrawString(titleFont, "Game Title: The Subtitling", new Vector2(20, 45), Color.White);
-            spriteBatch.DrawString(titleFont, "Press space bar to start game", new Vector2(50, 70), Color.White);
+            spriteBatch.Draw(texasSymbol, new Rectangle(410, 180, 400, 400), Color.White);
+            spriteBatch.DrawString(titleFont, "Civil War: 2015", new Vector2(380, 100), Color.White);
+            spriteBatch.DrawString(titleFont, "Press space bar to start game", new Vector2(220, 600), Color.White);
             spriteBatch.End();
+
+            
+            
+            
             base.Draw(gameTime);
         }
     }
