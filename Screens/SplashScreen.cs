@@ -8,29 +8,21 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using GameJamTest.Util;
 
-namespace GameJamTest.MenuSystem
+
+namespace GameJamTest.Screens
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class MenuScreen : Microsoft.Xna.Framework.DrawableGameComponent
+    public class SplashScreen : Microsoft.Xna.Framework.DrawableGameComponent
     {
-        ContentManager content;
         Game game;
-        Game1 mainGame;
-        private SpriteFont titleFont;
-        
-        
-        
-        //get the graphics device, used for drawing objects
-        private SpriteBatch spriteBatch;
-        public MenuScreen(Game game)
+        ContentManager content;
+        public SplashScreen(Game game)
             : base(game)
         {
             this.game = game;
-            mainGame = (Game1)game;
             // TODO: Construct any child components here
         }
 
@@ -40,12 +32,8 @@ namespace GameJamTest.MenuSystem
         /// </summary>
         public override void Initialize()
         {
-            
-            //graphicsDevice = GameServices.GetService<GraphicsDevice>();
-            spriteBatch = new SpriteBatch(game.GraphicsDevice);
             // TODO: Add your initialization code here
             content = game.Content;
-            titleFont = content.Load<SpriteFont>("Fonts/TitleFont");
             base.Initialize();
         }
 
@@ -55,21 +43,13 @@ namespace GameJamTest.MenuSystem
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            //if the space bar is pressed, load the gamescreen
-            KeyboardState keyState = Keyboard.GetState();
-            if(keyState.IsKeyDown(Keys.Space)){
+            // TODO: Add your update code here
 
-                mainGame.setCurrentScreen(2);        
-            }
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin();
-            spriteBatch.DrawString(titleFont, "Game Title: The Subtitling", new Vector2(20, 45), Color.White);
-            spriteBatch.DrawString(titleFont, "Press space bar to start game", new Vector2(50, 70), Color.White);
-            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
