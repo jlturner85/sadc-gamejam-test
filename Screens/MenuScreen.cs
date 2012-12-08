@@ -22,8 +22,6 @@ namespace GameJamTest.MenuSystem
         Game game;
         Game1 mainGame;
         private SpriteFont titleFont;
-        Scrolling scroll1, scroll2, scroll3, scroll4;
-        Texture2D staticBackground;
         
         //get the graphics device, used for drawing objects
         private SpriteBatch spriteBatch;
@@ -47,11 +45,7 @@ namespace GameJamTest.MenuSystem
             // TODO: Add your initialization code here
             content = game.Content;
             titleFont = content.Load<SpriteFont>("Fonts/TitleFont");
-            scroll1 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield1"), new Rectangle(0, 0, 800, 500));
-            scroll2 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield1"), new Rectangle(800, 0, 800, 500));
-            scroll3 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield2"), new Rectangle(0, 0, 800, 500));
-            scroll4 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield2"), new Rectangle(800, 0, 800, 500));
-            staticBackground = content.Load<Texture2D>("Backgrounds/black");
+            DrawnBackground.Initialize(this.content);
             base.Initialize();
         }
 
@@ -67,44 +61,13 @@ namespace GameJamTest.MenuSystem
 
                 mainGame.setCurrentScreen(2);        
             }
-            if (scroll1.rectangle.X + scroll1.texture.Width <= 0)
-            {
-                scroll1.rectangle.X = scroll2.rectangle.X + scroll2.texture.Width;
-            }
-            if (scroll2.rectangle.X + scroll2.texture.Width <= 0)
-            {
-                scroll2.rectangle.X = scroll1.rectangle.X + scroll1.texture.Width;
-            }
-            if (scroll3.rectangle.X + scroll3.texture.Width <= 0)
-            {
-                scroll3.rectangle.X = scroll4.rectangle.X + scroll4.texture.Width;
-            }
-            if (scroll4.rectangle.X + scroll4.texture.Width <= 0)
-            {
-                scroll4.rectangle.X = scroll3.rectangle.X + scroll3.texture.Width;
-            }
-            scroll1.Update(3);
-            scroll2.Update(3);
-            scroll3.Update(1);
-            scroll4.Update(1);
+
+            DrawnBackground.Update(gameTime);
             base.Update(gameTime);
         }
         
         public override void Draw(GameTime gameTime)
         {
-            //draw the black background layer
-            spriteBatch.Begin();
-            spriteBatch.Draw(staticBackground, new Rectangle(0, 0, game.GraphicsDevice.PresentationParameters.BackBufferWidth, game.GraphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
-            spriteBatch.End();
-
-            //draw the star scrolling backgrounds
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
-            scroll3.Draw(spriteBatch);
-            scroll4.Draw(spriteBatch);
-            scroll1.Draw(spriteBatch);
-            scroll2.Draw(spriteBatch);
-            spriteBatch.End();
-
             //draw the text on the screen
             spriteBatch.Begin();
             spriteBatch.DrawString(titleFont, "Game Title: The Subtitling", new Vector2(20, 45), Color.White);

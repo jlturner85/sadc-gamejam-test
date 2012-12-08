@@ -28,7 +28,7 @@ namespace GameJamTest
         public const int menuScreenID = 1;
         public const int gameScreenID = 2;
 
-        private int currentScreen = splashScreenID;
+        private int currentScreen = menuScreenID;
         
         //Screens
         private MenuScreen menuScreen;
@@ -56,7 +56,7 @@ namespace GameJamTest
         /// </summary>
         protected override void Initialize()
         {
-            Content.RootDirectory = "Content";
+            Content.RootDirectory = "GameJamTestContent";
 
             base.Initialize();
             menuScreen.Initialize();
@@ -130,6 +130,9 @@ namespace GameJamTest
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            DrawnBackground.Draw(this);
+
             this.SpriteBatch.Begin();
             switch (currentScreen)
             {

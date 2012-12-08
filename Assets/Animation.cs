@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 
+// del me pl0x
 namespace GameJamTest.Assets
 {
     public class Animation

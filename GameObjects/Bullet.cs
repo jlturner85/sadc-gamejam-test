@@ -6,34 +6,51 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using GameJamTest.Assets;
+using GameJamTest.GameObjects.Zombie;
+using GameJamTest.Screens;
 
 namespace GameJamTest.GameObjects
 {
     class Bullet : GameJamComponent
     {
         private Team team;
-        private Vector2 position;
         private Vector2 velocity;
-        private Texture2D sprite;
 
-        public Bullet(Game game, Team team, Vector2 position, Vector2 velocity)
-            : base(game)
+        public Bullet(Game game, GameScreen screen, Team team, Vector2 position, Vector2 velocity)
+            : base(game, screen)
         {
             this.team = team;
-            this.position = position;
+            this.Position = position;
             this.velocity = velocity;
-            this.sprite = Sprites.Bullet;
+            this.Sprite = Sprites.Bullet;
             this.Layer = Layer.BULLET;
         }
 
         public override void Update(GameTime gameTime)
         {
-            this.position = Vector2.Add(position, velocity);
-        }
+            this.Position = Vector2.Add(Position, velocity);
 
-        public override void Draw(GameTime gameTime)
-        {
-            (Game as Game1).SpriteBatch.Draw(this.sprite, this.position, Color.White);
+            if (this.Position.X < 0 || this.Position.X > 1000)
+            {
+                this.Destroy();
+            }
+
+            if (team == Team.PLAYER)
+            {
+                foreach (GameComponent component in this.Screen.Components)
+                {
+                    GameJamComponent drawable = component as GameJamComponent;
+                    if (drawable != null)
+                    {
+                        if ((drawable as ZombieShip) != null && this.Collide(drawable))
+                        {
+                            this.Destroy();
+                            drawable.Destroy();
+                            this.Screen.AddComponent(new Explosion(this.Game, this.Screen, Vector2.Add(drawable.Position, new Vector2(-4, -2))));
+                        }
+                    }
+                }
+            }
         }
     }
 
