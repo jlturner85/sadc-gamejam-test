@@ -112,5 +112,6 @@ namespace GameJamTest.Animation
                 rowNumber * FrameHeight, FrameWidth, FrameHeight), Color.White);
         }
                 
+
     }
 }
