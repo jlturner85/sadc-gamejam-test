@@ -44,8 +44,8 @@ namespace GameJamTest
             splashScreen = new SplashScreen(this);
             gameScreen = new GameScreen(this);
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = 720;
-            graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 720;
+            //graphics.PreferredBackBufferWidth = 1280;
             //Components.Add(new PlayerShip(this));
         }
 
