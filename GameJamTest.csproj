@@ -150,9 +150,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Users\Tom\Documents\Visual Studio 2010\Projects\GameJamTestContent\GameJamTestContent.contentproj">
-      <Project>{808887FE-DB80-4D0D-8E28-6145C0C27624}</Project>
-      <Name>GameJamTestContent</Name>
+    <ProjectReference Include="..\..\..\Documents\Visual Studio 2010\Projects\GameJamTest\GameJamTest\GameJamTestContent\GameJamTestContent.contentproj">
+      <Project>{98772F1C-92E8-47C5-960A-D04211ECA438}</Project>
+      <Name>GameJamTestContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
   </ItemGroup>

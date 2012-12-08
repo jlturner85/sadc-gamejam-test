@@ -28,7 +28,7 @@ namespace GameJamTest
         public const int menuScreenID = 1;
         public const int gameScreenID = 2;
 
-        private int currentScreen = menuScreenID;
+        private int currentScreen = splashScreenID;
         
         //Screens
         private MenuScreen menuScreen;
@@ -56,7 +56,7 @@ namespace GameJamTest
         /// </summary>
         protected override void Initialize()
         {
-            Content.RootDirectory = "GameJamTestContent";
+            Content.RootDirectory = "Content";
 
             base.Initialize();
             menuScreen.Initialize();
