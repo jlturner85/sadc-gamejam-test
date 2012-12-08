@@ -69,7 +69,7 @@ namespace GameJamTest.Assets
             repeating = false;
         }
 
-        public void DisableRepeating()
+        public void EnableRepeating()
         {
             repeating = true;
         }
