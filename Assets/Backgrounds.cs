@@ -37,7 +37,7 @@ namespace GameJamTest.Assets
         }
     }
 
-    public class DrawnBackground
+    public class ParallaxBackground
     {
         private static Scrolling scroll1, scroll2, scroll3, scroll4;
         private static Texture2D staticBackground;

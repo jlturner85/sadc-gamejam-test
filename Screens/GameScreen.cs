@@ -23,6 +23,8 @@ namespace GameJamTest.Screens
     {
         private bool initialized = false;
 
+        private Random random;
+
         private Game game;
         private ContentManager content;
 
@@ -58,7 +60,8 @@ namespace GameJamTest.Screens
         {
             if (!initialized)
             {
-                content = game.Content;
+                this.random = new Random();
+                this.content = game.Content;
                 foreach (GameComponent component in this.components)
                 {
                     component.Initialize();
@@ -78,7 +81,16 @@ namespace GameJamTest.Screens
         {
             this.Initialize();
 
-            DrawnBackground.Update(gameTime);
+            ParallaxBackground.Update(gameTime);
+
+            if (this.random.NextDouble() < 0.01)
+            {
+                int sign = (2 * this.random.Next(2)) - 1;
+                Vector2 position = new Vector2(400 + this.random.Next(400), sign > 0 ? -50 : Game1.SCREEN_HEIGHT + 50);
+                Vector2 velocity = new Vector2(-1 * (float)(this.random.NextDouble() + 1), sign * ((float)this.random.NextDouble() + 1));
+                this.AddComponent(new Asteroid(this.Game, this, position, velocity));
+            }
+
 
             foreach (GameComponent component in this.components)
             {

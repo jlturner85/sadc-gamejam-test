@@ -15,9 +15,8 @@ namespace GameJamTest.GameObjects
         private int aliveTime;
 
         public Explosion(Game game, GameScreen screen, Vector2 position)
-            : base(game, screen)
+            : base(game, screen, position)
         {
-            this.Position = position;
             this.aliveTime = 0;
             this.Sprite = Sprites.Boom;
         }

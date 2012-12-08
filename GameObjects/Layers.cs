@@ -10,6 +10,7 @@ namespace GameJamTest.GameObjects
         public static List<Layer> Values()
         {
             List<Layer> values = new List<Layer>();
+            values.Add(Layer.ASTEROID);
             values.Add(Layer.BULLET);
             values.Add(Layer.ZOMBIE);
             values.Add(Layer.PLAYER);
@@ -19,6 +20,6 @@ namespace GameJamTest.GameObjects
 
     public enum Layer
     {
-        BULLET, ZOMBIE, PLAYER
+        ASTEROID, BULLET, ZOMBIE, PLAYER
     }
 }

@@ -47,7 +47,7 @@ namespace GameJamTest.MenuSystem
             content = game.Content;
             titleFont = content.Load<SpriteFont>("Fonts/TitleFont");
             menuTickSound = content.Load<SoundEffect>("SoundEffects/fire_laser1");
-            DrawnBackground.Initialize(this.content);
+            ParallaxBackground.Initialize(this.content);
             base.Initialize();
         }
 
@@ -64,7 +64,7 @@ namespace GameJamTest.MenuSystem
                 mainGame.setCurrentScreen(2);        
             }
 
-            DrawnBackground.Update(gameTime);
+            ParallaxBackground.Update(gameTime);
             base.Update(gameTime);
         }
         
