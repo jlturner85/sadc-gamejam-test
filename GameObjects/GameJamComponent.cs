@@ -42,6 +42,12 @@ namespace GameJamTest.GameObjects
             this.Screen.RemoveComponent(this);
         }
 
+        public void Explode()
+        {
+            this.Destroy();
+            this.Screen.AddComponent(new Explosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(-4, -2))));
+        }
+
         public override void Update(GameTime gameTime)
         {
             this.Position = Vector2.Add(this.Position, this.Velocity);

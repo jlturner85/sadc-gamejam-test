@@ -23,21 +23,21 @@ namespace GameJamTest
     public class Game1 : Microsoft.Xna.Framework.Game
     {
 
-        public const int SCREEN_WIDTH = 1280;
-        public const int SCREEN_HEIGHT = 720;
+        public const int SCREEN_WIDTH = 800;
+        public const int SCREEN_HEIGHT = 480;
 
         //Gamestate Constants
         public const int splashScreenID = 0;
         public const int menuScreenID = 1;
         public const int gameScreenID = 2;
-        private int splashScreenTime = 0;
-        private int currentScreen = splashScreenID;
+
+        private int currentScreen = menuScreenID;
         
         //Screens
         private MenuScreen menuScreen;
         private SplashScreen splashScreen;
-        private GameScreen gameScreen;
-        private Song menuMusic;
+        private GameScreen gameScreen; 
+
         GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
@@ -47,20 +47,8 @@ namespace GameJamTest
             splashScreen = new SplashScreen(this);
             gameScreen = new GameScreen(this);
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
-            graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
-            
         }
 
-        public int getScreenWidth()
-        {
-            return SCREEN_WIDTH;
-        }
-
-        public int getScreenHeight()
-        {
-            return SCREEN_HEIGHT;
-        }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -76,8 +64,7 @@ namespace GameJamTest
             splashScreen.Initialize();
             GameServices.AddService<GraphicsDevice>(GraphicsDevice);
             GameServices.AddService<ContentManager>(Content);
-            
-        }    
+        }
         public void setCurrentScreen(int currentScreen)
         {
             this.currentScreen = currentScreen;
@@ -90,10 +77,7 @@ namespace GameJamTest
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            menuMusic = Content.Load<Song>("Music/menumusic");
-            AudioManager.playMusic(menuMusic);
             Sprites.LoadContent(this.Content);
-
         }
 
         /// <summary>
@@ -121,12 +105,6 @@ namespace GameJamTest
                     menuScreen.Update(gameTime);
                     break;
                 case splashScreenID:
-                    splashScreenTime += (int)gameTime.ElapsedGameTime.TotalSeconds;
-                    if (splashScreenTime > 5)
-                    {
-                        currentScreen = menuScreenID;
-                        break;
-                    }
                     splashScreen.Update(gameTime);
                     break;
                 case gameScreenID:

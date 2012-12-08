@@ -91,7 +91,6 @@ namespace GameJamTest.Screens
                 this.AddComponent(new Asteroid(this.Game, this, position, velocity));
             }
 
-
             foreach (GameComponent component in this.components)
             {
                 component.Update(gameTime);
