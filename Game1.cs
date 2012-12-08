@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using GameJamTest.MenuSystem;
 using GameJamTest.Util;
+using GameJamTest.Screens;
 // hello from tom
 namespace GameJamTest
 {
@@ -21,14 +22,16 @@ namespace GameJamTest
     {
 
         //Gamestate Constants
-        private const int splashScreen = 0;
-        private const int menu = 1;
-        private const int game = 2;
+        public const int splashScreenID = 0;
+        public const int menuScreenID = 1;
+        public const int gameScreenID = 2;
 
-        private int currentScreen = menu;
+        private int currentScreen = menuScreenID;
 
+        
         //Screens
         private MenuScreen menuScreen;
+        private SplashScreen splashScreen; 
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -36,6 +39,7 @@ namespace GameJamTest
         public Game1()
         {
             menuScreen = new MenuScreen(this);
+            splashScreen = new SplashScreen(this);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
@@ -52,10 +56,14 @@ namespace GameJamTest
 
             base.Initialize();
             menuScreen.Initialize();
+            splashScreen.Initialize();
             GameServices.AddService<GraphicsDevice>(GraphicsDevice);
             GameServices.AddService<ContentManager>(Content);
         }
-
+        public void setCurrentScreen(int currentScreen)
+        {
+            this.currentScreen = currentScreen;
+        }
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
@@ -89,12 +97,13 @@ namespace GameJamTest
                 this.Exit();
             switch (currentScreen)
             {
-                case menu:
+                case menuScreenID:
                     menuScreen.Update(gameTime);
                     break;
-                case splashScreen:
+                case splashScreenID:
+                    splashScreen.Update(gameTime);
                     break;
-                case game:
+                case gameScreenID:
                     break;
                 default:
                     break;
@@ -118,12 +127,13 @@ namespace GameJamTest
             // TODO: Add your drawing code here
             switch (currentScreen)
             {
-                case menu:
+                case menuScreenID:
                     menuScreen.Draw(gameTime);
                     break;
-                case splashScreen:
+                case splashScreenID:
+                    splashScreen.Draw(gameTime);
                     break;
-                case game:
+                case gameScreenID:
                     break;
                 default:
                     base.Draw(gameTime);

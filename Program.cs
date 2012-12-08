@@ -12,6 +12,7 @@ namespace GameJamTest
         {
             using (Game1 game = new Game1())
             {
+                /// Run the game ... that you lost.
                 game.Run();
             }
         }
