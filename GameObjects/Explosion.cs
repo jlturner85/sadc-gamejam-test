@@ -18,7 +18,7 @@ namespace GameJamTest.GameObjects
             : base(game, screen, position)
         {
             this.aliveTime = 0;
-            this.Sprite = Sprites.Boom;
+            //this.Sprite = Sprites.Boom;
         }
 
         public override void Update(GameTime gameTime)

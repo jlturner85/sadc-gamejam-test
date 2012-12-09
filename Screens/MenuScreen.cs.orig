@@ -22,9 +22,8 @@ namespace GameJamTest.MenuSystem
         Game game;
         Game1 mainGame;
         SoundEffect menuTickSound;
-        Animation texasAnimation;
         private SpriteFont titleFont;
-        private Texture2D texasSymbol;
+        
         //get the graphics device, used for drawing objects
         private SpriteBatch spriteBatch;
         public MenuScreen(Game game)
@@ -41,16 +40,18 @@ namespace GameJamTest.MenuSystem
         /// </summary>
         public override void Initialize()
         {
-            texasAnimation = new Animation(this.game.Content,"Sprites/Texas_spriteSheet", 300, 300, 2, 15);
+            
             //graphicsDevice = GameServices.GetService<GraphicsDevice>();
             spriteBatch = new SpriteBatch(game.GraphicsDevice);
             // TODO: Add your initialization code here
             content = game.Content;
-            titleFont = content.Load<SpriteFont>("Fonts/titlefont");
+            titleFont = content.Load<SpriteFont>("Fonts/TitleFont");
+<<<<<<< HEAD
             menuTickSound = content.Load<SoundEffect>("SoundEffects/fire_laser1");
-            //texasSymbol = content.Load<Texture2D>("Sprites/Texas_spriteSheet");
-            texasAnimation.EnableRepeating();
-            ParallaxBackground.Initialize(this.content,(Game1)game);
+            DrawnBackground.Initialize(this.content);
+=======
+            ParallaxBackground.Initialize(this.content);
+>>>>>>> 02db0cc41fe73fac7b6c61914fb6405a81dc5540
             base.Initialize();
         }
 
@@ -68,24 +69,16 @@ namespace GameJamTest.MenuSystem
             }
 
             ParallaxBackground.Update(gameTime);
-            texasAnimation.Update(gameTime);
             base.Update(gameTime);
         }
         
         public override void Draw(GameTime gameTime)
         {
-            
             //draw the text on the screen
             spriteBatch.Begin();
-            //spriteBatch.Draw(texasSymbol, new Rectangle(410, 180, 400, 400), Color.White);
-            texasAnimation.Draw(spriteBatch, new Vector2(410,180));
-            spriteBatch.DrawString(titleFont, "Civil War: 2015", new Vector2(380, 100), Color.White);
-            spriteBatch.DrawString(titleFont, "Press space bar to start game", new Vector2(220, 600), Color.White);
+            spriteBatch.DrawString(titleFont, "Game Title: The Subtitling", new Vector2(20, 45), Color.White);
+            spriteBatch.DrawString(titleFont, "Press space bar to start game", new Vector2(50, 70), Color.White);
             spriteBatch.End();
-
-            
-            
-            
             base.Draw(gameTime);
         }
     }

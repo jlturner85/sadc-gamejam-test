@@ -14,14 +14,14 @@ namespace GameJamTest.Assets
         private static Texture2D zombie;
         private static Texture2D asteroid;
         private static Texture2D boom;
-
+        
         public static void LoadContent(ContentManager content)
         {
-            ship = content.Load<Texture2D>("Sprites/ship");
-            bullet = content.Load<Texture2D>("Sprites/bullet");
-            zombie = content.Load<Texture2D>("Sprites/zombie");
-            asteroid = content.Load<Texture2D>("Sprites/asteroid");
-            boom = content.Load<Texture2D>("Sprites/boom");
+            //ship = content.Load<Texture2D>("Sprites/ship");
+            //bullet = content.Load<Texture2D>("Sprites/bullet");
+            //zombie = content.Load<Texture2D>("Sprites/zombie");
+            //asteroid = content.Load<Texture2D>("Sprites/asteroid");
+            //boom = content.Load<Texture2D>("Sprites/boom");
         }
 
         public static Texture2D Ship

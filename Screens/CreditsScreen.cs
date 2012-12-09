@@ -19,7 +19,7 @@ namespace GameJamTest.Screens
     {
         Game game;
         SpriteFont titleFont;
-        SpriteFont creditFont;
+        
         SpriteBatch spriteBatch;
         public CreditsScreen(Game game)
             : base(game)
@@ -35,7 +35,7 @@ namespace GameJamTest.Screens
         public override void Initialize()
         {
             titleFont = this.game.Content.Load<SpriteFont>("Fonts/titlefont");
-            creditFont = this.game.Content.Load<SpriteFont>("Fonts/CreditFont");
+            
             // TODO: Add your initialization code here
             spriteBatch = new SpriteBatch(this.game.GraphicsDevice);
             base.Initialize();
@@ -60,7 +60,7 @@ namespace GameJamTest.Screens
             spriteBatch.DrawString(titleFont, "Fernando Mosqueda - Artist, Sounds", new Vector2(20, 250), Color.White);
             spriteBatch.DrawString(titleFont, "Gerald Halbeisen- Artist, Programmer", new Vector2(20, 300), Color.White);
             spriteBatch.DrawString(titleFont, "Justin Turner - Programmer", new Vector2(20, 350), Color.White);
-            spriteBatch.DrawString(titleFont, "Tom Farrello- Programmer", new Vector2(20, 400), Color.White);
+            spriteBatch.DrawString(titleFont, "Tom Farello- Programmer", new Vector2(20, 400), Color.White);
             spriteBatch.DrawString(titleFont, "Perturbator- Music", new Vector2(20, 450), Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
