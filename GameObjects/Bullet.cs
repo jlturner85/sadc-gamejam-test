@@ -27,28 +27,22 @@ namespace GameJamTest.GameObjects
         {
             base.Update(gameTime);
 
-            if (this.Position.X < 0 || this.Position.X > 1000)
+            foreach (GameComponent component in this.Screen.Components)
             {
-                this.Destroy();
-            }
-
-            if (team == Team.PLAYER)
-            {
-                foreach (GameComponent component in this.Screen.Components)
+                GameJamComponent drawable = component as GameJamComponent;
+                if (drawable != null && this.Collide(drawable))
                 {
-                    GameJamComponent drawable = component as GameJamComponent;
-                    if (drawable != null && this.Collide(drawable))
+                    if (drawable is Asteroid)
                     {
-                        if (drawable is ZombieShip)
-                        {
-                            this.Destroy();
-                            drawable.Explode();
-                        }
+                        this.Destroy();
+                    }
 
-                        if (drawable is Asteroid)
-                        {
-                            this.Destroy();
-                        }
+                    ZombieShip zombie = drawable as ZombieShip;
+                    if (zombie != null && team == Team.PLAYER)
+                    {
+                        this.Destroy();
+                        zombie.Explode();
+                        this.Screen.Player.ScorePoints(zombie.PointValue);
                     }
                 }
             }

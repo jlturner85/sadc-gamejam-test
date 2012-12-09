@@ -47,8 +47,8 @@ namespace GameJamTest.MenuSystem
             content = game.Content;
             titleFont = content.Load<SpriteFont>("Fonts/titlefont");
             menuTickSound = content.Load<SoundEffect>("SoundEffects/fire_laser1");
-            texasSymbol = content.Load<Texture2D>("Sprites/Texas3");
-            ParallaxBackground.Initialize(this.content,(Game1)game);
+            //texasSymbol = content.Load<Texture2D>("Sprites/Texas3");
+            ParallaxBackground.Initialize(this.content);
             base.Initialize();
         }
 
@@ -74,7 +74,7 @@ namespace GameJamTest.MenuSystem
             
             //draw the text on the screen
             spriteBatch.Begin();
-            spriteBatch.Draw(texasSymbol, new Rectangle(410, 180, 400, 400), Color.White);
+            //spriteBatch.Draw(texasSymbol, new Rectangle(410, 180, 400, 400), Color.White);
             spriteBatch.DrawString(titleFont, "Civil War: 2015", new Vector2(380, 100), Color.White);
             spriteBatch.DrawString(titleFont, "Press space bar to start game", new Vector2(220, 600), Color.White);
             spriteBatch.End();

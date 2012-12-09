@@ -13,6 +13,7 @@ namespace GameJamTest.GameObjects.Player
 {
     public class PlayerShip : GameJamComponent
     {
+        long score;
         private GameKeyboard keyboard;
 
         public PlayerShip(Game game, GameScreen screen)
@@ -22,10 +23,15 @@ namespace GameJamTest.GameObjects.Player
             this.Layer = Layer.PLAYER;
         }
 
+        public override void Destroy()
+        {
+            // invulnerability!
+        }
+
         private void Fire()
         {
             Vector2 bulletPos = Vector2.Add(this.Position, new Vector2(12, 3));
-            Screen.AddComponent(new Bullet(Game, Screen, Team.PLAYER, bulletPos, new Vector2(3, 0)));
+            Screen.AddComponent(new Bullet(Game, Screen, Team.PLAYER, bulletPos, new Vector2(15, 0)));
         }
 
         public override void Initialize()
@@ -97,6 +103,16 @@ namespace GameJamTest.GameObjects.Player
             {
                 this.Fire();
             }
+        }
+
+        public void ScorePoints(long points)
+        {
+            this.score += points;
+        }
+
+        public long Score
+        {
+            get { return this.score; }
         }
     }
 
