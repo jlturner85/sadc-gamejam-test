@@ -12,8 +12,6 @@ namespace GameJamTest.GameObjects.Zombie
 {
     class Asteroid : GameJamComponent
     {
-        Vector2 velocity;
-
         public Asteroid(Game game, GameScreen screen, Vector2 position, Vector2 velocity)
             : base(game, screen, position, velocity)
         {

@@ -80,8 +80,7 @@ namespace GameJamTest
             splashScreen.Initialize();
             GameServices.AddService<GraphicsDevice>(GraphicsDevice);
             GameServices.AddService<ContentManager>(Content);
-            
-        }    
+        }
         public void setCurrentScreen(int currentScreen)
         {
             this.currentScreen = currentScreen;
@@ -97,7 +96,6 @@ namespace GameJamTest
             menuMusic = Content.Load<Song>("Music/menumusic");
             AudioManager.playMusic(menuMusic);
             Sprites.LoadContent(this.Content);
-
         }
 
         /// <summary>

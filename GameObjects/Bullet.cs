@@ -42,8 +42,7 @@ namespace GameJamTest.GameObjects
                         if (drawable is ZombieShip)
                         {
                             this.Destroy();
-                            drawable.Destroy();
-                            this.Screen.AddComponent(new Explosion(this.Game, this.Screen, Vector2.Add(drawable.Position, new Vector2(-4, -2))));
+                            drawable.Explode();
                         }
 
                         if (drawable is Asteroid)
@@ -53,6 +52,11 @@ namespace GameJamTest.GameObjects
                     }
                 }
             }
+        }
+
+        public Team Team
+        {
+            get { return this.team; }
         }
     }
 

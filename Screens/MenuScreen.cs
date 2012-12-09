@@ -82,10 +82,6 @@ namespace GameJamTest.MenuSystem
             spriteBatch.DrawString(titleFont, "Civil War: 2015", new Vector2(380, 100), Color.White);
             spriteBatch.DrawString(titleFont, "Press space bar to start game", new Vector2(220, 600), Color.White);
             spriteBatch.End();
-
-            
-            
-            
             base.Draw(gameTime);
         }
     }
