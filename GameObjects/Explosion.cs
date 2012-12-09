@@ -12,17 +12,16 @@ namespace GameJamTest.GameObjects
 {
     public class Explosion : GameJamComponent
     {
-        private int aliveTime;
-        protected Animation explosionAnimation;
+        private int timer;
+        private Animation explosionAnimation;
         public Explosion(Game game, GameScreen screen, Vector2 position)
             : base(game, screen, position)
         {
-            this.aliveTime = 0;
+            this.timer = 75;
             width = 64;
             height = 64;
             explosionAnimation = new Animation(this.Game.Content, "Sprites/explosion", width, height, 6, 6);
-            
-            //this.Sprite = Sprites.Boom;
+            this.Layer = Layer.EXPLOSION;
         }
         public override void Initialize()
         {
@@ -31,9 +30,9 @@ namespace GameJamTest.GameObjects
         }
         public override void Update(GameTime gameTime)
         {
+            this.timer--;
             explosionAnimation.Update(gameTime);
-            this.aliveTime += 1;
-            if (this.aliveTime > 75)
+            if (this.timer < 0)
             {
                 this.Destroy();
             }
