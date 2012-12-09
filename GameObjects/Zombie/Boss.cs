@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+using Microsoft.Xna.Framework.Audio;
 using GameJamTest.Assets;
+using GameJamTest.Util;
 using GameJamTest.Screens;
 
 namespace GameJamTest.GameObjects.Zombie
@@ -19,7 +20,8 @@ namespace GameJamTest.GameObjects.Zombie
         private const int INITIAL_Y = 260;
         private int xSign;
         private int ySign;
-
+        SoundEffect shipExplosion;
+        SoundEffect shipEntering;
         private Random random;
         private Texture2D sprite;
 
@@ -58,6 +60,9 @@ namespace GameJamTest.GameObjects.Zombie
         {
             bossAnimation = new Animation(this.Game.Content, "Sprites/boss1", 150, 150, 8, 7);
             bossAnimation.EnableRepeating();
+            shipEntering = this.Game.Content.Load<SoundEffect>("SoundEffects/zombiedemon");
+            shipExplosion = this.Game.Content.Load<SoundEffect>("SoundEffects/cannon");
+            AudioManager.playSoundEffect(shipEntering);
             base.Initialize();
         }
 
@@ -84,22 +89,27 @@ namespace GameJamTest.GameObjects.Zombie
                 this.Velocity = new Vector2(0, 0.5f);
                 if (this.explode > 100 && this.explode % 30 == 0)
                 {
+                    AudioManager.playSoundEffect(shipExplosion);
                     this.NewExplosion();
                 }
                 else if (this.explode > 40 && this.explode % 20 == 0)
                 {
+                    AudioManager.playSoundEffect(shipExplosion);
                     this.NewExplosion();
                 }
                 else if (this.explode == 75)
                 {
+                    AudioManager.playSoundEffect(shipExplosion);
                     this.Screen.ScreenExplosion();
                 }
                 else if (this.explode > 0 && this.explode % 10 == 0)
                 {
+                    AudioManager.playSoundEffect(shipExplosion);
                     this.NewExplosion();
                 }
                 else if (this.explode == 0)
                 {
+                    
                     this.Destroy();
                 }
             }

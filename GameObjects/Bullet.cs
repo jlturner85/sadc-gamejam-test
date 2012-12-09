@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+using Microsoft.Xna.Framework.Audio;
 using GameJamTest.Assets;
 using GameJamTest.GameObjects.Zombie;
 using GameJamTest.Screens;
-
+using GameJamTest.Util;
 namespace GameJamTest.GameObjects
 {
     class Bullet : GameJamComponent
     {
         private Team team;
         private Animation bulletAnimation;
-
+        
         public Bullet(Game game, GameScreen screen, Team team, Vector2 position, Vector2 velocity)
             : base(game, screen, position, velocity)
         {
@@ -46,6 +46,7 @@ namespace GameJamTest.GameObjects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            
             bulletAnimation.Update(gameTime);
 
             foreach (GameComponent component in this.Screen.Components)
@@ -73,6 +74,7 @@ namespace GameJamTest.GameObjects
                         Boss boss = drawable as Boss;
                         if (boss != null && boss.Alive)
                         {
+                            
                             this.Destroy();
                             boss.Damage();
                         }

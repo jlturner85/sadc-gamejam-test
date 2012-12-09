@@ -20,7 +20,7 @@ namespace GameJamTest.GameObjects.Zombie
             width = 32;
             height = 32;
             scale = 2;
-            asteroidAnimation = new Animation(game.Content, "Sprites/asteroid", width, height, 4, 3);
+            asteroidAnimation = new Animation(game.Content, "Sprites/asteroid2", width, height, 8, 8);
             asteroidAnimation.EnableRepeating();
         }
 

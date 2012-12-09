@@ -77,7 +77,7 @@ namespace GameJamTest
         protected override void Initialize()
         {
             Content.RootDirectory = "GameJamTestContent";
-
+            MediaPlayer.Volume=0.5f;
             base.Initialize();
             menuScreen.Initialize();
             creditsScreen.Initialize();

@@ -40,8 +40,8 @@ namespace GameJamTest.GameObjects
         }
         public bool Collide(GameJamComponent that)
         {
-            Rectangle r1 = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.width*(int)this.scale, this.height*(int)this.scale);
-            Rectangle r2 = new Rectangle((int)that.Position.X, (int)that.Position.Y, that.width*(int)that.scale, that.height*(int)that.scale);
+            Rectangle r1 = new Rectangle((int)this.Position.X, (int)this.Position.Y, (int)(this.width*this.scale), (int)(this.height*this.scale));
+            Rectangle r2 = new Rectangle((int)that.Position.X, (int)that.Position.Y, (int)(that.width*that.scale), (int)(that.height*that.scale));
             return r1.Intersects(r2);
         }
 

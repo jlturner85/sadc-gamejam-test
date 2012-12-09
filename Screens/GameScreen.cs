@@ -154,8 +154,8 @@ namespace GameJamTest.Screens
 
         private void ResetBossTimer()
         {
-            //this.bossCountdown = (250 * this.GameSpeed) + 2500;
-            this.bossCountdown = 0;
+            this.bossCountdown = (250 * this.GameSpeed) + 2500;
+            //this.bossCountdown = 0;
         }
 
         /// <summary>

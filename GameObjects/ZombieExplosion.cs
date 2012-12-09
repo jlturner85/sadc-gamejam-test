@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using GameJamTest.Screens;
 using GameJamTest.Assets;
+using GameJamTest.Util;
 namespace GameJamTest.GameObjects
 {
     /// <summary>
@@ -19,6 +20,7 @@ namespace GameJamTest.GameObjects
     {
         private int aliveTime;
         protected Animation explosionAnimation;
+        private SoundEffect zombiePop;
         public ZombieExplosion(Game game, GameScreen screen, Vector2 position)
             : base(game,screen,position)
         {
@@ -27,6 +29,8 @@ namespace GameJamTest.GameObjects
             width = 45;
             height = 22;
             explosionAnimation = new Animation(this.Game.Content, "Sprites/cannonzombieboom", width, height, 5, 15);
+            zombiePop = this.Game.Content.Load<SoundEffect>("SoundEffects/zombiedeath");
+            AudioManager.playSoundEffect(zombiePop);
         }
 
         /// <summary>
