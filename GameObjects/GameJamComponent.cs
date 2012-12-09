@@ -11,12 +11,13 @@ namespace GameJamTest.GameObjects
 {
     public class GameJamComponent : DrawableGameComponent
     {
-        private Vector2 position;
+        protected Vector2 position;
         private Vector2 velocity;
-        private Texture2D sprite;
+        //private Texture2D sprite;
         private Layer layer;
         private GameScreen screen;
-
+        public int height;
+        public int width;
         public GameJamComponent(Game game, GameScreen screen, Vector2 position)
             : this(game, screen, position, new Vector2(0, 0))
         {
@@ -32,8 +33,8 @@ namespace GameJamTest.GameObjects
 
         public bool Collide(GameJamComponent that)
         {
-            Rectangle r1 = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.Sprite.Width, this.Sprite.Height);
-            Rectangle r2 = new Rectangle((int)that.Position.X, (int)that.Position.Y, that.Sprite.Width, that.Sprite.Height);
+            Rectangle r1 = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.width, this.height);
+            Rectangle r2 = new Rectangle((int)that.Position.X, (int)that.Position.Y, that.width, that.height);
             return r1.Intersects(r2);
         }
 
@@ -59,10 +60,11 @@ namespace GameJamTest.GameObjects
             }
         }
 
-        public override void Draw(GameTime gameTime)
-        {
-            (Game as Game1).SpriteBatch.Draw(this.Sprite, this.Position, Color.White);
-        }
+        //public override void Draw(GameTime gameTime)
+        //{
+
+            //(Game as Game1).SpriteBatch.Draw(this.Sprite, this.Position, Color.White);
+        //}
 
         public Vector2 Position
         {
@@ -76,11 +78,11 @@ namespace GameJamTest.GameObjects
             set { this.velocity = value; }
         }
 
-        public Texture2D Sprite
-        {
-            get { return this.sprite; }
-            set { this.sprite = value; }
-        }
+        //public Texture2D Sprite
+        //{
+            //get { return this.sprite; }
+            //set { this.sprite = value; }
+        //}
 
         public Layer Layer
         {

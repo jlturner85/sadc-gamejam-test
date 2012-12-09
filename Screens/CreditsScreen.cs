@@ -19,7 +19,7 @@ namespace GameJamTest.Screens
     {
         Game game;
         SpriteFont titleFont;
-        SpriteFont creditFont;
+        
         SpriteBatch spriteBatch;
         public CreditsScreen(Game game)
             : base(game)
@@ -35,7 +35,11 @@ namespace GameJamTest.Screens
         public override void Initialize()
         {
             titleFont = this.game.Content.Load<SpriteFont>("Fonts/titlefont");
+<<<<<<< HEAD
             //creditFont = this.game.Content.Load<SpriteFont>("Fonts/CreditFont");
+=======
+            
+>>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14
             // TODO: Add your initialization code here
             spriteBatch = new SpriteBatch(this.game.GraphicsDevice);
             base.Initialize();

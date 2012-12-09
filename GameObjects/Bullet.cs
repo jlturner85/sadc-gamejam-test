@@ -19,7 +19,7 @@ namespace GameJamTest.GameObjects
             : base(game, screen, position, velocity)
         {
             this.team = team;
-            this.Sprite = Sprites.Bullet;
+            //this.Sprite = Sprites.Bullet;
             this.Layer = Layer.BULLET;
         }
 

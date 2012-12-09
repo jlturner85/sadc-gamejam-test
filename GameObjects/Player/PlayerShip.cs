@@ -15,7 +15,7 @@ namespace GameJamTest.GameObjects.Player
     {
         long score;
         private GameKeyboard keyboard;
-
+        Animation shipAnimationFlying;
         public PlayerShip(Game game, GameScreen screen)
             : base(game, screen, new Vector2(100, 100))
         {
@@ -36,13 +36,18 @@ namespace GameJamTest.GameObjects.Player
 
         public override void Initialize()
         {
-            this.Sprite = Sprites.Ship;
+            //this.Sprite = Sprites.Ship;
+            width = 32;
+            height = 16;
+            shipAnimationFlying = new Animation(this.Game.Content, "Sprites/playerShip", width, height, 2, 15);
+            shipAnimationFlying.EnableRepeating();
+            
         }
 
         public override void Update(GameTime gameTime)
         {
             keyboard.Update(gameTime);
-
+            shipAnimationFlying.Update(gameTime);
             Vector2 velocity = new Vector2(0, 0);
 
             if (keyboard.Up.IsHeld())
@@ -101,10 +106,12 @@ namespace GameJamTest.GameObjects.Player
 
             if (keyboard.Fire.IsPressed())
             {
+                
                 this.Fire();
             }
         }
 
+<<<<<<< HEAD
         public void ScorePoints(long points)
         {
             this.score += points;
@@ -113,6 +120,12 @@ namespace GameJamTest.GameObjects.Player
         public long Score
         {
             get { return this.score; }
+=======
+        public override void Draw(GameTime gameTime)
+        {
+            shipAnimationFlying.Draw((this.Game as Game1).SpriteBatch, position,0f, 1.5f);
+            base.Draw(gameTime);
+>>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14
         }
     }
 

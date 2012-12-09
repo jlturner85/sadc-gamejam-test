@@ -45,10 +45,20 @@ namespace GameJamTest.MenuSystem
             spriteBatch = new SpriteBatch(game.GraphicsDevice);
             // TODO: Add your initialization code here
             content = game.Content;
+<<<<<<< HEAD
             titleFont = content.Load<SpriteFont>("Fonts/titlefont");
             menuTickSound = content.Load<SoundEffect>("SoundEffects/fire_laser1");
             texasSymbol = content.Load<Texture2D>("Sprites/Texas3");
             ParallaxBackground.Initialize(this.content,(Game1)game);
+=======
+            titleFont = content.Load<SpriteFont>("Fonts/TitleFont");
+<<<<<<< HEAD
+            menuTickSound = content.Load<SoundEffect>("SoundEffects/fire_laser1");
+            DrawnBackground.Initialize(this.content);
+=======
+            ParallaxBackground.Initialize(this.content);
+>>>>>>> 02db0cc41fe73fac7b6c61914fb6405a81dc5540
+>>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14
             base.Initialize();
         }
 
@@ -71,7 +81,10 @@ namespace GameJamTest.MenuSystem
         
         public override void Draw(GameTime gameTime)
         {
+<<<<<<< HEAD
             
+=======
+>>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14
             //draw the text on the screen
             spriteBatch.Begin();
             spriteBatch.Draw(texasSymbol, new Rectangle(410, 180, 400, 400), Color.White);

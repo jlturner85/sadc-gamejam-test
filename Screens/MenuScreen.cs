@@ -22,6 +22,7 @@ namespace GameJamTest.MenuSystem
         Game game;
         Game1 mainGame;
         SoundEffect menuTickSound;
+        Animation texasAnimation;
         private SpriteFont titleFont;
         private Texture2D texasSymbol;
         //get the graphics device, used for drawing objects
@@ -40,15 +41,21 @@ namespace GameJamTest.MenuSystem
         /// </summary>
         public override void Initialize()
         {
-            
+            texasAnimation = new Animation(this.game.Content,"Sprites/Texas_spriteSheet", 300, 300, 2, 15);
             //graphicsDevice = GameServices.GetService<GraphicsDevice>();
             spriteBatch = new SpriteBatch(game.GraphicsDevice);
             // TODO: Add your initialization code here
             content = game.Content;
             titleFont = content.Load<SpriteFont>("Fonts/titlefont");
             menuTickSound = content.Load<SoundEffect>("SoundEffects/fire_laser1");
+<<<<<<< HEAD
             //texasSymbol = content.Load<Texture2D>("Sprites/Texas3");
             ParallaxBackground.Initialize(this.content);
+=======
+            //texasSymbol = content.Load<Texture2D>("Sprites/Texas_spriteSheet");
+            texasAnimation.EnableRepeating();
+            ParallaxBackground.Initialize(this.content,(Game1)game);
+>>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14
             base.Initialize();
         }
 
@@ -66,6 +73,7 @@ namespace GameJamTest.MenuSystem
             }
 
             ParallaxBackground.Update(gameTime);
+            texasAnimation.Update(gameTime);
             base.Update(gameTime);
         }
         
@@ -75,6 +83,10 @@ namespace GameJamTest.MenuSystem
             //draw the text on the screen
             spriteBatch.Begin();
             //spriteBatch.Draw(texasSymbol, new Rectangle(410, 180, 400, 400), Color.White);
+<<<<<<< HEAD
+=======
+            texasAnimation.Draw(spriteBatch, new Vector2(410,180));
+>>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14
             spriteBatch.DrawString(titleFont, "Civil War: 2015", new Vector2(380, 100), Color.White);
             spriteBatch.DrawString(titleFont, "Press space bar to start game", new Vector2(220, 600), Color.White);
             spriteBatch.End();
