@@ -130,7 +130,7 @@ namespace GameJamTest
                     break;
                 case splashScreenID:
                     splashScreenTime += (int)gameTime.ElapsedGameTime.TotalSeconds;
-                    if (splashScreenTime > 5)
+                    if (splashScreenTime > 10)
                     {
                         currentScreen = menuScreenID;
                         break;

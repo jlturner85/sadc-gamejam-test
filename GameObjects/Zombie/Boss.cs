@@ -135,6 +135,7 @@ namespace GameJamTest.GameObjects.Zombie
 
                 if (this.cannonTimer < 0)
                 {
+                    AudioManager.playSoundEffect(shipExplosion);
                     this.Screen.AddComponent(new ZombieShip(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(20, 200)), ZombieType.CANNON));
                     this.ResetCannonTimer();
                 }
@@ -191,9 +192,10 @@ namespace GameJamTest.GameObjects.Zombie
 
         public override void Draw(GameTime gameTime)
         {
+            Color color = flash > 0 ? Color.Red : Color.White;
             SpriteBatch spriteBatch = (this.Game as Game1).SpriteBatch;
-            bossAnimation.Draw((this.Game as Game1).SpriteBatch, position,0, scale);
-            //spriteBatch.Draw(sprite, this.Position, (flash > 0 ? Color.Red : Color.White));
+            bossAnimation.Draw((this.Game as Game1).SpriteBatch, position,0, scale, color);
+            
             this.DrawHealthBar(gameTime);
         }
 

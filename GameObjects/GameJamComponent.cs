@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+using Microsoft.Xna.Framework.Audio;
+using GameJamTest.Util;
 using GameJamTest.Screens;
 using GameJamTest.GameObjects.Zombie;
 namespace GameJamTest.GameObjects
@@ -19,9 +20,11 @@ namespace GameJamTest.GameObjects
         public int height;
         public int width;
         public float scale;
+        SoundEffect shipExplosion;
         public GameJamComponent(Game game, GameScreen screen, Vector2 position)
             : this(game, screen, position, new Vector2(0, 0))
         {
+            shipExplosion = game.Content.Load<SoundEffect>("SoundEffects/cannon");
         }
 
         public GameJamComponent(Game game, GameScreen screen, Vector2 position, Vector2 velocity)
@@ -31,6 +34,7 @@ namespace GameJamTest.GameObjects
             this.Position = position;
             this.Velocity = velocity;
             this.scale = 1;
+            shipExplosion = game.Content.Load<SoundEffect>("SoundEffects/cannon");
         }
 
         public override void Initialize()
@@ -65,11 +69,13 @@ namespace GameJamTest.GameObjects
                 }
                 else
                 {
+                    AudioManager.playSoundEffect(shipExplosion);
                     this.Screen.AddComponent(new Explosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(-10, -10))));
                 }
             }
             else
             {
+                AudioManager.playSoundEffect(shipExplosion);
                 this.Screen.AddComponent(new Explosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(-10, -10))));
             }
             this.Destroy();
