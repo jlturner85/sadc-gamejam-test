@@ -21,8 +21,7 @@ namespace GameJamTest.GameObjects
             width = 64;
             height = 64;
             explosionAnimation = new Animation(game.Content, "Sprites/explosion", width, height, 6, 2);
-            
-            //this.Sprite = Sprites.Boom;
+            this.Layer = Layer.EXPLOSION;
         }
 
         public override void Update(GameTime gameTime)

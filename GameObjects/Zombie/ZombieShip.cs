@@ -26,7 +26,6 @@ namespace GameJamTest.GameObjects.Zombie
 
             this.Layer = Layer.ZOMBIE;
             
-            //this.Sprite = Sprites.Zombie;
             this.type = type;
 
             switch (this.type)

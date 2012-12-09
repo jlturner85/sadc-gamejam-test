@@ -58,14 +58,24 @@ namespace GameJamTest.GameObjects
                         this.Destroy();
                     }
 
-                    ZombieShip zombie = drawable as ZombieShip;
-                    if (zombie != null && team == Team.PLAYER)
+                    if (team == Team.PLAYER)
                     {
-                        this.Destroy();
-                        zombie.Explode();
-                        long points = zombie.PointValue * ((2 * this.Screen.GameSpeed) - 10);
-                        this.Screen.Player.ScorePoints(points);
-                        this.Screen.AddComponent(new ScoreDisplay(this.Game, this.Screen, this.Position, points));
+                        ZombieShip zombie = drawable as ZombieShip;
+                        if (zombie != null)
+                        {
+                            this.Destroy();
+                            zombie.Explode();
+                            long points = zombie.PointValue * ((2 * this.Screen.GameSpeed) - 10);
+                            this.Screen.Player.ScorePoints(points);
+                            this.Screen.AddComponent(new ScoreDisplay(this.Game, this.Screen, zombie.Position, points));
+                        }
+
+                        Boss boss = drawable as Boss;
+                        if (boss != null && boss.Alive)
+                        {
+                            this.Destroy();
+                            boss.Damage();
+                        }
                     }
                 }
             }

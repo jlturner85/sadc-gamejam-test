@@ -148,7 +148,7 @@ namespace GameJamTest.GameObjects.Player
                         bullet.Destroy();
                     }
 
-                    if (drawable is Asteroid)
+                    if (drawable is Asteroid || drawable is Boss)
                     {
                         this.Explode();
                     }

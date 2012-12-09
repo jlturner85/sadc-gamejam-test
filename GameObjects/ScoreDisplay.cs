@@ -14,12 +14,19 @@ namespace GameJamTest.GameObjects
     {
         long points;
         int timer;
+        float size;
 
         public ScoreDisplay(Game game, GameScreen screen, Vector2 position, long points)
+            : this(game, screen, position, points, 1f / 3f)
+        {
+        }
+
+        public ScoreDisplay(Game game, GameScreen screen, Vector2 position, long points, float size)
             : base(game, screen, position)
         {
             this.points = points;
-            this.timer = 60;
+            this.size = size;
+            this.timer = (int)(180 * size);
             this.Layer = Layer.FRONT;
         }
 
@@ -27,7 +34,7 @@ namespace GameJamTest.GameObjects
         {
             this.timer--;
 
-            this.Velocity = new Vector2(0, -0.02f * timer);
+            this.Velocity = new Vector2(0, -0.005f * timer / size);
 
             base.Update(gameTime);
 
@@ -39,7 +46,7 @@ namespace GameJamTest.GameObjects
 
         public override void Draw(GameTime gameTime)
         {
-            (this.Game as Game1).SpriteBatch.DrawString(Fonts.TitleFont, points.ToString(), this.Position, Color.White, 0f, new Vector2(0, 0), 0.34f, SpriteEffects.None, 0f);
+            (this.Game as Game1).SpriteBatch.DrawString(Fonts.TitleFont, points.ToString(), this.Position, Color.White, 0f, new Vector2(0, 0), this.size, SpriteEffects.None, 0f);
         }
     }
 }
