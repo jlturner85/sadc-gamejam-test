@@ -19,12 +19,13 @@ namespace GameJamTest.GameObjects
     public class Arsenal : GameJamComponent
     {
         private Animation theArsenal;
-        Game game;
         public Arsenal(Game game, GameScreen screen)
-            : base(game, screen, new Vector2(100, 100))
+            : base(game, screen, new Vector2((Game1.SCREEN_WIDTH / 2) - 120, Game1.SCREEN_HEIGHT / 2))
         {
-            this.game = game;
+            this.width = 80;
+            this.height = 80;
             scale = 3;
+            this.Layer = Layer.FRONT;
             // TODO: Construct any child components here
         }
 
@@ -35,7 +36,7 @@ namespace GameJamTest.GameObjects
         public override void Initialize()
         {
             // TODO: Add your initialization code here
-            theArsenal = new Animation(game.Content, "Sprites/Arsenal2", 80, 80, 4, 15);
+            theArsenal = new Animation(this.Game.Content, "Sprites/Arsenal2", this.width, this.height, 4, 15);
             theArsenal.EnableRepeating();
             base.Initialize();
         }

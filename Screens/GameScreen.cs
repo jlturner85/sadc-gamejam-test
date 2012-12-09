@@ -32,6 +32,7 @@ namespace GameJamTest.Screens
         private ContentManager content;
 
         private PlayerShip player;
+        private Arsenal arsenal;
         private List<GameComponent> components;
         private List<GameComponent> newComponents;
         private List<GameComponent> oldComponents;
@@ -39,6 +40,7 @@ namespace GameJamTest.Screens
         private int gameSpeed;
         private Song bossSong;
         private Song gameSong;
+        private int intro;
         private int speedUpTimer;
         private int speedDisplayGrow;
         private int bossCountdown;
@@ -101,7 +103,9 @@ namespace GameJamTest.Screens
                 gameSong = game.Content.Load<Song>("Music/menumusic");
                 this.components = new List<GameComponent>();
                 this.player = new PlayerShip(game, this);
+                this.arsenal = new Arsenal(game, this);
                 this.components.Add(this.Player);
+                this.components.Add(this.arsenal);
                 this.newComponents = new List<GameComponent>();
                 this.oldComponents = new List<GameComponent>();
                 this.lose = -1;
@@ -112,6 +116,7 @@ namespace GameJamTest.Screens
                 this.gameSpeed = 10;
                 this.ResetSpeedTimer();
                 this.ResetBossTimer();
+                this.intro = 300;
 
                 shipAnimationStatic = new Animation(this.Game.Content, "Sprites/playerShip", 32, 16, 1, 1);
 
@@ -181,6 +186,12 @@ namespace GameJamTest.Screens
                 this.initialized = false;
             }
 
+            if (this.intro > 0)
+            {
+                this.intro--;
+                this.arsenal.Velocity = new Vector2(-MathHelper.Clamp(40 - (intro / 5f), 0, 10), 0);
+            }
+
             if (speedDisplayGrow > 0)
             {
                 speedDisplayGrow--;
@@ -231,7 +242,7 @@ namespace GameJamTest.Screens
 
             ParallaxBackground.Update(gameTime, this.GameSpeed);
 
-            if (timeout <= 0)
+            if (timeout <= 0 && this.intro <= 0)
             {
                 if (this.random.NextDouble() < (0.001 * this.GameSpeed) && this.lose < 0)
                 {
@@ -249,15 +260,15 @@ namespace GameJamTest.Screens
                     {
                         if (type < 6)
                         {
-                            this.AddComponent(new ZombieShip(this.Game, this, new Vector2(halfScreenWidth + this.random.Next(halfScreenWidth), -50), ZombieType.FLOATER));
+                            this.AddComponent(new ZombieShip(this.Game, this, new Vector2(halfScreenWidth + this.random.Next(halfScreenWidth), -60), ZombieType.FLOATER));
                         }
                         else if (type < 9)
                         {
-                            this.AddComponent(new ZombieShip(this.Game, this, new Vector2(Game1.SCREEN_WIDTH + 50, this.random.Next(Game1.SCREEN_HEIGHT)), ZombieType.SHOOTER));
+                            this.AddComponent(new ZombieShip(this.Game, this, new Vector2(Game1.SCREEN_WIDTH + 10, this.random.Next(Game1.SCREEN_HEIGHT)), ZombieType.SHOOTER));
                         }
                         else
                         {
-                            this.AddComponent(new ZombieShip(this.Game, this, new Vector2(halfScreenWidth + this.random.Next(halfScreenWidth), Game1.SCREEN_HEIGHT + 50), ZombieType.SLAMMER));
+                            this.AddComponent(new ZombieShip(this.Game, this, new Vector2(halfScreenWidth + this.random.Next(halfScreenWidth), Game1.SCREEN_HEIGHT + 10), ZombieType.SLAMMER));
                         }
                     }
                 }
@@ -357,6 +368,11 @@ namespace GameJamTest.Screens
         private float NextFloat()
         {
             return (float)this.random.NextDouble();
+        }
+
+        public int Intro
+        {
+            get { return this.intro; }
         }
 
         public PlayerShip Player
