@@ -12,7 +12,6 @@ namespace GameJamTest.GameObjects.Zombie
 {
     public class ZombieShip : GameJamComponent
     {
-<<<<<<< HEAD
         Random random;
 
         ZombieType type;
@@ -20,16 +19,11 @@ namespace GameJamTest.GameObjects.Zombie
         long pointValue;
 
         public ZombieShip(Game game, GameScreen screen, Vector2 position, ZombieType type)
-=======
-        Animation zombieAnimationFlying;
-        public ZombieShip(Game game, GameScreen screen, Vector2 position)
->>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14
             : base(game, screen, position)
         {
             this.random = new Random();
 
             this.Layer = Layer.ZOMBIE;
-<<<<<<< HEAD
             this.Sprite = Sprites.Zombie;
             this.type = type;
 
@@ -45,7 +39,7 @@ namespace GameJamTest.GameObjects.Zombie
                     break;
                 case ZombieType.SLAMMER:
                     this.Velocity = new Vector2(0, -9 * (1 + 2 * this.NextFloat()));
-                    this.pointValue = 250;
+                    this.pointValue = 50;
                     break;
             }
 
@@ -53,21 +47,6 @@ namespace GameJamTest.GameObjects.Zombie
         }
 
         private void Fire(float speed)
-=======
-            this.width = 30;
-            this.height = 17;
-            zombieAnimationFlying = new Animation(this.Game.Content, "Sprites/zombieShip", width, height, 2, 15);
-            zombieAnimationFlying.EnableRepeating();
-            //this.Sprite = Sprites.Zombie;
-        }
-        public override void Initialize()
-        {
-            
-            
-            base.Initialize();
-        }
-        private void Fire()
->>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14
         {
             Vector2 bulletPos = Vector2.Add(this.Position, new Vector2(0, 3));
             Vector2 velocity;
@@ -79,7 +58,6 @@ namespace GameJamTest.GameObjects.Zombie
 
         public override void Update(GameTime gameTime)
         {
-<<<<<<< HEAD
             base.Update(gameTime);
 
             timer--;
@@ -148,18 +126,7 @@ namespace GameJamTest.GameObjects.Zombie
         public long PointValue
         {
             get { return this.pointValue; }
-=======
-            zombieAnimationFlying.Update(gameTime);
         }
-
-        public override void Draw(GameTime gameTime)
-        {
-            zombieAnimationFlying.Draw((this.Game as Game1).SpriteBatch, position, 0f, 1.5f);
-            base.Draw(gameTime);
->>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14
-        }
-
-
     }
 
     public enum ZombieType

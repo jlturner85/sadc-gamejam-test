@@ -49,9 +49,12 @@ namespace GameJamTest.MenuSystem
             titleFont = content.Load<SpriteFont>("Fonts/titlefont");
             menuTickSound = content.Load<SoundEffect>("SoundEffects/fire_laser1");
 <<<<<<< HEAD
+<<<<<<< HEAD
             //texasSymbol = content.Load<Texture2D>("Sprites/Texas3");
             ParallaxBackground.Initialize(this.content);
 =======
+=======
+>>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14
             //texasSymbol = content.Load<Texture2D>("Sprites/Texas_spriteSheet");
             texasAnimation.EnableRepeating();
             ParallaxBackground.Initialize(this.content,(Game1)game);
@@ -84,6 +87,10 @@ namespace GameJamTest.MenuSystem
             spriteBatch.Begin();
             //spriteBatch.Draw(texasSymbol, new Rectangle(410, 180, 400, 400), Color.White);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            texasAnimation.Draw(spriteBatch, new Vector2(410,180));
+>>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14
 =======
             texasAnimation.Draw(spriteBatch, new Vector2(410,180));
 >>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14

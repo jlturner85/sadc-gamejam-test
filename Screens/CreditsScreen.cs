@@ -36,7 +36,11 @@ namespace GameJamTest.Screens
         {
             titleFont = this.game.Content.Load<SpriteFont>("Fonts/titlefont");
 <<<<<<< HEAD
+<<<<<<< HEAD
             //creditFont = this.game.Content.Load<SpriteFont>("Fonts/CreditFont");
+=======
+            
+>>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14
 =======
             
 >>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14
