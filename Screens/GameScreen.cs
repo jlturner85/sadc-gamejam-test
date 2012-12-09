@@ -28,6 +28,7 @@ namespace GameJamTest.Screens
         private Game game;
         private ContentManager content;
 
+        private PlayerShip player;
         private List<GameComponent> components;
         private List<GameComponent> newComponents;
         private List<GameComponent> oldComponents;
@@ -37,7 +38,8 @@ namespace GameJamTest.Screens
         {
             this.game = game;
             this.components = new List<GameComponent>();
-            this.components.Add(new PlayerShip(game, this));
+            this.player = new PlayerShip(game, this);
+            this.components.Add(this.Player);
             this.newComponents = new List<GameComponent>();
             this.oldComponents = new List<GameComponent>();
         }
@@ -65,8 +67,6 @@ namespace GameJamTest.Screens
                 foreach (GameComponent component in this.components)
                 {
                     component.Initialize();
-                    this.newComponents.Add(new ZombieShip(Game, this, new Vector2(300, 150)));
-                    this.newComponents.Add(new ZombieShip(Game, this, new Vector2(550, 250)));
                 }
 
                 initialized = true;
@@ -85,10 +85,28 @@ namespace GameJamTest.Screens
 
             if (this.random.NextDouble() < 0.01)
             {
-                int sign = (2 * this.random.Next(2)) - 1;
-                Vector2 position = new Vector2(400 + this.random.Next(400), sign > 0 ? -50 : Game1.SCREEN_HEIGHT + 50);
-                Vector2 velocity = new Vector2(-1 * (float)(this.random.NextDouble() + 1), sign * ((float)this.random.NextDouble() + 1));
-                this.AddComponent(new Asteroid(this.Game, this, position, velocity));
+                int halfScreenWidth = Game1.SCREEN_WIDTH / 2;
+
+                int type = this.random.Next(10);
+                if (type < 2)
+                {
+                    float sign = (1.2f * this.random.Next(2)) - 0.6f;
+                    Vector2 position = new Vector2(halfScreenWidth + this.random.Next(halfScreenWidth), sign > 0 ? -50 : Game1.SCREEN_HEIGHT + 50);
+                    Vector2 velocity = new Vector2(-0.6f * (this.NextFloat() + 0.5f), sign * (this.NextFloat() + 0.5f));
+                    this.AddComponent(new Asteroid(this.Game, this, position, velocity));
+                }
+                else if (type < 6)
+                {
+                    this.AddComponent(new ZombieShip(this.Game, this, new Vector2(halfScreenWidth + this.random.Next(halfScreenWidth), -50), ZombieType.FLOATER));
+                }
+                else if (type < 9)
+                {
+                    this.AddComponent(new ZombieShip(this.Game, this, new Vector2(Game1.SCREEN_WIDTH + 50, this.random.Next(Game1.SCREEN_HEIGHT)), ZombieType.SHOOTER));
+                }
+                else
+                {
+                    this.AddComponent(new ZombieShip(this.Game, this, new Vector2(halfScreenWidth + this.random.Next(halfScreenWidth), Game1.SCREEN_HEIGHT + 50), ZombieType.SLAMMER));
+                }
             }
 
             foreach (GameComponent component in this.components)
@@ -121,6 +139,18 @@ namespace GameJamTest.Screens
                     }
                 }
             }
+
+            (this.Game as Game1).SpriteBatch.DrawString(Fonts.TitleFont, "Score: " + this.Player.Score, new Vector2(0, 0), Color.White);
+        }
+
+        private float NextFloat()
+        {
+            return (float)this.random.NextDouble();
+        }
+
+        public PlayerShip Player
+        {
+            get { return this.player; }
         }
 
         public List<GameComponent> Components

@@ -38,7 +38,7 @@ namespace GameJamTest.GameObjects
             return r1.Intersects(r2);
         }
 
-        public void Destroy()
+        public virtual void Destroy()
         {
             this.Screen.RemoveComponent(this);
         }

@@ -16,7 +16,7 @@ namespace GameJamTest.Assets
         //backgrounds
         public Texture2D texture;
         public Rectangle rectangle;
-
+        
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, rectangle, new Color(255,255,255,255));
@@ -41,33 +41,36 @@ namespace GameJamTest.Assets
     {
         private static Scrolling scroll1, scroll2, scroll3, scroll4;
         private static Texture2D staticBackground;
-
+        private static int height;
+        private static int width;
         public static void Initialize(ContentManager content)
         {
-            scroll1 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield1"), new Rectangle(0, 0, 800, 500));
-            scroll2 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield1"), new Rectangle(800, 0, 800, 500));
-            scroll3 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield2"), new Rectangle(0, 0, 800, 500));
-            scroll4 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield2"), new Rectangle(800, 0, 800, 500));
+            height = Game1.SCREEN_HEIGHT;
+            width = Game1.SCREEN_WIDTH;
+            scroll1 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield1"), new Rectangle(0, 0, width, height));
+            scroll2 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield1"), new Rectangle(width, 0, width, height));
+            scroll3 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield2"), new Rectangle(0, 0, width, height));
+            scroll4 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield2"), new Rectangle(width, 0, width, height));
             staticBackground = content.Load<Texture2D>("Backgrounds/black");
         }
 
         public static void Update(GameTime gameTime)
         {
-            if (scroll1.rectangle.X + scroll1.texture.Width <= 0)
+            if (scroll1.rectangle.X + width <= 0)
             {
-                scroll1.rectangle.X = scroll2.rectangle.X + scroll2.texture.Width;
+                scroll1.rectangle.X = scroll2.rectangle.X + width;
             }
-            if (scroll2.rectangle.X + scroll2.texture.Width <= 0)
+            if (scroll2.rectangle.X + width<= 0)
             {
-                scroll2.rectangle.X = scroll1.rectangle.X + scroll1.texture.Width;
+                scroll2.rectangle.X = scroll1.rectangle.X + width;
             }
-            if (scroll3.rectangle.X + scroll3.texture.Width <= 0)
+            if (scroll3.rectangle.X + width <= 0)
             {
-                scroll3.rectangle.X = scroll4.rectangle.X + scroll4.texture.Width;
+                scroll3.rectangle.X = scroll4.rectangle.X + width;
             }
-            if (scroll4.rectangle.X + scroll4.texture.Width <= 0)
+            if (scroll4.rectangle.X + width <= 0)
             {
-                scroll4.rectangle.X = scroll3.rectangle.X + scroll3.texture.Width;
+                scroll4.rectangle.X = scroll3.rectangle.X + width;
             }
             scroll1.Update(3);
             scroll2.Update(3);

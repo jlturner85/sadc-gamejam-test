@@ -23,15 +23,21 @@ namespace GameJamTest.GameObjects
             //this.Sprite = Sprites.Bullet;
             if (team == Team.PLAYER)
             {
+                //player shot
                 width = 20;
                 height = 8;
                 bulletAnimation = new Animation(this.Game.Content, "Sprites/playershot2", width, height, 2, 15);
-                bulletAnimation.EnableRepeating();
+                
             }
             else
             {
-
+                //enemy shot
+                width = 17;
+                height = 17;
+                bulletAnimation = new Animation(this.Game.Content, "Sprites/enemyshot", width, height, 8, 15);
+                
             }
+            bulletAnimation.EnableRepeating();
             this.Layer = Layer.BULLET;
         }
 
@@ -39,28 +45,22 @@ namespace GameJamTest.GameObjects
         {
             base.Update(gameTime);
             bulletAnimation.Update(gameTime);
-            if (this.Position.X < 0 || this.Position.X > 1000)
+            foreach (GameComponent component in this.Screen.Components)
             {
-                this.Destroy();
-            }
-
-            if (team == Team.PLAYER)
-            {
-                foreach (GameComponent component in this.Screen.Components)
+                GameJamComponent drawable = component as GameJamComponent;
+                if (drawable != null && this.Collide(drawable))
                 {
-                    GameJamComponent drawable = component as GameJamComponent;
-                    if (drawable != null && this.Collide(drawable))
+                    if (drawable is Asteroid)
                     {
-                        if (drawable is ZombieShip)
-                        {
-                            this.Destroy();
-                            drawable.Explode();
-                        }
+                        this.Destroy();
+                    }
 
-                        if (drawable is Asteroid)
-                        {
-                            this.Destroy();
-                        }
+                    ZombieShip zombie = drawable as ZombieShip;
+                    if (zombie != null && team == Team.PLAYER)
+                    {
+                        this.Destroy();
+                        zombie.Explode();
+                        this.Screen.Player.ScorePoints(zombie.PointValue);
                     }
                 }
             }

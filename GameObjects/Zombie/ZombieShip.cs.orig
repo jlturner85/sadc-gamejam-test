@@ -25,33 +25,24 @@ namespace GameJamTest.GameObjects.Zombie
             this.random = new Random();
 
             this.Layer = Layer.ZOMBIE;
-            
+            this.width = 30;
+            this.height = 17;
+            zombieAnimationFlying = new Animation(this.Game.Content, "Sprites/zombieShip", width, height, 2, 15);
+            zombieAnimationFlying.EnableRepeating();
             //this.Sprite = Sprites.Zombie;
             this.type = type;
 
             switch (this.type)
             {
                 case ZombieType.FLOATER:
-                    this.width = 58;
-                    this.height = 76;
-                    zombieAnimationFlying = new Animation(this.Game.Content, "Sprites/paraZombie", width, height, 4, 5);
-                    zombieAnimationFlying.EnableRepeating();
                     this.Velocity = new Vector2(0, 1 + this.NextFloat());
                     this.pointValue = 50;
                     break;
                 case ZombieType.SHOOTER:
-                    this.width = 30;
-                    this.height = 17;
-                    zombieAnimationFlying = new Animation(this.Game.Content, "Sprites/zombieShip", width, height, 2, 15);
-                    zombieAnimationFlying.EnableRepeating();
                     this.Velocity = new Vector2(-1 * (2 + 4 * this.NextFloat()), 0);
                     this.pointValue = 100;
                     break;
                 case ZombieType.SLAMMER:
-                    this.width = 32;
-                    this.height = 17;
-                    zombieAnimationFlying = new Animation(this.Game.Content, "Sprites/kamakazi", width, height, 2, 15);
-                    zombieAnimationFlying.EnableRepeating();
                     this.Velocity = new Vector2(0, -9 * (1 + 2 * this.NextFloat()));
                     this.pointValue = 50;
                     break;
@@ -73,6 +64,12 @@ namespace GameJamTest.GameObjects.Zombie
         public override void Initialize()
         {
             base.Initialize();
+        }
+        
+        public override void Draw(GameTime gameTime)
+        {
+            zombieAnimationFlying.Draw((this.Game as Game1).SpriteBatch, position, 0f, 1.5f);
+            base.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
@@ -119,27 +116,6 @@ namespace GameJamTest.GameObjects.Zombie
                         break;
                 }
             }
-            
-            zombieAnimationFlying.Update(gameTime);
-        }     
-           
-        public override void Draw(GameTime gameTime)
-        {
-            float scale = 1;
-            switch(this.type)
-            {
-                case ZombieType.FLOATER:
-                    scale = 0.7f;
-                    break;
-                case ZombieType.SHOOTER:
-                    scale = 1.5f;
-                    break;
-                case ZombieType.SLAMMER:
-                    scale = 1.5f;
-                    break;
-            }
-            zombieAnimationFlying.Draw((this.Game as Game1).SpriteBatch, position, 0f, scale);
-            base.Draw(gameTime);
         }
 
         private void ResetTimer()

@@ -96,6 +96,7 @@ namespace GameJamTest
             menuMusic = Content.Load<Song>("Music/menumusic");
             AudioManager.playMusic(menuMusic);
             Sprites.LoadContent(this.Content);
+            Fonts.LoadContent(this.Content);
         }
 
         /// <summary>
