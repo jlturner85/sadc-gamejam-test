@@ -18,7 +18,7 @@ namespace GameJamTest.GameObjects
         private GameScreen screen;
         public int height;
         public int width;
-
+        public float scale;
         public GameJamComponent(Game game, GameScreen screen, Vector2 position)
             : this(game, screen, position, new Vector2(0, 0))
         {
@@ -30,6 +30,7 @@ namespace GameJamTest.GameObjects
             this.Screen = screen;
             this.Position = position;
             this.Velocity = velocity;
+            this.scale = 1;
         }
 
         public override void Initialize()
@@ -39,8 +40,8 @@ namespace GameJamTest.GameObjects
         }
         public bool Collide(GameJamComponent that)
         {
-            Rectangle r1 = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.width, this.height);
-            Rectangle r2 = new Rectangle((int)that.Position.X, (int)that.Position.Y, that.width, that.height);
+            Rectangle r1 = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.width*(int)this.scale, this.height*(int)this.scale);
+            Rectangle r2 = new Rectangle((int)that.Position.X, (int)that.Position.Y, that.width*(int)that.scale, that.height*(int)that.scale);
             return r1.Intersects(r2);
         }
 

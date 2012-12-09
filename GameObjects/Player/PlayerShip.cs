@@ -24,6 +24,7 @@ namespace GameJamTest.GameObjects.Player
         public PlayerShip(Game game, GameScreen screen)
             : base(game, screen, new Vector2(100, 100))
         {
+            scale = 2;
             this.Layer = Layer.PLAYER;
         }
 
@@ -32,6 +33,7 @@ namespace GameJamTest.GameObjects.Player
             this.Position = new Vector2(-50, Game1.SCREEN_HEIGHT / 2);
             this.Velocity = new Vector2(0, 0);
             this.spawnTime = 180;
+            
             if (invulnerable)
             {
                 this.invulnerableTime = 360;
@@ -187,7 +189,7 @@ namespace GameJamTest.GameObjects.Player
             shipAnimationFlying.Draw((this.Game as Game1).SpriteBatch, position, 0f, 1.5f);
             if (invulnerableTime > 0)
             {
-                shieldAnimation.Draw((this.Game as Game1).SpriteBatch, new Vector2(position.X-20,position.Y-20), 0f, 2.0f);
+                shieldAnimation.Draw((this.Game as Game1).SpriteBatch, new Vector2(position.X-20,position.Y-20), 0f, scale);
             }
             base.Draw(gameTime);
         }

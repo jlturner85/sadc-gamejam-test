@@ -124,7 +124,7 @@ namespace GameJamTest.GameObjects.Zombie
            
         public override void Draw(GameTime gameTime)
         {
-            float scale = 1;
+            
             switch(this.type)
             {
                 case ZombieType.FLOATER:

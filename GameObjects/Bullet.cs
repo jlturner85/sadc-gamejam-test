@@ -83,7 +83,7 @@ namespace GameJamTest.GameObjects
 
         public override void Draw(GameTime gameTime)
         {
-            bulletAnimation.Draw((this.Game as Game1).SpriteBatch, position, 0f, 1f);
+            bulletAnimation.Draw((this.Game as Game1).SpriteBatch, position, 0f, scale);
             base.Draw(gameTime);
         }
 
