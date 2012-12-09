@@ -114,7 +114,12 @@ namespace GameJamTest.MenuSystem
             //spriteBatch.Draw(texasSymbol, new Rectangle(410, 180, 400, 400), Color.White);
             texasAnimation.Draw(spriteBatch, new Vector2(410,180));
             shipAnimationFlying.Draw((this.Game as Game1).SpriteBatch, new Vector2(350, selectedPosition), 0f, 1.5f);
-            spriteBatch.DrawString(titleFont, "Civil War: 2015", new Vector2(380, 100), Color.CornflowerBlue);
+            String title1 = "Zombie space apocalypse:";
+            float length1 = titleFont.MeasureString(title1).X;
+            spriteBatch.DrawString(titleFont, title1, new Vector2((Game1.SCREEN_WIDTH - (length1 * 5 / 3)) / 2, 75), Color.CornflowerBlue, 0f, new Vector2(0, 0), 5f / 3f, SpriteEffects.None, 0f);
+            String title2 = "2015 Civil War Saga";
+            float length2 = titleFont.MeasureString(title2).X;
+            spriteBatch.DrawString(titleFont, title2, new Vector2((Game1.SCREEN_WIDTH - length2) / 2, 125), Color.CornflowerBlue);
             spriteBatch.DrawString(titleFont, "Start Game", new Vector2(450, 550), Color.White);
             spriteBatch.DrawString(titleFont, "Credits", new Vector2(475, 600), Color.White);
             spriteBatch.DrawString(titleFont, "SADC Game Jam 2012", new Vector2(330, 675), Color.Red);

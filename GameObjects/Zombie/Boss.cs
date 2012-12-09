@@ -16,7 +16,7 @@ namespace GameJamTest.GameObjects.Zombie
         private const int BAR_HEIGHT = 20;
         private Animation bossAnimation;
         private const int INITIAL_X = 735;
-        private const int INITIAL_Y = 260;
+        private const int INITIAL_Y = 185;
         private int xSign;
         private int ySign;
 
@@ -35,7 +35,7 @@ namespace GameJamTest.GameObjects.Zombie
         private int flash;
         
         public Boss(Game game, GameScreen screen)
-            : base(game, screen, new Vector2(Game1.SCREEN_WIDTH + 50, (Game1.SCREEN_HEIGHT / 2) - 100))
+            : base(game, screen, new Vector2(Game1.SCREEN_WIDTH + 50, (Game1.SCREEN_HEIGHT / 2) - 175))
         {
             this.random = new Random();
 
@@ -47,10 +47,8 @@ namespace GameJamTest.GameObjects.Zombie
             this.xSign = (400 * this.random.Next(2)) - 200;
             this.ySign = (200 * this.random.Next(2)) - 100;
 
-            //this.sprite = Sprites.skull;
             this.flash = 0;
             this.explode = -1;
-            this.spawnTime = 120;
             this.aliveTime = 0;
             this.hp = 4 * this.Screen.GameSpeed;
             this.maxHp = this.hp;

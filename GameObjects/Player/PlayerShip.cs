@@ -22,29 +22,25 @@ namespace GameJamTest.GameObjects.Player
         Animation shipAnimationFlying;
         SoundEffect shipFiringSound;
         public PlayerShip(Game game, GameScreen screen)
-            : base(game, screen, new Vector2(100, 100))
+            : base(game, screen, new Vector2((Game1.SCREEN_WIDTH / 2) - 32, 450))
         {
             scale = 2;
             this.Layer = Layer.PLAYER;
         }
 
-        private void Respawn(bool invulnerable)
+        private void Respawn()
         {
             this.Position = new Vector2(-75, Game1.SCREEN_HEIGHT / 2);
             this.Velocity = new Vector2(0, 0);
             this.spawnTime = 180;
-            
-            if (invulnerable)
-            {
-                this.invulnerableTime = 360;
-            }
+            this.invulnerableTime = 360;
         }
 
         public override void Destroy()
         {
             if (this.lives > 0)
             {
-                Respawn(true);
+                Respawn();
             }
             else
             {
@@ -78,7 +74,6 @@ namespace GameJamTest.GameObjects.Player
             shipAnimationFlying = new Animation(this.Game.Content, "Sprites/playerShip", width, height, 2, 15);
             shipAnimationFlying.EnableRepeating();
             shipFiringSound = this.Game.Content.Load<SoundEffect>("SoundEffects/fire_laser1");
-            Respawn(false);
         }
 
         public override void Update(GameTime gameTime)
@@ -86,6 +81,8 @@ namespace GameJamTest.GameObjects.Player
             shipAnimationFlying.Update(gameTime);
             shieldAnimation.Update(gameTime);
             Vector2 velocity = new Vector2(0, 0);
+
+            int intro = this.Screen.Intro;
 
             if (this.spawnTime > 0)
             {
@@ -96,7 +93,7 @@ namespace GameJamTest.GameObjects.Player
                 this.invulnerableTime--;
             }
 
-            if (this.spawnTime <= 0)
+            if (this.spawnTime <= 0 && intro <= 0)
             {
                 if (this.Screen.Keyboard.Up.IsHeld())
                 {
@@ -131,6 +128,19 @@ namespace GameJamTest.GameObjects.Player
                     MathHelper.Clamp(this.Position.X, 0, Game1.SCREEN_WIDTH - this.width),
                     MathHelper.Clamp(this.Position.Y, 0, Game1.SCREEN_HEIGHT - this.height)
                 );
+            }
+            else if (intro > 0)
+            {
+                if (intro > 180 && intro < 240)
+                {
+                    this.Velocity = new Vector2(0, (180 - intro) / 6);
+                }
+                else if (intro < 180)
+                {
+                    this.Velocity = new Vector2(-7 * (float)Math.Sin(MathHelper.Pi * intro / 135), 1);
+                }
+
+                base.Update(gameTime);
             }
             else if (this.spawnTime == 65)
             {

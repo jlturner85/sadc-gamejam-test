@@ -80,8 +80,8 @@ namespace GameJamTest.GameObjects
         {
             this.Position = Vector2.Add(this.Position, this.Velocity);
 
-            if (this.Position.X < -100 || this.Position.X > Game1.SCREEN_WIDTH + 100 ||
-                this.Position.Y < -100 || this.Position.Y > Game1.SCREEN_HEIGHT + 100)
+            if (this.Position.X < -(width * scale) - 20 || this.Position.X > Game1.SCREEN_WIDTH + 20 ||
+                this.Position.Y < -(height * scale) - 20 || this.Position.Y > Game1.SCREEN_HEIGHT + 20)
             {
                 this.Destroy();
             }
