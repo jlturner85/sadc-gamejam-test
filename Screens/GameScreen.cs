@@ -13,7 +13,7 @@ using GameJamTest.Assets;
 using GameJamTest.GameObjects;
 using GameJamTest.GameObjects.Player;
 using GameJamTest.GameObjects.Zombie;
-
+using GameJamTest.Util;
 namespace GameJamTest.Screens
 {
     /// <summary>
@@ -37,7 +37,8 @@ namespace GameJamTest.Screens
         private List<GameComponent> oldComponents;
 
         private int gameSpeed;
-
+        private Song bossSong;
+        private Song gameSong;
         private int speedUpTimer;
         private int speedDisplayGrow;
         private int bossCountdown;
@@ -50,6 +51,7 @@ namespace GameJamTest.Screens
             : base(game)
         {
             this.game = game;
+            
         }
 
         public void AddComponent(GameComponent component)
@@ -95,7 +97,8 @@ namespace GameJamTest.Screens
             if (!initialized)
             {
                 this.keyboard = new GameKeyboard();
-
+                bossSong = game.Content.Load<Song>("Music/vengeance");
+                gameSong = game.Content.Load<Song>("Music/menumusic");
                 this.components = new List<GameComponent>();
                 this.player = new PlayerShip(game, this);
                 this.components.Add(this.Player);
@@ -136,6 +139,8 @@ namespace GameJamTest.Screens
 
         private void SpawnBoss()
         {
+            AudioManager.stopMusic();
+            AudioManager.playMusic(bossSong);
             Boss boss = new Boss(this.Game, this);
             this.AddComponent(boss);
             boss.Initialize();
@@ -154,7 +159,10 @@ namespace GameJamTest.Screens
 
         private void ResetBossTimer()
         {
+            AudioManager.stopMusic();
+            AudioManager.playMusic(gameSong);
             this.bossCountdown = (250 * this.GameSpeed) + 2500;
+           
         }
 
         /// <summary>
