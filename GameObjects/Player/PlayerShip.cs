@@ -69,8 +69,8 @@ namespace GameJamTest.GameObjects.Player
             base.Update(gameTime);
 
             this.Position = new Vector2(
-                MathHelper.Clamp(this.Position.X, 0, Game1.SCREEN_WIDTH - this.Sprite.Width),
-                MathHelper.Clamp(this.Position.Y, 0, Game1.SCREEN_HEIGHT - this.Sprite.Height)
+                MathHelper.Clamp(this.Position.X, 0, Game1.SCREEN_WIDTH - width),
+                MathHelper.Clamp(this.Position.Y, 0, Game1.SCREEN_HEIGHT - height)
             );
 
             foreach (GameComponent component in this.Screen.Components)

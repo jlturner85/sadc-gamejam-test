@@ -21,60 +21,8 @@ namespace GameJamTest.MenuSystem
         ContentManager content;
         Game game;
         Game1 mainGame;
-        SoundEffect menuTickSound;
-        private SpriteFont titleFont;
-        
-        //get the graphics device, used for drawing objects
-        private SpriteBatch spriteBatch;
-        public MenuScreen(Game game)
-            : base(game)
-        {
-            this.game = game;
-            mainGame = (Game1)game;
-            // TODO: Construct any child components here
-        }
-
-        /// <summary>
-        /// Allows the game component to perform any initialization it needs to before starting
-        /// to run.  This is where it can query for any required services and load content.
-        /// </summary>
-        public override void Initialize()
-        {
-            
-            //graphicsDevice = GameServices.GetService<GraphicsDevice>();
-            spriteBatch = new SpriteBatch(game.GraphicsDevice);
-            // TODO: Add your initialization code here
-            content = game.Content;
-            titleFont = content.Load<SpriteFont>("Fonts/TitleFont");
-<<<<<<< HEAD
-            menuTickSound = content.Load<SoundEffect>("SoundEffects/fire_laser1");
-            DrawnBackground.Initialize(this.content);
-=======
-            ParallaxBackground.Initialize(this.content);
->>>>>>> 02db0cc41fe73fac7b6c61914fb6405a81dc5540
-            base.Initialize();
-        }
-
-        /// <summary>
-        /// Allows the game component to update itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        public override void Update(GameTime gameTime)
-        {
-            //if the space bar is pressed, load the gamescreen
-            KeyboardState keyState = Keyboard.GetState();
-            if(keyState.IsKeyDown(Keys.Space)){
-                AudioManager.playSoundEffect(menuTickSound);
-                mainGame.setCurrentScreen(2);        
-            }
-
-            ParallaxBackground.Update(gameTime);
-            base.Update(gameTime);
-        }
-        
-        public override void Draw(GameTime gameTime)
-        {
             //draw the text on the screen
+>>>>>>> f01a3b1c1835435cfbaf8b6555b8ab1f8165f930
             spriteBatch.Begin();
             spriteBatch.DrawString(titleFont, "Game Title: The Subtitling", new Vector2(20, 45), Color.White);
             spriteBatch.DrawString(titleFont, "Press space bar to start game", new Vector2(50, 70), Color.White);
