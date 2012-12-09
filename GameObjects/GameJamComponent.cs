@@ -51,23 +51,25 @@ namespace GameJamTest.GameObjects
 
         public virtual void Explode()
         {
-
-            if (this is ZombieShip)
+            ZombieShip zombie = this as ZombieShip;
+            if (zombie != null)
             {
-                if ((this as ZombieShip).type == ZombieType.FLOATER)
+                if (zombie.type == ZombieType.FLOATER)
                 {
-                    this.Screen.AddComponent(new ZombieExplosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(-4, -2))));
-
+                    this.Screen.AddComponent(new ZombieExplosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(0, 38))));
+                }
+                else if (zombie.type == ZombieType.CANNON)
+                {
+                    this.Screen.AddComponent(new ZombieExplosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(0, 0))));
                 }
                 else
                 {
-                    this.Screen.AddComponent(new Explosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(-4, -2))));
+                    this.Screen.AddComponent(new Explosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(-10, -10))));
                 }
-
             }
             else
             {
-                this.Screen.AddComponent(new Explosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(-4, -2))));
+                this.Screen.AddComponent(new Explosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(-10, -10))));
             }
             this.Destroy();
            

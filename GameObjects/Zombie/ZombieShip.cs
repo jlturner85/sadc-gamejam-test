@@ -54,16 +54,29 @@ namespace GameJamTest.GameObjects.Zombie
                     this.Velocity = new Vector2(0, -9 * (1 + 2 * this.NextFloat()));
                     this.pointValue = 25;
                     break;
+                case ZombieType.CANNON:
+                    this.width = 32;
+                    this.height = 22;
+                    zombieAnimationFlying = new Animation(this.Game.Content, "Sprites/bomberZombie", width, height, 8, 5);
+                    zombieAnimationFlying.EnableRepeating();
+                    Vector2 diff = Vector2.Subtract(this.Position, this.Screen.Player.Position);
+                    this.Velocity = new Vector2(-10, - 0.5f - (diff.Y / 30) - (diff.X / 120));
+                    this.pointValue = 5;
+                    break;
             }
 
             this.ResetTimer();
         }
 
-        private void Fire(float speed)
+        private void Fire(float speed, bool lead)
         {
             Vector2 bulletPos = Vector2.Add(this.Position, new Vector2(0, 3));
-            Vector2 velocity;
-            velocity = Vector2.Subtract(this.Screen.Player.Position, this.Position);
+            Vector2 velocity = Vector2.Subtract(this.Screen.Player.Position, this.Position);
+            if (lead)
+            {
+                Vector2 leadVec = Vector2.Multiply(this.Screen.Player.Velocity, velocity.Length() / 10);
+                velocity = Vector2.Add(velocity, leadVec);
+            }
             velocity.Normalize();
             velocity = Vector2.Multiply(velocity, speed * this.Screen.GameSpeed);
             this.Screen.AddComponent(new Bullet(this.Game, this.Screen, Team.ZOMBIE, bulletPos, velocity));
@@ -90,11 +103,11 @@ namespace GameJamTest.GameObjects.Zombie
                 switch (this.type)
                 {
                     case ZombieType.FLOATER:
-                        this.Fire(0.2f);
+                        this.Fire(0.1f, false);
                         this.ResetTimer();
                         break;
                     case ZombieType.SHOOTER:
-                        this.Fire(0.5f);
+                        this.Fire(0.25f, true);
                         this.ResetTimer();
                         break;
                     case ZombieType.SLAMMER:
@@ -115,6 +128,9 @@ namespace GameJamTest.GameObjects.Zombie
                             velocity.X -= 0.15f;
                             this.Velocity = velocity;
                         }
+                        break;
+                    case ZombieType.CANNON:
+                        this.Velocity = Vector2.Subtract(this.Velocity, new Vector2(0, -0.25f));
                         break;
                 }
             }
@@ -171,6 +187,6 @@ namespace GameJamTest.GameObjects.Zombie
 
     public enum ZombieType
     {
-        FLOATER, SHOOTER, SLAMMER
+        FLOATER, SHOOTER, SLAMMER, CANNON
     }
 }

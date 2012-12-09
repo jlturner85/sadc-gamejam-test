@@ -152,7 +152,7 @@ namespace GameJamTest.Screens
 
         private void ResetBossTimer()
         {
-            this.bossCountdown = (250 * this.GameSpeed) + 2500;
+            this.bossCountdown = 0;// (300 * this.GameSpeed) + 2000;
         }
 
         /// <summary>
@@ -275,8 +275,6 @@ namespace GameJamTest.Screens
             SpriteBatch spriteBatch = (this.Game as Game1).SpriteBatch;
             SpriteFont font = Fonts.TitleFont;
 
-            (this.Game as Game1).SpriteBatch.DrawString(font, "Boss Countdown: " + this.bossCountdown, new Vector2(500, 0), Color.White, 0f, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0f); // debug
-
             (this.Game as Game1).SpriteBatch.DrawString(font, "Score: " + this.Player.Score, new Vector2(0, 0), Color.CornflowerBlue);
             String speed = "Speed x" + this.GameSpeed;
             speed = speed.Insert(speed.Length - 1, ".");
@@ -299,11 +297,11 @@ namespace GameJamTest.Screens
                     {
                         drawable.Draw(gameTime);
                     }
+                }
 
-                    if (layer == Layer.BEHIND_TEXT)
-                    {
-                        this.DrawGameOverText(spriteBatch, font);
-                    }
+                if (layer == Layer.BEHIND_TEXT)
+                {
+                    this.DrawGameOverText(spriteBatch, font);
                 }
             }
 

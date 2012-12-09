@@ -29,7 +29,7 @@ namespace GameJamTest.GameObjects.Player
 
         private void Respawn(bool invulnerable)
         {
-            this.Position = new Vector2(-50, Game1.SCREEN_HEIGHT / 2);
+            this.Position = new Vector2(-75, Game1.SCREEN_HEIGHT / 2);
             this.Velocity = new Vector2(0, 0);
             this.spawnTime = 180;
             if (invulnerable)
@@ -130,11 +130,11 @@ namespace GameJamTest.GameObjects.Player
                     MathHelper.Clamp(this.Position.Y, 0, Game1.SCREEN_HEIGHT - this.height)
                 );
             }
-            else if (this.spawnTime == 60)
+            else if (this.spawnTime == 65)
             {
                 this.lives--;
             }
-            else if (this.spawnTime < 60)
+            else if (this.spawnTime < 65)
             {
                 this.Velocity = new Vector2(this.spawnTime / 6f, 0);
 
