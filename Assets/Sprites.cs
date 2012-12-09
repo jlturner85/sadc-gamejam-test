@@ -10,13 +10,13 @@ namespace GameJamTest.Assets
 {
     class Sprites
     {
-        public static Texture2D skull;
+        //public static Texture2D skull;
         public static Texture2D lifebar;
         public static Texture2D lifebarBg;
         
         public static void LoadContent(ContentManager content)
         {
-            skull = content.Load<Texture2D>("Sprites/skull");
+            //skull = content.Load<Texture2D>("Sprites/skull");
             lifebar = content.Load<Texture2D>("Sprites/lifebar");
             lifebarBg = content.Load<Texture2D>("Sprites/lifebarbackground");
         }

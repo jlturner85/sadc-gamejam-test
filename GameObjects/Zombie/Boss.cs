@@ -14,7 +14,7 @@ namespace GameJamTest.GameObjects.Zombie
     {
         private const int BAR_WIDTH = 616;
         private const int BAR_HEIGHT = 20;
-
+        private Animation bossAnimation;
         private const int INITIAL_X = 735;
         private const int INITIAL_Y = 260;
         private int xSign;
@@ -41,23 +41,26 @@ namespace GameJamTest.GameObjects.Zombie
 
             this.height = 150;
             this.width = 150;
-
+            this.scale = 3f;
             this.Layer = Layer.ZOMBIE;
 
             this.xSign = (400 * this.random.Next(2)) - 200;
             this.ySign = (200 * this.random.Next(2)) - 100;
 
-            this.sprite = Sprites.skull;
+            //this.sprite = Sprites.skull;
             this.flash = 0;
             this.explode = -1;
             this.spawnTime = 120;
             this.aliveTime = 0;
             this.hp = 4 * this.Screen.GameSpeed;
             this.maxHp = this.hp;
+            
         }
 
         public override void Initialize()
         {
+            bossAnimation = new Animation(this.Game.Content, "Sprites/boss1", 150, 150, 8, 7);
+            bossAnimation.EnableRepeating();
             base.Initialize();
         }
 
@@ -142,13 +145,13 @@ namespace GameJamTest.GameObjects.Zombie
                 this.Position = new Vector2(INITIAL_X + xSign * (float)Math.Sin(MathHelper.Pi * this.aliveTime / 7200),
                     INITIAL_Y + ySign * (float)Math.Sin(MathHelper.Pi * this.aliveTime / 3600));
             }
-
+            bossAnimation.Update(gameTime);
             base.Update(gameTime);
         }
 
         private void NewExplosion()
         {
-            Explosion explosion = new Explosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(this.random.Next(this.width), this.random.Next(this.height))));
+            Explosion explosion = new Explosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(this.random.Next(this.width*(int)scale), this.random.Next(this.height*(int)scale))));
             this.Screen.AddComponent(explosion);
         }
 
@@ -179,7 +182,8 @@ namespace GameJamTest.GameObjects.Zombie
         public override void Draw(GameTime gameTime)
         {
             SpriteBatch spriteBatch = (this.Game as Game1).SpriteBatch;
-            spriteBatch.Draw(sprite, this.Position, (flash > 0 ? Color.Red : Color.White));
+            bossAnimation.Draw((this.Game as Game1).SpriteBatch, position,0, scale);
+            //spriteBatch.Draw(sprite, this.Position, (flash > 0 ? Color.Red : Color.White));
             this.DrawHealthBar(gameTime);
         }
 

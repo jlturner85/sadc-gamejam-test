@@ -136,7 +136,9 @@ namespace GameJamTest.Screens
 
         private void SpawnBoss()
         {
-            this.AddComponent(new Boss(this.Game, this));
+            Boss boss = new Boss(this.Game, this);
+            this.AddComponent(boss);
+            boss.Initialize();
         }
 
         public void ScreenExplosion()
@@ -152,7 +154,7 @@ namespace GameJamTest.Screens
 
         private void ResetBossTimer()
         {
-            this.bossCountdown = 0;// (300 * this.GameSpeed) + 2000;
+            this.bossCountdown = (250 * this.GameSpeed) + 2500;
         }
 
         /// <summary>

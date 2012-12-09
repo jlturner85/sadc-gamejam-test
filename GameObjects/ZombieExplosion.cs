@@ -55,7 +55,7 @@ namespace GameJamTest.GameObjects
         }
         public override void Draw(GameTime gameTime)
         {
-            explosionAnimation.Draw((this.Game as Game1).SpriteBatch, position, 0f, 1);
+            explosionAnimation.Draw((this.Game as Game1).SpriteBatch, position, 0f, scale);
             base.Draw(gameTime);
         }
     }

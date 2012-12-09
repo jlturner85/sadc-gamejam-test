@@ -19,6 +19,7 @@ namespace GameJamTest.GameObjects.Zombie
             this.Layer = Layer.ASTEROID;
             width = 32;
             height = 32;
+            scale = 2;
             asteroidAnimation = new Animation(game.Content, "Sprites/asteroid", width, height, 4, 3);
             asteroidAnimation.EnableRepeating();
         }
@@ -31,7 +32,7 @@ namespace GameJamTest.GameObjects.Zombie
 
         public override void Draw(GameTime gameTime)
         {
-            asteroidAnimation.Draw((this.Game as Game1).SpriteBatch, position, 0f, 2f);
+            asteroidAnimation.Draw((this.Game as Game1).SpriteBatch, position, 0f, scale);
             base.Draw(gameTime);
         }
     }

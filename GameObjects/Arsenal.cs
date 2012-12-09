@@ -24,6 +24,7 @@ namespace GameJamTest.GameObjects
             : base(game, screen, new Vector2(100, 100))
         {
             this.game = game;
+            scale = 3;
             // TODO: Construct any child components here
         }
 
@@ -52,7 +53,7 @@ namespace GameJamTest.GameObjects
 
         public override void Draw(GameTime gameTime)
         {
-            theArsenal.Draw((this.Game as Game1).SpriteBatch, position, 0.0f, 3f);
+            theArsenal.Draw((this.Game as Game1).SpriteBatch, position, 0.0f, this.scale);
             base.Draw(gameTime);
         }
     }
