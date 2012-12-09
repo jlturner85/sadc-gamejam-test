@@ -14,19 +14,37 @@ namespace GameJamTest.GameObjects
     class Bullet : GameJamComponent
     {
         private Team team;
-
+        private Animation bulletAnimation;
         public Bullet(Game game, GameScreen screen, Team team, Vector2 position, Vector2 velocity)
             : base(game, screen, position, velocity)
         {
             this.team = team;
+            
             //this.Sprite = Sprites.Bullet;
+            if (team == Team.PLAYER)
+            {
+                //player shot
+                width = 20;
+                height = 8;
+                bulletAnimation = new Animation(this.Game.Content, "Sprites/playershot2", width, height, 2, 15);
+                
+            }
+            else
+            {
+                //enemy shot
+                width = 17;
+                height = 17;
+                bulletAnimation = new Animation(this.Game.Content, "Sprites/enemyshot", width, height, 8, 15);
+                
+            }
+            bulletAnimation.EnableRepeating();
             this.Layer = Layer.BULLET;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
+            bulletAnimation.Update(gameTime);
             foreach (GameComponent component in this.Screen.Components)
             {
                 GameJamComponent drawable = component as GameJamComponent;
@@ -54,8 +72,15 @@ namespace GameJamTest.GameObjects
         {
             get { return this.team; }
         }
+
+        public override void Draw(GameTime gameTime)
+        {
+            bulletAnimation.Draw((this.Game as Game1).SpriteBatch, position, 0f, 1f);
+            base.Draw(gameTime);
+        }
     }
 
+    
     enum Team
     {
         PLAYER, ZOMBIE

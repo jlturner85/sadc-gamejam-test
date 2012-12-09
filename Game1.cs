@@ -23,8 +23,8 @@ namespace GameJamTest
     public class Game1 : Microsoft.Xna.Framework.Game
     {
 
-        public const int SCREEN_WIDTH = 1280;
-        public const int SCREEN_HEIGHT = 720;
+        public static int SCREEN_WIDTH = 1280;
+        public static int SCREEN_HEIGHT = 720;
 
         //Gamestate Constants
         public const int splashScreenID = 0;
