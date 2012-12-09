@@ -70,7 +70,7 @@ namespace GameJamTest.Screens
                 this.content = game.Content;
 
                 this.gameSpeed = 10;
-                this.speedUpTimer = 1200;
+                this.speedUpTimer = 2400;
 
                 foreach (GameComponent component in this.components)
                 {
@@ -98,7 +98,7 @@ namespace GameJamTest.Screens
             if (speedUpTimer < 0)
             {
                 this.gameSpeed++;
-                this.speedUpTimer = 1200;
+                this.speedUpTimer = 2400;
                 this.speedDisplayGrow = 60;
             }
 
@@ -111,7 +111,7 @@ namespace GameJamTest.Screens
                 int type = this.random.Next(10);
                 if (type < 2)
                 {
-                    float sign = (1.2f * this.random.Next(2)) - 0.6f;
+                    float sign = (0.12f * this.random.Next(2)) - 0.06f;
                     Vector2 position = new Vector2(halfScreenWidth + this.random.Next(halfScreenWidth), sign > 0 ? -50 : Game1.SCREEN_HEIGHT + 50);
                     Vector2 velocity = new Vector2(-0.06f * this.GameSpeed * (this.NextFloat() + 0.5f), sign * this.GameSpeed * (this.NextFloat() + 0.5f));
                     this.AddComponent(new Asteroid(this.Game, this, position, velocity));
