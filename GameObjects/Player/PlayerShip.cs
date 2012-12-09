@@ -16,7 +16,7 @@ namespace GameJamTest.GameObjects.Player
     {
         private long score;
         private int lives;
-
+        private Animation shieldAnimation;
         private int spawnTime;
         private int invulnerableTime;
         Animation shipAnimationFlying;
@@ -71,6 +71,8 @@ namespace GameJamTest.GameObjects.Player
             width = 32;
             height = 16;
             this.lives = 3;
+            shieldAnimation = new Animation(this.Game.Content, "Sprites/shield3", 40, 33, 4, 2);
+            shieldAnimation.EnableRepeating();
             shipAnimationFlying = new Animation(this.Game.Content, "Sprites/playerShip", width, height, 2, 15);
             shipAnimationFlying.EnableRepeating();
             shipFiringSound = this.Game.Content.Load<SoundEffect>("SoundEffects/fire_laser1");
@@ -80,7 +82,7 @@ namespace GameJamTest.GameObjects.Player
         public override void Update(GameTime gameTime)
         {
             shipAnimationFlying.Update(gameTime);
-
+            shieldAnimation.Update(gameTime);
             Vector2 velocity = new Vector2(0, 0);
 
             if (this.spawnTime > 0)
@@ -183,6 +185,10 @@ namespace GameJamTest.GameObjects.Player
         public override void Draw(GameTime gameTime)
         {
             shipAnimationFlying.Draw((this.Game as Game1).SpriteBatch, position, 0f, 1.5f);
+            if (invulnerableTime > 0)
+            {
+                shieldAnimation.Draw((this.Game as Game1).SpriteBatch, new Vector2(position.X-20,position.Y-20), 0f, 2.0f);
+            }
             base.Draw(gameTime);
         }
     }
