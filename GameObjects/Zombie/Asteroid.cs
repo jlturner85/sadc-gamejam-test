@@ -16,7 +16,6 @@ namespace GameJamTest.GameObjects.Zombie
             : base(game, screen, position, velocity)
         {
             this.Layer = Layer.ASTEROID;
-            //this.Sprite = Sprites.Asteroid;
         }
     }
 }

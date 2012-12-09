@@ -18,6 +18,7 @@ namespace GameJamTest.GameObjects
         private GameScreen screen;
         public int height;
         public int width;
+
         public GameJamComponent(Game game, GameScreen screen, Vector2 position)
             : this(game, screen, position, new Vector2(0, 0))
         {

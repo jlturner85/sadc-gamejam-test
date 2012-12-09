@@ -31,6 +31,7 @@ namespace GameJamTest
         public const int menuScreenID = 1;
         public const int gameScreenID = 2;
         public const int creditScreenID = 3;
+
         private int splashScreenTime = 0;
         private int currentScreen = splashScreenID;
         

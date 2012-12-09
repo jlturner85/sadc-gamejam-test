@@ -42,7 +42,9 @@ namespace GameJamTest.GameObjects
                     {
                         this.Destroy();
                         zombie.Explode();
-                        this.Screen.Player.ScorePoints(zombie.PointValue);
+                        long points = zombie.PointValue * this.Screen.GameSpeed;
+                        this.Screen.Player.ScorePoints(points);
+                        this.Screen.AddComponent(new ScoreDisplay(this.Game, this.Screen, this.Position, points));
                     }
                 }
             }

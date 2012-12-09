@@ -36,15 +36,15 @@ namespace GameJamTest.GameObjects.Zombie
             {
                 case ZombieType.FLOATER:
                     this.Velocity = new Vector2(0, 1 + this.NextFloat());
-                    this.pointValue = 50;
+                    this.pointValue = 5;
                     break;
                 case ZombieType.SHOOTER:
                     this.Velocity = new Vector2(-1 * (2 + 4 * this.NextFloat()), 0);
-                    this.pointValue = 100;
+                    this.pointValue = 10;
                     break;
                 case ZombieType.SLAMMER:
                     this.Velocity = new Vector2(0, -9 * (1 + 2 * this.NextFloat()));
-                    this.pointValue = 50;
+                    this.pointValue = 25;
                     break;
             }
 
@@ -57,7 +57,7 @@ namespace GameJamTest.GameObjects.Zombie
             Vector2 velocity;
             velocity = Vector2.Subtract(this.Screen.Player.Position, this.Position);
             velocity.Normalize();
-            velocity = Vector2.Multiply(velocity, speed);
+            velocity = Vector2.Multiply(velocity, speed * this.Screen.GameSpeed);
             this.Screen.AddComponent(new Bullet(this.Game, this.Screen, Team.ZOMBIE, bulletPos, velocity));
         }
         
@@ -82,11 +82,11 @@ namespace GameJamTest.GameObjects.Zombie
                 switch (this.type)
                 {
                     case ZombieType.FLOATER:
-                        this.Fire(2);
+                        this.Fire(0.2f);
                         this.ResetTimer();
                         break;
                     case ZombieType.SHOOTER:
-                        this.Fire(5);
+                        this.Fire(0.5f);
                         this.ResetTimer();
                         break;
                     case ZombieType.SLAMMER:
@@ -125,15 +125,16 @@ namespace GameJamTest.GameObjects.Zombie
             switch (this.type)
             {
                 case ZombieType.FLOATER:
-                    timer = 180 + random.Next(360);
+                    timer = 1800 + random.Next(3600);
                     break;
                 case ZombieType.SHOOTER:
-                    timer = 90 + random.Next(120);
+                    timer = 900 + random.Next(1200);
                     break;
                 case ZombieType.SLAMMER:
-                    timer = 240 + random.Next(480);
+                    timer = 2400 + random.Next(4800);
                     break;
             }
+            timer = timer / this.Screen.GameSpeed;
         }
 
         private float NextFloat()

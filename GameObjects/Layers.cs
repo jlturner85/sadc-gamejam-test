@@ -14,12 +14,13 @@ namespace GameJamTest.GameObjects
             values.Add(Layer.BULLET);
             values.Add(Layer.ZOMBIE);
             values.Add(Layer.PLAYER);
+            values.Add(Layer.FRONT);
             return values;
         }
     }
 
     public enum Layer
     {
-        ASTEROID, BULLET, ZOMBIE, PLAYER
+        ASTEROID, BULLET, ZOMBIE, PLAYER, FRONT
     }
 }

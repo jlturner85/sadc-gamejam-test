@@ -33,6 +33,10 @@ namespace GameJamTest.Screens
         private List<GameComponent> newComponents;
         private List<GameComponent> oldComponents;
 
+        private int gameSpeed;
+        private int speedUpTimer;
+        private int speedDisplayGrow;
+
         public GameScreen(Game game)
             : base(game)
         {
@@ -64,6 +68,10 @@ namespace GameJamTest.Screens
             {
                 this.random = new Random();
                 this.content = game.Content;
+
+                this.gameSpeed = 10;
+                this.speedUpTimer = 1200;
+
                 foreach (GameComponent component in this.components)
                 {
                     component.Initialize();
@@ -81,9 +89,22 @@ namespace GameJamTest.Screens
         {
             this.Initialize();
 
+            this.speedUpTimer--;
+            if (speedDisplayGrow > 0)
+            {
+                speedDisplayGrow--;
+            }
+
+            if (speedUpTimer < 0)
+            {
+                this.gameSpeed++;
+                this.speedUpTimer = 1200;
+                this.speedDisplayGrow = 60;
+            }
+
             ParallaxBackground.Update(gameTime);
 
-            if (this.random.NextDouble() < 0.01)
+            if (this.random.NextDouble() < (0.001 * this.GameSpeed))
             {
                 int halfScreenWidth = Game1.SCREEN_WIDTH / 2;
 
@@ -92,7 +113,7 @@ namespace GameJamTest.Screens
                 {
                     float sign = (1.2f * this.random.Next(2)) - 0.6f;
                     Vector2 position = new Vector2(halfScreenWidth + this.random.Next(halfScreenWidth), sign > 0 ? -50 : Game1.SCREEN_HEIGHT + 50);
-                    Vector2 velocity = new Vector2(-0.6f * (this.NextFloat() + 0.5f), sign * (this.NextFloat() + 0.5f));
+                    Vector2 velocity = new Vector2(-0.06f * this.GameSpeed * (this.NextFloat() + 0.5f), sign * this.GameSpeed * (this.NextFloat() + 0.5f));
                     this.AddComponent(new Asteroid(this.Game, this, position, velocity));
                 }
                 else if (type < 6)
@@ -127,6 +148,15 @@ namespace GameJamTest.Screens
         public override void Draw(GameTime gameTime)
         {
             this.Initialize();
+            
+            SpriteFont font = Fonts.TitleFont;
+
+            (this.Game as Game1).SpriteBatch.DrawString(font, "Score: " + this.Player.Score, new Vector2(0, 0), Color.CornflowerBlue);
+            String speed = "Speed x" + this.GameSpeed;
+            speed = speed.Insert(speed.Length - 1, ".");
+            float size = 1 + (speedDisplayGrow / 50f) - (speedDisplayGrow * speedDisplayGrow / 3000f);
+            float length = font.MeasureString(speed).X * size;
+            (this.Game as Game1).SpriteBatch.DrawString(Fonts.TitleFont, speed, new Vector2(Game1.SCREEN_WIDTH - length, 0), Color.Salmon, 0f, new Vector2(0, 0), size, SpriteEffects.None, 0f);
 
             foreach (Layer layer in Layers.Values())
             {
@@ -139,8 +169,6 @@ namespace GameJamTest.Screens
                     }
                 }
             }
-
-            (this.Game as Game1).SpriteBatch.DrawString(Fonts.TitleFont, "Score: " + this.Player.Score, new Vector2(0, 0), Color.White);
         }
 
         private float NextFloat()
@@ -151,6 +179,11 @@ namespace GameJamTest.Screens
         public PlayerShip Player
         {
             get { return this.player; }
+        }
+
+        public int GameSpeed
+        {
+            get { return this.gameSpeed; }
         }
 
         public List<GameComponent> Components
