@@ -50,7 +50,7 @@ namespace GameJamTest.MenuSystem
             menuTickSound = content.Load<SoundEffect>("SoundEffects/fire_laser1");
             //texasSymbol = content.Load<Texture2D>("Sprites/Texas_spriteSheet");
             texasAnimation.EnableRepeating();
-            ParallaxBackground.Initialize(this.content,(Game1)game);
+            ParallaxBackground.Initialize(this.content);
             base.Initialize();
         }
 
