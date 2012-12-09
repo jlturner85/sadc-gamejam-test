@@ -106,12 +106,10 @@ namespace GameJamTest.GameObjects.Player
 
             if (keyboard.Fire.IsPressed())
             {
-                
                 this.Fire();
             }
         }
 
-<<<<<<< HEAD
         public void ScorePoints(long points)
         {
             this.score += points;
@@ -120,12 +118,11 @@ namespace GameJamTest.GameObjects.Player
         public long Score
         {
             get { return this.score; }
-=======
+
         public override void Draw(GameTime gameTime)
         {
             shipAnimationFlying.Draw((this.Game as Game1).SpriteBatch, position,0f, 1.5f);
             base.Draw(gameTime);
->>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14
         }
     }
 

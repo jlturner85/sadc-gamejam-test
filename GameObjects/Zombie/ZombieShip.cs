@@ -13,6 +13,7 @@ namespace GameJamTest.GameObjects.Zombie
     public class ZombieShip : GameJamComponent
     {
         Random random;
+        Animation zombieAnimationFlying;
 
         ZombieType type;
         int timer;
@@ -24,7 +25,11 @@ namespace GameJamTest.GameObjects.Zombie
             this.random = new Random();
 
             this.Layer = Layer.ZOMBIE;
-            this.Sprite = Sprites.Zombie;
+            this.width = 30;
+            this.height = 17;
+            zombieAnimationFlying = new Animation(this.Game.Content, "Sprites/zombieShip", width, height, 2, 15);
+            zombieAnimationFlying.EnableRepeating();
+            //this.Sprite = Sprites.Zombie;
             this.type = type;
 
             switch (this.type)
@@ -54,6 +59,11 @@ namespace GameJamTest.GameObjects.Zombie
             velocity.Normalize();
             velocity = Vector2.Multiply(velocity, speed);
             this.Screen.AddComponent(new Bullet(this.Game, this.Screen, Team.ZOMBIE, bulletPos, velocity));
+        }
+        
+        public override void Initialize()
+        {
+            base.Initialize();
         }
 
         public override void Update(GameTime gameTime)
@@ -100,6 +110,14 @@ namespace GameJamTest.GameObjects.Zombie
                         break;
                 }
             }
+            
+            zombieAnimationFlying.Update(gameTime);
+        }     
+           
+        public override void Draw(GameTime gameTime)
+        {
+            zombieAnimationFlying.Draw((this.Game as Game1).SpriteBatch, position, 0f, 1.5f);
+            base.Draw(gameTime);
         }
 
         private void ResetTimer()
