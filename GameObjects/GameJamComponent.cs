@@ -49,9 +49,8 @@ namespace GameJamTest.GameObjects
             this.Screen.RemoveComponent(this);
         }
 
-        public void Explode()
+        public virtual void Explode()
         {
-            this.Destroy();
 
             if (this is ZombieShip)
             {

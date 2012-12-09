@@ -14,20 +14,49 @@ namespace GameJamTest.GameObjects.Player
 {
     public class PlayerShip : GameJamComponent
     {
-        long score;
-        private GameKeyboard keyboard;
+        private long score;
+        private int lives;
+
+        private int spawnTime;
+        private int invulnerableTime;
         Animation shipAnimationFlying;
         SoundEffect shipFiringSound;
         public PlayerShip(Game game, GameScreen screen)
             : base(game, screen, new Vector2(100, 100))
         {
-            this.keyboard = new GameKeyboard();
             this.Layer = Layer.PLAYER;
+        }
+
+        private void Respawn(bool invulnerable)
+        {
+            this.Position = new Vector2(-50, Game1.SCREEN_HEIGHT / 2);
+            this.Velocity = new Vector2(0, 0);
+            this.spawnTime = 180;
+            if (invulnerable)
+            {
+                this.invulnerableTime = 360;
+            }
         }
 
         public override void Destroy()
         {
-            // invulnerability!
+            if (this.lives > 0)
+            {
+                Respawn(true);
+            }
+            else
+            {
+                base.Destroy();
+                this.Screen.Lose();
+            }
+        }
+
+        public override void Explode()
+        {
+            if (this.invulnerableTime <= 0)
+            {
+                base.Explode();
+            }
         }
 
         private void Fire()
@@ -39,49 +68,76 @@ namespace GameJamTest.GameObjects.Player
 
         public override void Initialize()
         {
-            //this.Sprite = Sprites.Ship;
             width = 32;
             height = 16;
+            this.lives = 3;
             shipAnimationFlying = new Animation(this.Game.Content, "Sprites/playerShip", width, height, 2, 15);
             shipAnimationFlying.EnableRepeating();
             shipFiringSound = this.Game.Content.Load<SoundEffect>("SoundEffects/fire_laser1");
-            
+            Respawn(false);
         }
 
         public override void Update(GameTime gameTime)
         {
-            keyboard.Update(gameTime);
             shipAnimationFlying.Update(gameTime);
+
             Vector2 velocity = new Vector2(0, 0);
 
-            if (keyboard.Up.IsHeld())
+            if (this.spawnTime > 0)
             {
-                velocity = Vector2.Add(velocity, new Vector2(0, -5));
+                this.spawnTime--;
+            }
+            if (this.invulnerableTime > 0)
+            {
+                this.invulnerableTime--;
             }
 
-            if (keyboard.Left.IsHeld())
+            if (this.spawnTime <= 0)
             {
-                velocity = Vector2.Add(velocity, new Vector2(-5, 0));
-            }
+                if (this.Screen.Keyboard.Up.IsHeld())
+                {
+                    velocity = Vector2.Add(velocity, new Vector2(0, -5));
+                }
 
-            if (keyboard.Down.IsHeld())
+                if (this.Screen.Keyboard.Left.IsHeld())
+                {
+                    velocity = Vector2.Add(velocity, new Vector2(-5, 0));
+                }
+
+                if (this.Screen.Keyboard.Down.IsHeld())
+                {
+                    velocity = Vector2.Add(velocity, new Vector2(0, 5));
+                }
+
+                if (this.Screen.Keyboard.Right.IsHeld())
+                {
+                    velocity = Vector2.Add(velocity, new Vector2(5, 0));
+                }
+
+                if (this.Screen.Keyboard.Fire.IsPressed())
+                {
+                    this.Fire();
+                }
+
+                this.Velocity = velocity;
+
+                base.Update(gameTime);
+
+                this.Position = new Vector2(
+                    MathHelper.Clamp(this.Position.X, 0, Game1.SCREEN_WIDTH - this.width),
+                    MathHelper.Clamp(this.Position.Y, 0, Game1.SCREEN_HEIGHT - this.height)
+                );
+            }
+            else if (this.spawnTime == 60)
             {
-                velocity = Vector2.Add(velocity, new Vector2(0, 5));
+                this.lives--;
             }
-
-            if (keyboard.Right.IsHeld())
+            else if (this.spawnTime < 60)
             {
-                velocity = Vector2.Add(velocity, new Vector2(5, 0));
+                this.Velocity = new Vector2(this.spawnTime / 6f, 0);
+
+                base.Update(gameTime);
             }
-
-            this.Velocity = velocity;
-
-            base.Update(gameTime);
-
-            this.Position = new Vector2(
-                MathHelper.Clamp(this.Position.X, 0, Game1.SCREEN_WIDTH - this.width),
-                MathHelper.Clamp(this.Position.Y, 0, Game1.SCREEN_HEIGHT - this.height)
-            );
 
             foreach (GameComponent component in this.Screen.Components)
             {
@@ -107,16 +163,16 @@ namespace GameJamTest.GameObjects.Player
                     }
                 }
             }
-
-            if (keyboard.Fire.IsPressed())
-            {
-                this.Fire();
-            }
         }
 
         public void ScorePoints(long points)
         {
             this.score += points;
+        }
+
+        public int Lives
+        {
+            get { return this.lives; }
         }
 
         public long Score
@@ -126,7 +182,7 @@ namespace GameJamTest.GameObjects.Player
 
         public override void Draw(GameTime gameTime)
         {
-            shipAnimationFlying.Draw((this.Game as Game1).SpriteBatch, position,0f, 1.5f);
+            shipAnimationFlying.Draw((this.Game as Game1).SpriteBatch, position, 0f, 1.5f);
             base.Draw(gameTime);
         }
     }
