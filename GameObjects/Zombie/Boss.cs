@@ -28,6 +28,9 @@ namespace GameJamTest.GameObjects.Zombie
         private int hp;
         private int maxHp;
 
+        private int cannonTimer;
+        private int gunTimer;
+
         private int explode;
         private int spawnTime;
         private long aliveTime;
@@ -51,7 +54,7 @@ namespace GameJamTest.GameObjects.Zombie
             this.explode = -1;
             this.spawnTime = 120;
             this.aliveTime = 0;
-            this.hp = (int)(2.5f * this.Screen.GameSpeed);
+            this.hp = 4 * this.Screen.GameSpeed;
             this.maxHp = this.hp;
             
         }
@@ -69,6 +72,16 @@ namespace GameJamTest.GameObjects.Zombie
         public override void Destroy()
         {
             base.Destroy();
+        }
+
+        public void ResetGunTimer()
+        {
+            this.gunTimer = (600 + this.random.Next(1200)) / this.Screen.GameSpeed;
+        }
+
+        public void ResetCannonTimer()
+        {
+            this.cannonTimer = (1200 + this.random.Next(2400)) / this.Screen.GameSpeed;
         }
 
         public override void Update(GameTime gameTime)
@@ -116,6 +129,29 @@ namespace GameJamTest.GameObjects.Zombie
             else
             {
                 this.aliveTime += this.Screen.GameSpeed;
+
+                this.cannonTimer--;
+                this.gunTimer--;
+
+                if (this.cannonTimer < 0)
+                {
+                    this.Screen.AddComponent(new ZombieShip(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(20, 200)), ZombieType.CANNON));
+                    this.ResetCannonTimer();
+                }
+
+                if (this.gunTimer < 0)
+                {
+                    float speed = 0.25f * this.Screen.GameSpeed;
+                    Vector2 bulletPos = Vector2.Add(this.Position, new Vector2(20, 20));
+                    Vector2 velocity = Vector2.Subtract(this.Screen.Player.Position, this.Position);
+                    Vector2 leadVec = Vector2.Multiply(this.Screen.Player.Velocity, velocity.Length() / 10);
+                    velocity = Vector2.Add(velocity, leadVec);
+                    velocity.Normalize();
+                    velocity = Vector2.Multiply(velocity, speed);
+                    this.Screen.AddComponent(new Bullet(this.Game, this.Screen, Team.ZOMBIE, bulletPos, velocity));
+                    this.ResetGunTimer();
+                }
+
                 this.Position = new Vector2(INITIAL_X + xSign * (float)Math.Sin(MathHelper.Pi * this.aliveTime / 7200),
                     INITIAL_Y + ySign * (float)Math.Sin(MathHelper.Pi * this.aliveTime / 3600));
             }
