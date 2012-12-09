@@ -69,7 +69,7 @@ namespace GameJamTest.GameObjects
             {
                 this.Screen.AddComponent(new Explosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(-4, -2))));
             }
-            
+            this.Destroy();
            
         }
 
