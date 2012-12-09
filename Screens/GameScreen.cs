@@ -22,6 +22,7 @@ namespace GameJamTest.Screens
     public class GameScreen : DrawableGameComponent
     {
         private bool initialized = false;
+        private GameKeyboard keyboard;
 
         private Random random;
 
@@ -36,16 +37,14 @@ namespace GameJamTest.Screens
         private int gameSpeed;
         private int speedUpTimer;
         private int speedDisplayGrow;
+        private int lose;
+
+        Animation shipAnimationStatic;
 
         public GameScreen(Game game)
             : base(game)
         {
             this.game = game;
-            this.components = new List<GameComponent>();
-            this.player = new PlayerShip(game, this);
-            this.components.Add(this.Player);
-            this.newComponents = new List<GameComponent>();
-            this.oldComponents = new List<GameComponent>();
         }
 
         public void AddComponent(GameComponent component)
@@ -58,6 +57,11 @@ namespace GameJamTest.Screens
             this.oldComponents.Add(component);
         }
 
+        public void Lose()
+        {
+            this.lose = 240;
+        }
+
         /// <summary>
         /// Allows the game component to perform any initialization it needs to before starting
         /// to run.  This is where it can query for any required services and load content.
@@ -66,11 +70,22 @@ namespace GameJamTest.Screens
         {
             if (!initialized)
             {
+                this.keyboard = new GameKeyboard();
+
+                this.components = new List<GameComponent>();
+                this.player = new PlayerShip(game, this);
+                this.components.Add(this.Player);
+                this.newComponents = new List<GameComponent>();
+                this.oldComponents = new List<GameComponent>();
+                this.lose = -1;
+
                 this.random = new Random();
                 this.content = game.Content;
 
                 this.gameSpeed = 10;
-                this.speedUpTimer = 2400;
+                this.speedUpTimer = 1800;
+
+                shipAnimationStatic = new Animation(this.Game.Content, "Sprites/playerShip", 32, 16, 1, 1);
 
                 foreach (GameComponent component in this.components)
                 {
@@ -89,22 +104,41 @@ namespace GameJamTest.Screens
         {
             this.Initialize();
 
-            this.speedUpTimer--;
+            this.keyboard.Update(gameTime);
+
+            if (this.Keyboard.Back.IsPressed())
+            {
+                (this.Game as Game1).setCurrentScreen(Game1.menuScreenID);
+                this.initialized = false;
+            }
+
             if (speedDisplayGrow > 0)
             {
                 speedDisplayGrow--;
             }
 
-            if (speedUpTimer < 0)
+            if (this.lose > 0)
             {
-                this.gameSpeed++;
-                this.speedUpTimer = 2400;
-                this.speedDisplayGrow = 60;
+                this.lose--;
+            }
+            else if (this.lose < 0)
+            {
+                this.speedUpTimer--;
+
+                if (speedUpTimer == 30)
+                {
+                    this.speedDisplayGrow = 60;
+                }
+                if (speedUpTimer < 0)
+                {
+                    this.gameSpeed++;
+                    this.speedUpTimer = 1800;
+                }
             }
 
-            ParallaxBackground.Update(gameTime);
+            ParallaxBackground.Update(gameTime, this.GameSpeed);
 
-            if (this.random.NextDouble() < (0.001 * this.GameSpeed))
+            if (this.random.NextDouble() < (0.001 * this.GameSpeed) && this.lose < 0)
             {
                 int halfScreenWidth = Game1.SCREEN_WIDTH / 2;
 
@@ -148,15 +182,44 @@ namespace GameJamTest.Screens
         public override void Draw(GameTime gameTime)
         {
             this.Initialize();
-            
+
             SpriteFont font = Fonts.TitleFont;
+            SpriteBatch spriteBatch = (this.Game as Game1).SpriteBatch;
 
             (this.Game as Game1).SpriteBatch.DrawString(font, "Score: " + this.Player.Score, new Vector2(0, 0), Color.CornflowerBlue);
             String speed = "Speed x" + this.GameSpeed;
             speed = speed.Insert(speed.Length - 1, ".");
             float size = 1 + (speedDisplayGrow / 50f) - (speedDisplayGrow * speedDisplayGrow / 3000f);
             float length = font.MeasureString(speed).X * size;
-            (this.Game as Game1).SpriteBatch.DrawString(Fonts.TitleFont, speed, new Vector2(Game1.SCREEN_WIDTH - length, 0), Color.Salmon, 0f, new Vector2(0, 0), size, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(Fonts.TitleFont, speed, new Vector2(Game1.SCREEN_WIDTH - length, 0), Color.Salmon, 0f, new Vector2(0, 0), size, SpriteEffects.None, 0f);
+
+            if (this.lose >= 0)
+            {
+                if (this.lose < 180)
+                {
+                    String s1 = "You lost the game";
+                    float length1 = font.MeasureString(s1).X;
+                    (this.Game as Game1).SpriteBatch.DrawString(font, s1, new Vector2((Game1.SCREEN_WIDTH - length1 * 2) / 2, (Game1.SCREEN_HEIGHT / 2) - 100), Color.Yellow, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
+                }
+                if (this.lose < 90)
+                {
+                    String s1 = "Try again next time.";
+                    float length1 = font.MeasureString(s1).X;
+                    (this.Game as Game1).SpriteBatch.DrawString(font, s1, new Vector2((Game1.SCREEN_WIDTH - length1) / 2, (Game1.SCREEN_HEIGHT / 2) - 25), Color.White);
+                }
+                if (this.lose == 0)
+                {
+                    String s1 = "See you!";
+                    float length1 = font.MeasureString(s1).X;
+                    (this.Game as Game1).SpriteBatch.DrawString(font, s1, new Vector2((Game1.SCREEN_WIDTH - length1) / 2, (Game1.SCREEN_HEIGHT / 2) + 10), Color.White);
+                }
+            }
+
+            int i = 0;
+            while (i < this.Player.Lives) {
+                shipAnimationStatic.Draw(spriteBatch, new Vector2(i * 50, Game1.SCREEN_HEIGHT - 28), 0f, 1.5f);
+                i++;
+            }
 
             foreach (Layer layer in Layers.Values())
             {
@@ -179,6 +242,11 @@ namespace GameJamTest.Screens
         public PlayerShip Player
         {
             get { return this.player; }
+        }
+
+        public GameKeyboard Keyboard
+        {
+            get { return this.keyboard; }
         }
 
         public int GameSpeed

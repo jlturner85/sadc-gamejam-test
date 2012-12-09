@@ -16,6 +16,8 @@ namespace GameJamTest.Assets
         //backgrounds
         public Texture2D texture;
         public Rectangle rectangle;
+
+        protected float fractionalPart;
         
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -31,9 +33,12 @@ namespace GameJamTest.Assets
             rectangle = newRectangle;
         }
 
-        public void Update(int speed)
+        public void Update(float speed)
         {
-            rectangle.X -= speed;
+            float total = speed + this.fractionalPart;
+            int integralPart = (int)total;
+            rectangle.X -= integralPart;
+            this.fractionalPart = total - integralPart;
         }
     }
 
@@ -56,6 +61,11 @@ namespace GameJamTest.Assets
 
         public static void Update(GameTime gameTime)
         {
+            Update(gameTime, 10);
+        }
+
+        public static void Update(GameTime gameTime, int gameSpeed)
+        {
             if (scroll1.rectangle.X + width <= 0)
             {
                 scroll1.rectangle.X = scroll2.rectangle.X + width;
@@ -72,10 +82,10 @@ namespace GameJamTest.Assets
             {
                 scroll4.rectangle.X = scroll3.rectangle.X + width;
             }
-            scroll1.Update(3);
-            scroll2.Update(3);
-            scroll3.Update(1);
-            scroll4.Update(1);
+            scroll1.Update(gameSpeed * 0.3f);
+            scroll2.Update(gameSpeed * 0.3f);
+            scroll3.Update(gameSpeed * 0.1f);
+            scroll4.Update(gameSpeed * 0.1f);
         }
 
         public static void Draw(Game game)

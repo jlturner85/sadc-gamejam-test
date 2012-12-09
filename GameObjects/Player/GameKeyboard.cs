@@ -15,6 +15,7 @@ namespace GameJamTest.GameObjects.Player
         private GameKey down;
         private GameKey right;
         private GameKey fire;
+        private GameKey back;
 
         private List<GameKey> keys;
 
@@ -25,6 +26,7 @@ namespace GameJamTest.GameObjects.Player
             this.down = new GameKey(Keys.S);
             this.right = new GameKey(Keys.D);
             this.fire = new GameKey(Keys.Space);
+            this.back = new GameKey(Keys.Escape);
 
             this.keys = new List<GameKey>();
             this.keys.Add(this.up);
@@ -32,6 +34,7 @@ namespace GameJamTest.GameObjects.Player
             this.keys.Add(this.down);
             this.keys.Add(this.right);
             this.keys.Add(this.fire);
+            this.keys.Add(this.back);
         }
 
         public void Update(GameTime gameTime)
@@ -83,6 +86,11 @@ namespace GameJamTest.GameObjects.Player
         public GameKey Fire
         {
             get { return this.fire; }
+        }
+
+        public GameKey Back
+        {
+            get { return this.back; }
         }
     }
 
