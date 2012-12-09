@@ -18,7 +18,8 @@ namespace GameJamTest.Util
 
         public static void playSoundEffect(SoundEffect effect)
         {
-            effect.Play();
+            effect.CreateInstance().Play();
+            
         }
 
         public static void playMusic(Song newMusic)

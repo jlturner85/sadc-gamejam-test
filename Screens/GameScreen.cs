@@ -19,8 +19,10 @@ namespace GameJamTest.Screens
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
+    /// 
     public class GameScreen : DrawableGameComponent
     {
+        public static int screenNumber = 2;
         private bool initialized = false;
 
         private Random random;

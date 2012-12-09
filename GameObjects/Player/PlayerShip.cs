@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+using Microsoft.Xna.Framework.Audio;
 using GameJamTest.Assets;
 using GameJamTest.GameObjects.Zombie;
 using GameJamTest.Screens;
+using GameJamTest.Util;
 
 namespace GameJamTest.GameObjects.Player
 {
@@ -16,6 +17,7 @@ namespace GameJamTest.GameObjects.Player
         long score;
         private GameKeyboard keyboard;
         Animation shipAnimationFlying;
+        SoundEffect shipFiringSound;
         public PlayerShip(Game game, GameScreen screen)
             : base(game, screen, new Vector2(100, 100))
         {
@@ -32,6 +34,7 @@ namespace GameJamTest.GameObjects.Player
         {
             Vector2 bulletPos = Vector2.Add(this.Position, new Vector2(12, 3));
             Screen.AddComponent(new Bullet(Game, Screen, Team.PLAYER, bulletPos, new Vector2(15, 0)));
+            AudioManager.playSoundEffect(shipFiringSound);
         }
 
         public override void Initialize()
@@ -41,6 +44,7 @@ namespace GameJamTest.GameObjects.Player
             height = 16;
             shipAnimationFlying = new Animation(this.Game.Content, "Sprites/playerShip", width, height, 2, 15);
             shipAnimationFlying.EnableRepeating();
+            shipFiringSound = this.Game.Content.Load<SoundEffect>("SoundEffects/fire_laser1");
             
         }
 

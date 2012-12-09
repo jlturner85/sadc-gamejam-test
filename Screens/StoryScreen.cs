@@ -15,14 +15,16 @@ namespace GameJamTest.Screens
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class CreditsScreen : Microsoft.Xna.Framework.DrawableGameComponent
+    public class StoryScreen : Microsoft.Xna.Framework.DrawableGameComponent
     {
-        public static int screenNumber = 3;
+
+        
+        public static int screenNumber = 4;
         Game game;
         SpriteFont titleFont;
-        Texture2D happyFamily;
+        
         SpriteBatch spriteBatch;
-        public CreditsScreen(Game game)
+        public StoryScreen(Game game)
             : base(game)
         {
             // TODO: Construct any child components here
@@ -35,9 +37,9 @@ namespace GameJamTest.Screens
         public override void Initialize()
         {
             titleFont = this.game.Content.Load<SpriteFont>("Fonts/titlefont");
-            happyFamily = this.game.Content.Load<Texture2D>("Images/happy");
+            
             // TODO: Add your initialization code here
-            spriteBatch = new SpriteBatch(this.game.GraphicsDevice);
+            spriteBatch = spriteBatch = new SpriteBatch(this.game.GraphicsDevice);
             base.Initialize();
         }
 
@@ -50,9 +52,9 @@ namespace GameJamTest.Screens
             KeyboardState keyState = Keyboard.GetState();
 
             //if either enter of space is pressed, return to the main menu
-            if (keyState.IsKeyDown(Keys.Escape))
+            if (keyState.IsKeyDown(Keys.Enter))
             {
-                (game as Game1).setCurrentScreen(1);
+                (game as Game1).setCurrentScreen(2);
             }
             // TODO: Add your update code here
             ParallaxBackground.Update(gameTime);
@@ -62,21 +64,22 @@ namespace GameJamTest.Screens
 
         public override void Draw(GameTime gameTime)
         {
+
             spriteBatch.Begin();
-            spriteBatch.DrawString(titleFont, "Thanks for a playing!", new Vector2(300, 100), Color.White);
-            spriteBatch.DrawString(titleFont, "Credits:", new Vector2(20, 200), Color.White);
-            spriteBatch.DrawString(titleFont, "Fernando Mosqueda - Artist, Sounds", new Vector2(20, 250), Color.White);
-            spriteBatch.DrawString(titleFont, "Gerald Halbeisen- Artist, Programmer", new Vector2(20, 300), Color.White);
-            spriteBatch.DrawString(titleFont, "Justin Turner - Programmer", new Vector2(20, 350), Color.White);
-            spriteBatch.DrawString(titleFont, "Tom Farello- Programmer", new Vector2(20, 400), Color.White);
-            spriteBatch.DrawString(titleFont, "Danny Carroll- Game Jam Theme", new Vector2(20, 450), Color.White);
-            spriteBatch.DrawString(titleFont, "Music by Perturbator", new Vector2(20, 500), Color.White);
-            spriteBatch.DrawString(titleFont, "Created 12/7-12/9", new Vector2(20, 550), Color.Red);
-            spriteBatch.Draw(happyFamily, new Rectangle(1000,300,350,400), Color.CornflowerBlue);
-            spriteBatch.DrawString(titleFont, "Press Escape to Return to Menu", new Vector2(20, 650), Color.Green);
+            spriteBatch.DrawString(titleFont, "In the year 2015, war was beginning. The", new Vector2(20, 50), Color.White);
+            spriteBatch.DrawString(titleFont, "United States of the America has been", new Vector2(20, 100), Color.White);
+            spriteBatch.DrawString(titleFont, "severed. Land of hope, Texas, sends elite", new Vector2(20, 150), Color.White);
+            spriteBatch.DrawString(titleFont, "defenders of Space Station San Antonio,", new Vector2(20, 200), Color.White);
+            spriteBatch.DrawString(titleFont, "the SADC, have taken to space to launch", new Vector2(20, 250), Color.White);
+            spriteBatch.DrawString(titleFont, "a final attack against those who would", new Vector2(20, 300), Color.White);
+            spriteBatch.DrawString(titleFont, "oppose peace. The Arsenal base has neared", new Vector2(20, 350), Color.White);
+            spriteBatch.DrawString(titleFont, "the final target, and the SADC defenders", new Vector2(20, 400), Color.White);
+            spriteBatch.DrawString(titleFont, "have been dispatched. The zombie army of", new Vector2(20, 450), Color.White);
+            spriteBatch.DrawString(titleFont, "our enemy awaits... are you a strong", new Vector2(20, 500), Color.White);
+            spriteBatch.DrawString(titleFont, "enough to bring successful victory?", new Vector2(20, 550), Color.White); 
+            spriteBatch.DrawString(titleFont, "Press enter to continue...", new Vector2(20, 650), Color.CornflowerBlue);
             spriteBatch.End();
             base.Draw(gameTime);
         }
-        
     }
 }

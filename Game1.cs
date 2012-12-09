@@ -25,13 +25,13 @@ namespace GameJamTest
 
         public static int SCREEN_WIDTH = 1280;
         public static int SCREEN_HEIGHT = 720;
-
+        
         //Gamestate Constants
         public const int splashScreenID = 0;
         public const int menuScreenID = 1;
         public const int gameScreenID = 2;
         public const int creditScreenID = 3;
-
+        public const int storyScreenID = 4;
         private int splashScreenTime = 0;
         private int currentScreen = splashScreenID;
         
@@ -40,6 +40,7 @@ namespace GameJamTest
         private SplashScreen splashScreen;
         private GameScreen gameScreen;
         private CreditsScreen creditsScreen;
+        private StoryScreen storyScreen;
         private Song menuMusic;
         GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -50,9 +51,11 @@ namespace GameJamTest
             splashScreen = new SplashScreen(this);
             gameScreen = new GameScreen(this);
             creditsScreen = new CreditsScreen(this);
+            storyScreen = new StoryScreen(this);
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
+            
             
         }
 
@@ -79,6 +82,7 @@ namespace GameJamTest
             menuScreen.Initialize();
             creditsScreen.Initialize();
             splashScreen.Initialize();
+            storyScreen.Initialize();
             GameServices.AddService<GraphicsDevice>(GraphicsDevice);
             GameServices.AddService<ContentManager>(Content);
         }
@@ -94,7 +98,7 @@ namespace GameJamTest
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            menuMusic = Content.Load<Song>("Music/menumusic");
+            menuMusic = Content.Load<Song>("Music/shadowforce");
             AudioManager.playMusic(menuMusic);
             Sprites.LoadContent(this.Content);
             Fonts.LoadContent(this.Content);
@@ -139,6 +143,9 @@ namespace GameJamTest
                 case creditScreenID:
                     creditsScreen.Update(gameTime);
                     break;
+                case storyScreenID:
+                    storyScreen.Update(gameTime);
+                    break;
                 default:
                     break;
                    
@@ -174,6 +181,9 @@ namespace GameJamTest
                     break;
                 case creditScreenID:
                     creditsScreen.Draw(gameTime);
+                    break;
+                case storyScreenID:
+                    storyScreen.Draw(gameTime);
                     break;
                 default:
                     base.Draw(gameTime);

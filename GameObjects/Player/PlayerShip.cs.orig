@@ -75,8 +75,13 @@ namespace GameJamTest.GameObjects.Player
             base.Update(gameTime);
 
             this.Position = new Vector2(
-                MathHelper.Clamp(this.Position.X, 0, Game1.SCREEN_WIDTH - this.Sprite.Width),
-                MathHelper.Clamp(this.Position.Y, 0, Game1.SCREEN_HEIGHT - this.Sprite.Height)
+<<<<<<< HEAD
+                MathHelper.Clamp(this.Position.X, 0, Game1.SCREEN_WIDTH - width),
+                MathHelper.Clamp(this.Position.Y, 0, Game1.SCREEN_HEIGHT - height)
+=======
+                MathHelper.Clamp(this.Position.X, 0, Game1.SCREEN_WIDTH - this.width),
+                MathHelper.Clamp(this.Position.Y, 0, Game1.SCREEN_HEIGHT - this.height)
+>>>>>>> cd53b1678acf40e10ba9e6a7ea96b198c09e87a0
             );
 
             foreach (GameComponent component in this.Screen.Components)
@@ -106,7 +111,6 @@ namespace GameJamTest.GameObjects.Player
 
             if (keyboard.Fire.IsPressed())
             {
-                
                 this.Fire();
             }
         }
@@ -119,12 +123,12 @@ namespace GameJamTest.GameObjects.Player
         public long Score
         {
             get { return this.score; }
-=======
+        }
+
         public override void Draw(GameTime gameTime)
         {
             shipAnimationFlying.Draw((this.Game as Game1).SpriteBatch, position,0f, 1.5f);
             base.Draw(gameTime);
->>>>>>> 3f5fe3409cad7ff40b14dd02359fc623a565de14
         }
     }
 
