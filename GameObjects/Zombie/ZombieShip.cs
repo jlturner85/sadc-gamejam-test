@@ -15,7 +15,7 @@ namespace GameJamTest.GameObjects.Zombie
         Random random;
         Animation zombieAnimationFlying;
 
-        ZombieType type;
+        public ZombieType type;
         int timer;
         long pointValue;
 

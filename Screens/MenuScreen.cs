@@ -18,13 +18,18 @@ namespace GameJamTest.MenuSystem
     /// </summary>
     public class MenuScreen : Microsoft.Xna.Framework.DrawableGameComponent
     {
+        public static int screenNumber = 1;
         ContentManager content;
         Game game;
         Game1 mainGame;
         SoundEffect menuTickSound;
         Animation texasAnimation;
+        Animation shipAnimationFlying;
         private SpriteFont titleFont;
         private Texture2D texasSymbol;
+        private Song gameMusic;
+        public int selectedScreen;
+        private int selectedPosition = 550;
         //get the graphics device, used for drawing objects
         private SpriteBatch spriteBatch;
         public MenuScreen(Game game)
@@ -41,6 +46,11 @@ namespace GameJamTest.MenuSystem
         /// </summary>
         public override void Initialize()
         {
+            selectedScreen = 4;//game screen
+            int width = 32;
+            int height = 16;
+            gameMusic= game.Content.Load<Song>("Music/menumusic");
+            shipAnimationFlying = new Animation(this.Game.Content, "Sprites/playerShip", width, height, 2, 15);
             texasAnimation = new Animation(this.game.Content,"Sprites/Texas_spriteSheet", 300, 300, 2, 15);
             //graphicsDevice = GameServices.GetService<GraphicsDevice>();
             spriteBatch = new SpriteBatch(game.GraphicsDevice);
@@ -50,6 +60,7 @@ namespace GameJamTest.MenuSystem
             menuTickSound = content.Load<SoundEffect>("SoundEffects/fire_laser1");
             //texasSymbol = content.Load<Texture2D>("Sprites/Texas_spriteSheet");
             texasAnimation.EnableRepeating();
+            shipAnimationFlying.EnableRepeating();
             ParallaxBackground.Initialize(this.content);
             base.Initialize();
         }
@@ -62,12 +73,35 @@ namespace GameJamTest.MenuSystem
         {
             //if the space bar is pressed, load the gamescreen
             KeyboardState keyState = Keyboard.GetState();
-            if(keyState.IsKeyDown(Keys.Space)){
-                AudioManager.playSoundEffect(menuTickSound);
-                mainGame.setCurrentScreen(2);        
+
+            if (keyState.IsKeyDown(Keys.Up) || keyState.IsKeyDown(Keys.W))
+            {
+                if(selectedScreen == 3){
+                    selectedScreen = 4;
+                    selectedPosition = 550;
+                }
+            }
+
+            if(keyState.IsKeyDown(Keys.Down)||keyState.IsKeyDown(Keys.S))
+            {
+                if(selectedScreen ==4){
+                    selectedScreen = 3;
+                    selectedPosition = 600;
+                }
+            }
+            if (keyState.IsKeyDown(Keys.Space))
+            {
+                if (selectedScreen == 4)
+                {
+                    AudioManager.stopMusic();
+                    AudioManager.playMusic(gameMusic);
+                }
+                (game as Game1).setCurrentScreen(selectedScreen); 
+                      
             }
 
             ParallaxBackground.Update(gameTime);
+            shipAnimationFlying.Update(gameTime);
             texasAnimation.Update(gameTime);
             base.Update(gameTime);
         }
@@ -79,8 +113,11 @@ namespace GameJamTest.MenuSystem
             spriteBatch.Begin();
             //spriteBatch.Draw(texasSymbol, new Rectangle(410, 180, 400, 400), Color.White);
             texasAnimation.Draw(spriteBatch, new Vector2(410,180));
-            spriteBatch.DrawString(titleFont, "Civil War: 2015", new Vector2(380, 100), Color.White);
-            spriteBatch.DrawString(titleFont, "Press space bar to start game", new Vector2(220, 600), Color.White);
+            shipAnimationFlying.Draw((this.Game as Game1).SpriteBatch, new Vector2(350, selectedPosition), 0f, 1.5f);
+            spriteBatch.DrawString(titleFont, "Civil War: 2015", new Vector2(380, 100), Color.CornflowerBlue);
+            spriteBatch.DrawString(titleFont, "Start Game", new Vector2(450, 550), Color.White);
+            spriteBatch.DrawString(titleFont, "Credits", new Vector2(475, 600), Color.White);
+            spriteBatch.DrawString(titleFont, "SADC Game Jam 2012", new Vector2(330, 675), Color.Red);
             spriteBatch.End();
             base.Draw(gameTime);
         }

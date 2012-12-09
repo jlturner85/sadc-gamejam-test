@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using GameJamTest.Screens;
-
+using GameJamTest.GameObjects.Zombie;
 namespace GameJamTest.GameObjects
 {
     public class GameJamComponent : DrawableGameComponent
@@ -32,6 +32,11 @@ namespace GameJamTest.GameObjects
             this.Velocity = velocity;
         }
 
+        public override void Initialize()
+        {
+            
+            base.Initialize();
+        }
         public bool Collide(GameJamComponent that)
         {
             Rectangle r1 = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.width, this.height);
@@ -46,8 +51,26 @@ namespace GameJamTest.GameObjects
 
         public virtual void Explode()
         {
-            this.Screen.AddComponent(new Explosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(-4, -2))));
+
+            if (this is ZombieShip)
+            {
+                if ((this as ZombieShip).type == ZombieType.FLOATER)
+                {
+                    this.Screen.AddComponent(new ZombieExplosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(-4, -2))));
+
+                }
+                else
+                {
+                    this.Screen.AddComponent(new Explosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(-4, -2))));
+                }
+
+            }
+            else
+            {
+                this.Screen.AddComponent(new Explosion(this.Game, this.Screen, Vector2.Add(this.Position, new Vector2(-4, -2))));
+            }
             this.Destroy();
+           
         }
 
         public override void Update(GameTime gameTime)
