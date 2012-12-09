@@ -77,7 +77,7 @@ namespace GameJamTest
         protected override void Initialize()
         {
             Content.RootDirectory = "GameJamTestContent";
-
+            MediaPlayer.Volume=0.5f;
             base.Initialize();
             menuScreen.Initialize();
             creditsScreen.Initialize();
@@ -130,7 +130,7 @@ namespace GameJamTest
                     break;
                 case splashScreenID:
                     splashScreenTime += (int)gameTime.ElapsedGameTime.TotalSeconds;
-                    if (splashScreenTime > 5)
+                    if (splashScreenTime > 10)
                     {
                         currentScreen = menuScreenID;
                         break;

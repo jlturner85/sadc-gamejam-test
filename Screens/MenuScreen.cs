@@ -93,8 +93,8 @@ namespace GameJamTest.MenuSystem
             {
                 if (selectedScreen == 4)
                 {
-                    AudioManager.stopMusic();
-                    AudioManager.playMusic(gameMusic);
+                    //AudioManager.stopMusic();
+                    //dAudioManager.playMusic(gameMusic);
                 }
                 (game as Game1).setCurrentScreen(selectedScreen); 
                       

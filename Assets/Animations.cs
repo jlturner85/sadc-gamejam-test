@@ -120,5 +120,14 @@ namespace GameJamTest.Assets
                 Vector2.Zero, scale, SpriteEffects.None, 1.0f);
         }
 
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, float rotation, float scale, Color color)
+        {
+            int rowNumber = index / framesPerRow;
+            spriteBatch.Draw(texture, position, new Rectangle((index - (rowNumber * framesPerRow)) * FrameWidth,
+                rowNumber * FrameHeight, FrameWidth, FrameHeight), color, rotation,
+                Vector2.Zero, scale, SpriteEffects.None, 1.0f);
+        }
+
+
     }
 }
