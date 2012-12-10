@@ -133,6 +133,10 @@ namespace GameJamTest.GameObjects.Player
             {
                 if (intro > 180 && intro < 240)
                 {
+                    if (intro == 235)
+                    {
+                        this.lives--;
+                    }
                     this.Velocity = new Vector2(0, (180 - intro) / 6);
                 }
                 else if (intro < 180)

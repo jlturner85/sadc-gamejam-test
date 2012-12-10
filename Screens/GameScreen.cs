@@ -379,6 +379,11 @@ namespace GameJamTest.Screens
             get { return this.intro; }
         }
 
+        public bool Alive
+        {
+            get { return this.lose < 0 ; }
+        }
+
         public PlayerShip Player
         {
             get { return this.player; }
