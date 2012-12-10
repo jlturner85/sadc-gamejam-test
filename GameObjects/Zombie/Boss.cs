@@ -128,8 +128,11 @@ namespace GameJamTest.GameObjects.Zombie
             {
                 this.aliveTime += this.Screen.GameSpeed;
 
-                this.cannonTimer--;
-                this.gunTimer--;
+                if (this.Screen.Alive)
+                {
+                    this.cannonTimer--;
+                    this.gunTimer--;
+                }
 
                 if (this.cannonTimer < 0)
                 {
