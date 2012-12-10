@@ -59,7 +59,7 @@ namespace GameJamTest.GameObjects.Zombie
 
         public override void Initialize()
         {
-            bossAnimation = new Animation(this.Game.Content, "Sprites/boss1", 150, 150, 8, 7);
+            bossAnimation = new Animation(this.Game.Content, "Sprites/boss1", 135, 109, 8, 7);
             bossAnimation.EnableRepeating();
             shipEntering = this.Game.Content.Load<SoundEffect>("SoundEffects/zombiedemon");
             shipExplosion = this.Game.Content.Load<SoundEffect>("SoundEffects/cannon");

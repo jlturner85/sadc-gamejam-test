@@ -40,6 +40,7 @@ namespace GameJamTest.Screens
         private int gameSpeed;
         private Song bossSong;
         private Song gameSong;
+        private Song menuSong;
         private int intro;
         private int speedUpTimer;
         private int speedDisplayGrow;
@@ -101,6 +102,7 @@ namespace GameJamTest.Screens
                 this.keyboard = new GameKeyboard();
                 bossSong = game.Content.Load<Song>("Music/vengeance");
                 gameSong = game.Content.Load<Song>("Music/menumusic");
+                menuSong = game.Content.Load<Song>("Music/shadowforce");
                 this.components = new List<GameComponent>();
                 this.player = new PlayerShip(game, this);
                 this.arsenal = new Arsenal(game, this);
@@ -182,6 +184,8 @@ namespace GameJamTest.Screens
 
             if (this.Keyboard.Back.IsPressed())
             {
+                AudioManager.stopMusic();
+                AudioManager.playMusic(menuSong);
                 (this.Game as Game1).setCurrentScreen(Game1.menuScreenID);
                 this.initialized = false;
             }
