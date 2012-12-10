@@ -16,8 +16,8 @@ namespace GameJamTest.GameObjects.Zombie
         private const int BAR_WIDTH = 616;
         private const int BAR_HEIGHT = 20;
         private Animation bossAnimation;
-        private const int INITIAL_X = 735;
-        private const int INITIAL_Y = 185;
+        private const int INITIAL_X = 695;
+        private const int INITIAL_Y = 192;
         private int xSign;
         private int ySign;
         SoundEffect shipExplosion;
@@ -37,7 +37,7 @@ namespace GameJamTest.GameObjects.Zombie
         private int flash;
         
         public Boss(Game game, GameScreen screen)
-            : base(game, screen, new Vector2(Game1.SCREEN_WIDTH + 50, (Game1.SCREEN_HEIGHT / 2) - 175))
+            : base(game, screen, new Vector2(Game1.SCREEN_WIDTH + 10, (Game1.SCREEN_HEIGHT / 2) - 168))
         {
             this.random = new Random();
 
@@ -50,16 +50,16 @@ namespace GameJamTest.GameObjects.Zombie
             this.ySign = (200 * this.random.Next(2)) - 100;
 
             this.flash = 0;
+            this.spawnTime = 120;
             this.explode = -1;
             this.aliveTime = 0;
             this.hp = 4 * this.Screen.GameSpeed;
             this.maxHp = this.hp;
-            
         }
 
         public override void Initialize()
         {
-            bossAnimation = new Animation(this.Game.Content, "Sprites/boss1", 150, 150, 8, 7);
+            bossAnimation = new Animation(this.Game.Content, "Sprites/boss1", 135, 109, 8, 7);
             bossAnimation.EnableRepeating();
             shipEntering = this.Game.Content.Load<SoundEffect>("SoundEffects/zombiedemon");
             shipExplosion = this.Game.Content.Load<SoundEffect>("SoundEffects/cannon");
