@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameJamTest", "GameJamTest.csproj", "{0CE8F3A9-1BE9-427F-9FA7-4FFB7BCDB5B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameJamTestContent", "C:\dev\space-game\sadc-gamejam-content\GameJamTestContent.contentproj", "{98772F1C-92E8-47C5-960A-D04211ECA438}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CE8F3A9-1BE9-427F-9FA7-4FFB7BCDB5B3}.Debug|x86.ActiveCfg = Debug|x86
+		{0CE8F3A9-1BE9-427F-9FA7-4FFB7BCDB5B3}.Debug|x86.Build.0 = Debug|x86
+		{0CE8F3A9-1BE9-427F-9FA7-4FFB7BCDB5B3}.Release|x86.ActiveCfg = Release|x86
+		{0CE8F3A9-1BE9-427F-9FA7-4FFB7BCDB5B3}.Release|x86.Build.0 = Release|x86
+		{98772F1C-92E8-47C5-960A-D04211ECA438}.Debug|x86.ActiveCfg = Debug|x86
+		{98772F1C-92E8-47C5-960A-D04211ECA438}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
