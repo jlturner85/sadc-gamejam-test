@@ -95,27 +95,28 @@ namespace GameJamTest.GameObjects.Player
 
             if (this.spawnTime <= 0 && intro <= 0)
             {
-                if (this.Screen.Keyboard.Up.IsHeld())
+                if((this.Game as Game1).Keyboard.Up.IsHeld())
+                //if (this.Screen.Keyboard.Up.IsHeld())
                 {
                     velocity = Vector2.Add(velocity, new Vector2(0, -5));
                 }
-
-                if (this.Screen.Keyboard.Left.IsHeld())
+                if((this.Game as Game1).Keyboard.Left.IsHeld())
+                //if (this.Screen.Keyboard.Left.IsHeld())
                 {
                     velocity = Vector2.Add(velocity, new Vector2(-5, 0));
                 }
-
-                if (this.Screen.Keyboard.Down.IsHeld())
+                if((this.Game as Game1).Keyboard.Down.IsHeld())
+                //if (this.Screen.Keyboard.Down.IsHeld())
                 {
                     velocity = Vector2.Add(velocity, new Vector2(0, 5));
                 }
-
-                if (this.Screen.Keyboard.Right.IsHeld())
+                if((this.Game as Game1).Keyboard.Right.IsHeld())
+                //if (this.Screen.Keyboard.Right.IsHeld())
                 {
                     velocity = Vector2.Add(velocity, new Vector2(5, 0));
                 }
-
-                if (this.Screen.Keyboard.Fire.IsPressed())
+                if ((this.Game as Game1).Keyboard.Fire.IsPressed())
+                //if (this.Screen.Keyboard.Fire.IsPressed())
                 {
                     this.Fire();
                 }

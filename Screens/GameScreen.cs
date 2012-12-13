@@ -24,13 +24,13 @@ namespace GameJamTest.Screens
     {
         public static int screenNumber = 2;
         private bool initialized = false;
-        private GameKeyboard keyboard;
+        
 
         private Random random;
 
         private Game game;
         private ContentManager content;
-
+        //private GameKeyboard keyboard;
         private PlayerShip player;
         private Arsenal arsenal;
         private List<GameComponent> components;
@@ -99,7 +99,7 @@ namespace GameJamTest.Screens
         {
             if (!initialized)
             {
-                this.keyboard = new GameKeyboard();
+                //this.keyboard = new GameKeyboard();
                 bossSong = game.Content.Load<Song>("Music/vengeance");
                 gameSong = game.Content.Load<Song>("Music/menumusic");
                 menuSong = game.Content.Load<Song>("Music/shadowforce");
@@ -180,9 +180,8 @@ namespace GameJamTest.Screens
         {
             this.Initialize();
 
-            this.keyboard.Update(gameTime);
-
-            if (this.Keyboard.Back.IsPressed())
+            //this.keyboard.Update(gameTime);
+            if ((this.Game as Game1).Keyboard.Back.IsPressed())
             {
                 AudioManager.stopMusic();
                 AudioManager.playMusic(menuSong);
@@ -389,10 +388,10 @@ namespace GameJamTest.Screens
             get { return this.player; }
         }
 
-        public GameKeyboard Keyboard
-        {
-            get { return this.keyboard; }
-        }
+        //public GameKeyboard Keyboard
+        //{
+        //    get { return this.keyboard; }
+        //}
 
         public int GameSpeed
         {

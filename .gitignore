@@ -1,0 +1,4 @@
+bin/x86/Debug/*
+GameJamTest.csproj.Debug.cachefile
+GameJamTest.suo
+obj/x86/Debug/*
