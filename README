@@ -1,1 +1,10 @@
 A readme file. o.O
+
+A readme file.
+
+Your file structure should look like this:
+
+(parentDir)/sadc-gamejam-test
+(parentDir)/sadc-gamejam-content
+
+and then should be runnable out of the box.
