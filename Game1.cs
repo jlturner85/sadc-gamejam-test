@@ -10,9 +10,9 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
 using GameJamTest.Assets;
-using GameJamTest.MenuSystem;
 using GameJamTest.Util;
 using GameJamTest.Screens;
+using GameJamTest.GameObjects.Player;
 
 namespace GameJamTest
 {
@@ -32,6 +32,7 @@ namespace GameJamTest
         public const int gameScreenID = 2;
         public const int creditScreenID = 3;
         public const int storyScreenID = 4;
+        public const int leaderboardScreenID = 5;
         private int splashScreenTime = 0;
         private int currentScreen = splashScreenID;
         
@@ -41,22 +42,25 @@ namespace GameJamTest
         private GameScreen gameScreen;
         private CreditsScreen creditsScreen;
         private StoryScreen storyScreen;
+        private LeaderboardScreen leaderboardScreen;
         private Song menuMusic;
         GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
-        public Game1()
-        {
+        private GameKeyboard keyboard;
+
+        public Game1() {
+
             menuScreen = new MenuScreen(this);
             splashScreen = new SplashScreen(this);
             gameScreen = new GameScreen(this);
             creditsScreen = new CreditsScreen(this);
             storyScreen = new StoryScreen(this);
+            leaderboardScreen = new LeaderboardScreen(this);
+
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
-            
-            
         }
 
         public int getScreenWidth()
@@ -83,8 +87,10 @@ namespace GameJamTest
             creditsScreen.Initialize();
             splashScreen.Initialize();
             storyScreen.Initialize();
+            leaderboardScreen.Initialize();
             GameServices.AddService<GraphicsDevice>(GraphicsDevice);
             GameServices.AddService<ContentManager>(Content);
+            keyboard = new GameKeyboard();
         }
         public void setCurrentScreen(int currentScreen)
         {
@@ -118,8 +124,9 @@ namespace GameJamTest
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
-        {
+        protected override void Update(GameTime gameTime) {
+        
+            keyboard.Update(gameTime);
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
@@ -130,8 +137,7 @@ namespace GameJamTest
                     break;
                 case splashScreenID:
                     splashScreenTime += (int)gameTime.ElapsedGameTime.TotalSeconds;
-                    if (splashScreenTime > 10)
-                    {
+                    if (splashScreenTime > 10) {
                         currentScreen = menuScreenID;
                         break;
                     }
@@ -146,15 +152,16 @@ namespace GameJamTest
                 case storyScreenID:
                     storyScreen.Update(gameTime);
                     break;
+                case leaderboardScreenID:
+                    leaderboardScreen.Update(gameTime);
+                    break;
                 default:
                     break;
                    
 
             }
-            // TODO: Add your update logic here
-            //Test Test
+
             base.Update(gameTime);
-            
         }
 
         /// <summary>
@@ -185,6 +192,9 @@ namespace GameJamTest
                 case storyScreenID:
                     storyScreen.Draw(gameTime);
                     break;
+                case leaderboardScreenID:
+                    leaderboardScreen.Draw(gameTime);
+                    break;
                 default:
                     base.Draw(gameTime);
                     break;
@@ -195,6 +205,9 @@ namespace GameJamTest
         public SpriteBatch SpriteBatch
         {
             get { return this.spriteBatch; }
+        }
+        public GameKeyboard Keyboard {
+            get { return keyboard; }
         }
     }
 }

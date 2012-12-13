@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using GameJamTest.Util;
 using GameJamTest.Assets;
 
-namespace GameJamTest.MenuSystem
+namespace GameJamTest.Screens
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.  stuff stuff
@@ -29,7 +29,8 @@ namespace GameJamTest.MenuSystem
         private Texture2D texasSymbol;
         private Song gameMusic;
         public int selectedScreen;
-        private int selectedPosition = 550;
+        private int selectedPosition = 500;
+        KeyboardState previousState;
         //get the graphics device, used for drawing objects
         private SpriteBatch spriteBatch;
         public MenuScreen(Game game)
@@ -62,6 +63,7 @@ namespace GameJamTest.MenuSystem
             texasAnimation.EnableRepeating();
             shipAnimationFlying.EnableRepeating();
             ParallaxBackground.Initialize(this.content);
+            previousState = Keyboard.GetState();
             base.Initialize();
         }
 
@@ -74,19 +76,31 @@ namespace GameJamTest.MenuSystem
             //if the space bar is pressed, load the gamescreen
             KeyboardState keyState = Keyboard.GetState();
 
-            if (keyState.IsKeyDown(Keys.Up) || keyState.IsKeyDown(Keys.W))
-            {
-                if(selectedScreen == 3){
+            // If up is pressed at top option, go to bottom option.
+            if ((this.game as Game1).Keyboard.Up.IsPressed()) {
+                if (selectedScreen == 4) { // start game option
+                    selectedScreen = 5; 
+                    selectedPosition = 600;
+                } else if (selectedScreen == 3) { // credits option
                     selectedScreen = 4;
+                    selectedPosition = 500;
+                } else if (selectedScreen == 5) { // leaderboard option
+                    selectedScreen = 3; //credit screen
                     selectedPosition = 550;
                 }
             }
 
-            if(keyState.IsKeyDown(Keys.Down)||keyState.IsKeyDown(Keys.S))
-            {
-                if(selectedScreen ==4){
+            // If down is pressed at bottom option, go to top option.
+            if((this.game as Game1).Keyboard.Down.IsPressed()) {                 
+                if (selectedScreen == 4) { // start game option
                     selectedScreen = 3;
+                    selectedPosition = 550;
+                } else if (selectedScreen == 3) { // credits option
+                    selectedScreen = 5;
                     selectedPosition = 600;
+                } else if (selectedScreen == 5) { // leaderboard option
+                    selectedScreen = 4; //credit screen
+                    selectedPosition = 500;
                 }
             }
             if (keyState.IsKeyDown(Keys.Space))
@@ -103,6 +117,8 @@ namespace GameJamTest.MenuSystem
             ParallaxBackground.Update(gameTime);
             shipAnimationFlying.Update(gameTime);
             texasAnimation.Update(gameTime);
+
+            previousState = keyState;
             base.Update(gameTime);
         }
         
@@ -120,8 +136,9 @@ namespace GameJamTest.MenuSystem
             String title2 = "2015 Civil War Saga";
             float length2 = titleFont.MeasureString(title2).X;
             spriteBatch.DrawString(titleFont, title2, new Vector2((Game1.SCREEN_WIDTH - length2) / 2, 125), Color.CornflowerBlue);
-            spriteBatch.DrawString(titleFont, "Start Game", new Vector2(450, 550), Color.White);
-            spriteBatch.DrawString(titleFont, "Credits", new Vector2(475, 600), Color.White);
+            spriteBatch.DrawString(titleFont, "Start Game", new Vector2(450, 500), Color.White);
+            spriteBatch.DrawString(titleFont, "Credits", new Vector2(490, 550), Color.White);
+            spriteBatch.DrawString(titleFont, "Leaderboards", new Vector2(425, 600), Color.White);
             spriteBatch.DrawString(titleFont, "SADC Game Jam 2012", new Vector2(330, 675), Color.Red);
             spriteBatch.End();
             base.Draw(gameTime);
