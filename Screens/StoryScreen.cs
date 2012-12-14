@@ -49,15 +49,13 @@ namespace GameJamTest.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            KeyboardState keyState = Keyboard.GetState();
-
             //if either enter of space is pressed, return to the main menu
-            if (keyState.IsKeyDown(Keys.Enter))
-            {
+            if ((this.game as Game1).Keyboard.Fire.IsPressed()) {
                 (game as Game1).setCurrentScreen(2);
             }
-            // TODO: Add your update code here
+
             ParallaxBackground.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -77,7 +75,7 @@ namespace GameJamTest.Screens
             spriteBatch.DrawString(titleFont, "have been dispatched. The zombie army of", new Vector2(20, 450), Color.White);
             spriteBatch.DrawString(titleFont, "our enemy awaits... are you a strong", new Vector2(20, 500), Color.White);
             spriteBatch.DrawString(titleFont, "enough to bring successful victory?", new Vector2(20, 550), Color.White); 
-            spriteBatch.DrawString(titleFont, "Press enter to continue...", new Vector2(20, 650), Color.CornflowerBlue);
+            spriteBatch.DrawString(titleFont, "Press SPACE to continue...", new Vector2(20, 650), Color.CornflowerBlue);
             spriteBatch.End();
             base.Draw(gameTime);
         }

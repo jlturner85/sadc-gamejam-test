@@ -99,7 +99,6 @@ namespace GameJamTest.Screens
         {
             if (!initialized)
             {
-                //this.keyboard = new GameKeyboard();
                 bossSong = game.Content.Load<Song>("Music/vengeance");
                 gameSong = game.Content.Load<Song>("Music/menumusic");
                 menuSong = game.Content.Load<Song>("Music/shadowforce");
@@ -179,9 +178,8 @@ namespace GameJamTest.Screens
         public override void Update(GameTime gameTime)
         {
             this.Initialize();
-
-            //this.keyboard.Update(gameTime);
-            if ((this.Game as Game1).Keyboard.Back.IsPressed())
+            //TODO change this to option menu?
+            if ((this.Game as Game1).Keyboard.Back.IsPressed() && this.Alive)
             {
                 AudioManager.stopMusic();
                 AudioManager.playMusic(menuSong);
@@ -290,6 +288,11 @@ namespace GameJamTest.Screens
                 this.components.Remove(oldComponent);
             }
             this.oldComponents = new List<GameComponent>();
+
+            if (!this.Alive && player.Score > LeaderboardScreen.LowestScore() && this.lose < 100) {
+                UpdateNameInput();
+                
+            }
         }
 
         public override void Draw(GameTime gameTime)
@@ -343,30 +346,111 @@ namespace GameJamTest.Screens
             }
         }
 
-        private void DrawGameOverText(SpriteBatch spriteBatch, SpriteFont font)
-        {
-            if (this.lose >= 0)
-            {
-                if (this.lose < 180)
-                {
+        #region GAME OVER STUFF
+        // initial name variable and char array for iteration
+        char[] name = {'A','A','A'};
+        int pos = 0;
+        int nameCharPos = 0;
+        char[] nameChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?.$ ".ToCharArray();
+        //method for updating name input
+        private void UpdateNameInput() {
+            #region Up/Down
+            
+            if ((this.game as Game1).Keyboard.Up.IsPressed()) {
+                // up was pressed, so go forward nameChar
+                if (nameCharPos == nameChars.Count() - 1) {
+                    // last position, set to first.
+                    nameCharPos = 0;
+                } else {
+                    nameCharPos++;
+                }
+                name[pos] = nameChars[nameCharPos];
+                AudioManager.playSoundEffect(Player.shipFiringSound);
+            } else if ((this.game as Game1).Keyboard.Down.IsPressed()) {
+                // down was pressed, go back a nameChar
+                if (nameCharPos == 0) {
+                    // first position, set to last.
+                    nameCharPos = nameChars.Count() - 1;
+                } else {
+                    nameCharPos--;
+                }
+                name[pos] = nameChars[nameCharPos];
+                AudioManager.playSoundEffect(Player.shipFiringSound);
+            }
+            #endregion
+            #region Left/Right
+            if ((this.game as Game1).Keyboard.Right.IsPressed()) {
+                if (pos == 2) {
+                    // last position, set to first.
+                    pos = 0;
+                } else {
+                    pos++;
+                }
+            } else if ((this.game as Game1).Keyboard.Left.IsPressed()) {
+                if (pos == 0) {
+                    // last position, set to first.
+                    pos = 2;
+                } else {
+                    pos--;
+                }
+            }
+            #endregion
+            if ((this.game as Game1).Keyboard.Fire.IsPressed()) {
+                //save and go back to leaderboard
+                (this.Game as Game1).setCurrentScreen(Game1.leaderboardScreenID);
+                this.initialized = false;
+            }
+        }
+        private void DrawNameInput(SpriteBatch spriteBatch, SpriteFont font) {
+            //method for drawing name input
+            String initials = String.Format("NAME: {0}", new string(name));
+            float initialsLength = font.MeasureString(initials).X;
+            (this.Game as Game1).SpriteBatch.DrawString(font, initials, new Vector2((Game1.SCREEN_WIDTH - initialsLength * 1.7f) / 2 + 250, (Game1.SCREEN_HEIGHT / 2) + 50), Color.Chartreuse, 0f, new Vector2(0, 0), 1.7f, SpriteEffects.None, 0f);
+        }
+        private void DrawHighScoreGet(SpriteBatch spriteBatch, SpriteFont font) {
+            //Display high score get message
+            String messageString = "HIGH SCORE GET!";
+            float messageLength = font.MeasureString(messageString).X;
+            (this.Game as Game1).SpriteBatch.DrawString(font, messageString, new Vector2((Game1.SCREEN_WIDTH - messageLength * 2) / 2, (Game1.SCREEN_HEIGHT / 2) - 25), Color.Salmon, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
+
+            // display rank
+            String rankString = String.Format("RANK: {0}", "1ST");
+            float rankLength = font.MeasureString(rankString).X;
+            (this.Game as Game1).SpriteBatch.DrawString(font, rankString, new Vector2((Game1.SCREEN_WIDTH - rankLength * 1.7f) / 2 - 300, (Game1.SCREEN_HEIGHT / 2) + 50), Color.Chartreuse, 0f, new Vector2(0, 0), 1.7f, SpriteEffects.None, 0f);
+
+            DrawNameInput(spriteBatch, font);
+        }
+
+        private void DrawGameOverText(SpriteBatch spriteBatch, SpriteFont font) {
+            if (this.lose >= 0) {
+
+                if (this.lose < 180) {
+                    //present game over text
                     String s1 = "You lost the game";
                     float length1 = font.MeasureString(s1).X;
                     (this.Game as Game1).SpriteBatch.DrawString(font, s1, new Vector2((Game1.SCREEN_WIDTH - length1 * 2) / 2, (Game1.SCREEN_HEIGHT / 2) - 100), Color.Yellow, 0f, new Vector2(0, 0), 2f, SpriteEffects.None, 0f);
                 }
-                if (this.lose < 90)
-                {
-                    String s1 = "Try again next time.";
-                    float length1 = font.MeasureString(s1).X;
-                    (this.Game as Game1).SpriteBatch.DrawString(font, s1, new Vector2((Game1.SCREEN_WIDTH - length1) / 2, (Game1.SCREEN_HEIGHT / 2) - 25), Color.White);
+
+                if (player.Score > LeaderboardScreen.LowestScore() && this.lose < 100) {
+                    DrawHighScoreGet(spriteBatch, font);
+
+                } else {
+                    if (this.lose < 90) {
+                        String s1 = "Try again next time.";
+                        float length1 = font.MeasureString(s1).X;
+                        (this.Game as Game1).SpriteBatch.DrawString(font, s1, new Vector2((Game1.SCREEN_WIDTH - length1) / 2, (Game1.SCREEN_HEIGHT / 2) - 25), Color.White);
+                    }
+                    if (this.lose == 0) {
+                        String s1 = "See you!";
+                        float length1 = font.MeasureString(s1).X;
+                        (this.Game as Game1).SpriteBatch.DrawString(font, s1, new Vector2((Game1.SCREEN_WIDTH - length1) / 2, (Game1.SCREEN_HEIGHT / 2) + 10), Color.White);
+                    }
                 }
-                if (this.lose == 0)
-                {
-                    String s1 = "See you!";
-                    float length1 = font.MeasureString(s1).X;
-                    (this.Game as Game1).SpriteBatch.DrawString(font, s1, new Vector2((Game1.SCREEN_WIDTH - length1) / 2, (Game1.SCREEN_HEIGHT / 2) + 10), Color.White);
-                }
+
             }
         }
+        #endregion
+        
 
         private float NextFloat()
         {
@@ -387,11 +471,6 @@ namespace GameJamTest.Screens
         {
             get { return this.player; }
         }
-
-        //public GameKeyboard Keyboard
-        //{
-        //    get { return this.keyboard; }
-        //}
 
         public int GameSpeed
         {

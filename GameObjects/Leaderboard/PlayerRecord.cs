@@ -5,12 +5,13 @@ using System.Text;
 
 namespace GameJamTest.GameObjects.Leaderboard {
     public class PlayerRecord {
-        private String name;
+        private string name;
         private int score;
+        //private double speed;
         //private int deaths;
         //private int kills;
         //private DateTime date;
-        public String Name {
+        public string Name {
             get { return name; }
             set { name = value; }
         }
@@ -18,7 +19,7 @@ namespace GameJamTest.GameObjects.Leaderboard {
             get { return score; }
             set { score = value; }
         }
-        public PlayerRecord(String name, int score) {
+        public PlayerRecord(string name, int score) {
             this.Name = name;
             this.Score = score;
         }

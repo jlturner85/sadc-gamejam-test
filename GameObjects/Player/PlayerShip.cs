@@ -19,7 +19,8 @@ namespace GameJamTest.GameObjects.Player
         private int spawnTime;
         private int invulnerableTime;
         Animation shipAnimationFlying;
-        SoundEffect shipFiringSound;
+        //TODO change back to private after testing
+        public SoundEffect shipFiringSound;
         public PlayerShip(Game game, GameScreen screen)
             : base(game, screen, new Vector2((Game1.SCREEN_WIDTH / 2) - 32, 450))
         {
@@ -67,7 +68,7 @@ namespace GameJamTest.GameObjects.Player
         {
             width = 32;
             height = 16;
-            this.lives = 3;
+            this.lives = 0;
             shieldAnimation = new Animation(this.Game.Content, "Sprites/shield3", 40, 33, 4, 2);
             shieldAnimation.EnableRepeating();
             shipAnimationFlying = new Animation(this.Game.Content, "Sprites/playerShip", width, height, 2, 15);

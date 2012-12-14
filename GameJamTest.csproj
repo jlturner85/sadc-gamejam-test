@@ -117,6 +117,7 @@
     <Compile Include="GameObjects\Explosion.cs" />
     <Compile Include="GameObjects\GameJamComponent.cs" />
     <Compile Include="GameObjects\Layers.cs" />
+    <Compile Include="GameObjects\Leaderboard\PlayerRecord.cs" />
     <Compile Include="GameObjects\Player\GameKeyboard.cs" />
     <Compile Include="GameObjects\Player\PlayerShip.cs" />
     <Compile Include="GameObjects\ScoreDisplay.cs" />
@@ -174,6 +175,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HIGHSCORES.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

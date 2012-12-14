@@ -81,7 +81,8 @@ namespace GameJamTest
         protected override void Initialize()
         {
             Content.RootDirectory = "GameJamTestContent";
-            MediaPlayer.Volume=0.5f;
+            //MediaPlayer.Volume=0.5f;
+            MediaPlayer.Volume = 0;
             base.Initialize();
             menuScreen.Initialize();
             creditsScreen.Initialize();
@@ -130,17 +131,11 @@ namespace GameJamTest
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            switch (currentScreen)
-            {
+            switch (currentScreen) {
                 case menuScreenID:
                     menuScreen.Update(gameTime);
                     break;
                 case splashScreenID:
-                    splashScreenTime += (int)gameTime.ElapsedGameTime.TotalSeconds;
-                    if (splashScreenTime > 10) {
-                        currentScreen = menuScreenID;
-                        break;
-                    }
                     splashScreen.Update(gameTime);
                     break;
                 case gameScreenID:
@@ -157,8 +152,6 @@ namespace GameJamTest
                     break;
                 default:
                     break;
-                   
-
             }
 
             base.Update(gameTime);
@@ -202,10 +195,10 @@ namespace GameJamTest
             this.SpriteBatch.End();
         }
 
-        public SpriteBatch SpriteBatch
-        {
+        public SpriteBatch SpriteBatch {
             get { return this.spriteBatch; }
         }
+
         public GameKeyboard Keyboard {
             get { return keyboard; }
         }
