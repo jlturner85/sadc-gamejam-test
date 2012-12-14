@@ -54,7 +54,7 @@ namespace GameJamTest.Screens
 
             base.Update(gameTime);
             elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (elapsedTime > 5)
+            if (elapsedTime > 2)
             {
                 game.GraphicsDevice.Clear(Color.White);
                 game1.setCurrentScreen(1);

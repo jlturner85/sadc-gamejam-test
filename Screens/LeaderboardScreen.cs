@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using GameJamTest.Assets;
 
 
 namespace GameJamTest.Screens {
@@ -15,8 +16,10 @@ namespace GameJamTest.Screens {
     /// This is a game component that implements IUpdateable.
     /// </summary>
     public class LeaderboardScreen : Microsoft.Xna.Framework.DrawableGameComponent {
-
-        private Game game;
+        public static int screenNumber = 5;
+        Game game;
+        private SpriteBatch spriteBatch;
+        private SpriteFont titleFont;
 
         public LeaderboardScreen(Game game)
             : base(game) {
@@ -30,7 +33,8 @@ namespace GameJamTest.Screens {
         /// </summary>
         public override void Initialize() {
             // TODO: Add your initialization code here
-
+            titleFont = this.game.Content.Load<SpriteFont>("Fonts/titlefont");
+            spriteBatch = spriteBatch = new SpriteBatch(this.game.GraphicsDevice);
             base.Initialize();
         }
 
@@ -39,9 +43,21 @@ namespace GameJamTest.Screens {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime) {
-            // TODO: Add your update code here
 
+            // TODO: Add your update code here
+            if ((this.game as Game1).Keyboard.Back.IsPressed()) {
+                (this.game as Game1).setCurrentScreen(1); // go to menu screen
+            }
+
+            ParallaxBackground.Update(gameTime);
             base.Update(gameTime);
+        }
+        public override void Draw(GameTime gameTime) {
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(titleFont, "Leaderboards", new Vector2(450, 50), Color.White);
+            spriteBatch.End();
+            base.Draw(gameTime);
         }
     }
 }
