@@ -12,8 +12,7 @@ using GameJamTest.Util;
 
 namespace GameJamTest.GameObjects.Player
 {
-    public class PlayerShip : GameJamComponent
-    {
+    public class PlayerShip : GameJamComponent {
         private long score;
         private int lives;
         private Animation shieldAnimation;

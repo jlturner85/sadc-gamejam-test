@@ -73,8 +73,10 @@ namespace GameJamTest.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            //if the space bar is pressed, load the gamescreen
-            KeyboardState keyState = Keyboard.GetState();
+
+            if ((this.game as Game1).Keyboard.Back.IsPressed()) {
+                this.game.Exit();
+            }
 
             // If up is pressed at top option, go to bottom option.
             if ((this.game as Game1).Keyboard.Up.IsPressed()) {
@@ -103,7 +105,7 @@ namespace GameJamTest.Screens
                     selectedPosition = 500;
                 }
             }
-            if (keyState.IsKeyDown(Keys.Space))
+            if ((this.game as Game1).Keyboard.Fire.IsPressed())
             {
                 if (selectedScreen == 4)
                 {
@@ -117,8 +119,6 @@ namespace GameJamTest.Screens
             ParallaxBackground.Update(gameTime);
             shipAnimationFlying.Update(gameTime);
             texasAnimation.Update(gameTime);
-
-            previousState = keyState;
             base.Update(gameTime);
         }
         

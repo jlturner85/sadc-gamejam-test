@@ -14,7 +14,6 @@ namespace GameJamTest.Util
 {
     static class AudioManager
     {
-        
 
         public static void playSoundEffect(SoundEffect effect)
         {

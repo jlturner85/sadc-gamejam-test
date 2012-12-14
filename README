@@ -1,5 +1,10 @@
 A readme file. o.O
 
+Prereqs:
+XNA 4.0 or greater installed.
+reference to mysql.data and system.data necessary.
+
+
 Clone this repo and the content repo to the same parent directory.
 Your file structure should look like this:
 
@@ -8,3 +13,6 @@ Your file structure should look like this:
 
 After doing so, you should be able to open your project out of the box.
 Make sure not to commit any debug/generated files!
+
+Added dependency on Mysql Connector. Not sure if it will cause any issues with
+compile/run but if it does, just remove the reference to MySqlData or install mysql connector
