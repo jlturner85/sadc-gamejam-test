@@ -15,19 +15,15 @@ namespace GameJamTest.Screens
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class SplashScreen : Microsoft.Xna.Framework.DrawableGameComponent
+    public class SplashScreen : Screen
     {
-        Game game;
-        Game1 game1;
         ContentManager content;
         private SpriteBatch spriteBatch;
         Texture2D logo;
         float elapsedTime = 0;
-        public SplashScreen(Game game)
+        public SplashScreen(Game1 game)
             : base(game)
         {
-            this.game = game;
-            game1 = (Game1)game;
             // TODO: Construct any child components here
         }
 
@@ -38,8 +34,8 @@ namespace GameJamTest.Screens
         public override void Initialize()
         {
             // TODO: Add your initialization code here
-            spriteBatch = new SpriteBatch(game.GraphicsDevice);
-            content = game.Content;
+            spriteBatch = new SpriteBatch(Game.GraphicsDevice);
+            content = Game.Content;
             logo = content.Load<Texture2D>("Images/seemslegit");
             base.Initialize();
         }
@@ -53,19 +49,21 @@ namespace GameJamTest.Screens
             // TODO: Add your update code here
 
             base.Update(gameTime);
+
+            Game.ScreenManager.GameScreen.Show(false);
             elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (elapsedTime > 2)
             {
-                game.GraphicsDevice.Clear(Color.White);
-                game1.setCurrentScreen(1);
-                
+                Game.GraphicsDevice.Clear(Color.White);
+                Show(false);
+                Game.ScreenManager.MenuScreen.Show(true);
             }
         }
 
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(logo, new Rectangle(0, 0, game.GraphicsDevice.PresentationParameters.BackBufferWidth, game.GraphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
+            spriteBatch.Draw(logo, new Rectangle(0, 0, Game.GraphicsDevice.PresentationParameters.BackBufferWidth, Game.GraphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
         }

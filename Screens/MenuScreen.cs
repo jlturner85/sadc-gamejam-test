@@ -16,12 +16,10 @@ namespace GameJamTest.Screens
     /// <summary>
     /// This is a game component that implements IUpdateable.  stuff stuff
     /// </summary>
-    public class MenuScreen : Microsoft.Xna.Framework.DrawableGameComponent
+    public class MenuScreen : Screen
     {
         public static int screenNumber = 1;
         ContentManager content;
-        Game game;
-        Game1 mainGame;
         SoundEffect menuTickSound;
         Animation texasAnimation;
         Animation shipAnimationFlying;
@@ -33,12 +31,9 @@ namespace GameJamTest.Screens
         KeyboardState previousState;
         //get the graphics device, used for drawing objects
         private SpriteBatch spriteBatch;
-        public MenuScreen(Game game)
+        public MenuScreen(Game1 game)
             : base(game)
         {
-            this.game = game;
-            mainGame = (Game1)game;
-            // TODO: Construct any child components here
         }
 
         /// <summary>
@@ -50,19 +45,18 @@ namespace GameJamTest.Screens
             selectedScreen = 4;//game screen
             int width = 32;
             int height = 16;
-            gameMusic= game.Content.Load<Song>("Music/menumusic");
+            gameMusic= Game.Content.Load<Song>("Music/menumusic");
             shipAnimationFlying = new Animation(this.Game.Content, "Sprites/playerShip", width, height, 2, 15);
-            texasAnimation = new Animation(this.game.Content,"Sprites/Texas_spriteSheet", 300, 300, 2, 15);
+            texasAnimation = new Animation(this.Game.Content,"Sprites/Texas_spriteSheet", 300, 300, 2, 15);
             //graphicsDevice = GameServices.GetService<GraphicsDevice>();
-            spriteBatch = new SpriteBatch(game.GraphicsDevice);
+            spriteBatch = new SpriteBatch(Game.GraphicsDevice);
             // TODO: Add your initialization code here
-            content = game.Content;
+            content = Game.Content;
             titleFont = content.Load<SpriteFont>("Fonts/titlefont");
             menuTickSound = content.Load<SoundEffect>("SoundEffects/fire_laser1");
             //texasSymbol = content.Load<Texture2D>("Sprites/Texas_spriteSheet");
             texasAnimation.EnableRepeating();
             shipAnimationFlying.EnableRepeating();
-            ParallaxBackground.Initialize(this.content);
             previousState = Keyboard.GetState();
             base.Initialize();
         }
@@ -74,12 +68,12 @@ namespace GameJamTest.Screens
         public override void Update(GameTime gameTime)
         {
 
-            if ((this.game as Game1).Keyboard.Back.IsPressed()) {
-                this.game.Exit();
+            if (Game.Keyboard.Back.IsPressed()) {
+                this.Game.Exit();
             }
 
             // If up is pressed at top option, go to bottom option.
-            if ((this.game as Game1).Keyboard.Up.IsPressed()) {
+            if (Game.Keyboard.Up.IsPressed()) {
                 if (selectedScreen == 4) { // start game option
                     selectedScreen = 5; 
                     selectedPosition = 600;
@@ -93,7 +87,7 @@ namespace GameJamTest.Screens
             }
 
             // If down is pressed at bottom option, go to top option.
-            if((this.game as Game1).Keyboard.Down.IsPressed()) {                 
+            if(Game.Keyboard.Down.IsPressed()) {                 
                 if (selectedScreen == 4) { // start game option
                     selectedScreen = 3;
                     selectedPosition = 550;
@@ -105,18 +99,22 @@ namespace GameJamTest.Screens
                     selectedPosition = 500;
                 }
             }
-            if ((this.game as Game1).Keyboard.Fire.IsPressed())
+            if (Game.Keyboard.Fire.IsPressed())
             {
-                if (selectedScreen == 4)
+                Show(false);
+                if (selectedScreen == 3)
                 {
-                    //AudioManager.stopMusic();
-                    //dAudioManager.playMusic(gameMusic);
+                    Game.ScreenManager.CreditsScreen.Show(true);
                 }
-                (game as Game1).setCurrentScreen(selectedScreen); 
-                      
+                else if (selectedScreen == 4)
+                {
+                    Game.ScreenManager.StoryScreen.Show(true);
+                }
+                else if (selectedScreen == 5)
+                {
+                    Game.ScreenManager.LeaderboardScreen.Show(true);
+                }
             }
-
-            ParallaxBackground.Update(gameTime);
             shipAnimationFlying.Update(gameTime);
             texasAnimation.Update(gameTime);
             base.Update(gameTime);

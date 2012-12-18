@@ -27,40 +27,26 @@ namespace GameJamTest
         public static int SCREEN_HEIGHT = 720;
         
         //Gamestate Constants
-        public const int splashScreenID = 0;
-        public const int menuScreenID = 1;
-        public const int gameScreenID = 2;
-        public const int creditScreenID = 3;
-        public const int storyScreenID = 4;
-        public const int leaderboardScreenID = 5;
         private int splashScreenTime = 0;
-        private int currentScreen = splashScreenID;
         
         //Screens
-        private MenuScreen menuScreen;
-        private SplashScreen splashScreen;
-        private GameScreen gameScreen;
-        private CreditsScreen creditsScreen;
-        private StoryScreen storyScreen;
-        private LeaderboardScreen leaderboardScreen;
         private Song menuMusic;
         GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+        public ScreenManager ScreenManager;
 
         private GameKeyboard keyboard;
 
-        public Game1() {
-
-            menuScreen = new MenuScreen(this);
-            splashScreen = new SplashScreen(this);
-            gameScreen = new GameScreen(this);
-            creditsScreen = new CreditsScreen(this);
-            storyScreen = new StoryScreen(this);
-            leaderboardScreen = new LeaderboardScreen(this);
-
+        public Game1()
+        {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
+
+
+            ScreenManager = new ScreenManager(this);
+
+            Components.Add(ScreenManager);
         }
 
         public int getScreenWidth()
@@ -84,115 +70,35 @@ namespace GameJamTest
             //MediaPlayer.Volume=0.5f;
             MediaPlayer.Volume = 0;
             base.Initialize();
-            menuScreen.Initialize();
-            creditsScreen.Initialize();
-            splashScreen.Initialize();
-            storyScreen.Initialize();
-            leaderboardScreen.Initialize();
             GameServices.AddService<GraphicsDevice>(GraphicsDevice);
             GameServices.AddService<ContentManager>(Content);
             keyboard = new GameKeyboard();
         }
-        public void setCurrentScreen(int currentScreen)
-        {
-            this.currentScreen = currentScreen;
-        }
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
+
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            menuMusic = Content.Load<Song>("Music/shadowforce");
-            AudioManager.playMusic(menuMusic);
-            Sprites.LoadContent(this.Content);
-            Fonts.LoadContent(this.Content);
+            Fonts.LoadContent(Content);
+            Sprites.LoadContent(Content);
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime) {
-        
-            keyboard.Update(gameTime);
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
-            switch (currentScreen) {
-                case menuScreenID:
-                    menuScreen.Update(gameTime);
-                    break;
-                case splashScreenID:
-                    splashScreen.Update(gameTime);
-                    break;
-                case gameScreenID:
-                    gameScreen.Update(gameTime);
-                    break;
-                case creditScreenID:
-                    creditsScreen.Update(gameTime);
-                    break;
-                case storyScreenID:
-                    storyScreen.Update(gameTime);
-                    break;
-                case leaderboardScreenID:
-                    leaderboardScreen.Update(gameTime);
-                    break;
-                default:
-                    break;
-            }
-
+        protected override void Update(GameTime gameTime)
+        {
+            Keyboard.Update(gameTime);
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            ParallaxBackground.Draw(this);
-
-            this.SpriteBatch.Begin();
-            switch (currentScreen)
-            {
-                case menuScreenID:
-                    menuScreen.Draw(gameTime);
-                    break;
-                case splashScreenID:
-                    splashScreen.Draw(gameTime);
-                    break;
-                case gameScreenID:
-                    gameScreen.Draw(gameTime);
-                    break;
-                case creditScreenID:
-                    creditsScreen.Draw(gameTime);
-                    break;
-                case storyScreenID:
-                    storyScreen.Draw(gameTime);
-                    break;
-                case leaderboardScreenID:
-                    leaderboardScreen.Draw(gameTime);
-                    break;
-                default:
-                    base.Draw(gameTime);
-                    break;
-            }
-            this.SpriteBatch.End();
+            SpriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
+            base.Draw(gameTime);
+            SpriteBatch.End();
         }
 
         public SpriteBatch SpriteBatch {

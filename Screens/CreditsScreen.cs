@@ -15,18 +15,15 @@ namespace GameJamTest.Screens
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class CreditsScreen : Microsoft.Xna.Framework.DrawableGameComponent
+    public class CreditsScreen : Screen
     {
         public static int screenNumber = 3;
-        Game game;
         SpriteFont titleFont;
         Texture2D happyFamily;
         SpriteBatch spriteBatch;
-        public CreditsScreen(Game game)
+        public CreditsScreen(Game1 game)
             : base(game)
         {
-            // TODO: Construct any child components here
-            this.game = game;
         }
         /// <summary>
         /// Allows the game component to perform any initialization it needs to before starting
@@ -34,10 +31,10 @@ namespace GameJamTest.Screens
         /// </summary>
         public override void Initialize()
         {
-            titleFont = this.game.Content.Load<SpriteFont>("Fonts/titlefont");
-            happyFamily = this.game.Content.Load<Texture2D>("Images/happy");
+            titleFont = this.Game.Content.Load<SpriteFont>("Fonts/titlefont");
+            happyFamily = this.Game.Content.Load<Texture2D>("Images/happy");
             // TODO: Add your initialization code here
-            spriteBatch = new SpriteBatch(this.game.GraphicsDevice);
+            spriteBatch = new SpriteBatch(this.Game.GraphicsDevice);
             base.Initialize();
         }
 
@@ -52,10 +49,9 @@ namespace GameJamTest.Screens
             //if either enter of space is pressed, return to the main menu
             if (keyState.IsKeyDown(Keys.Escape))
             {
-                (game as Game1).setCurrentScreen(1);
+                Show(false);
+                Game.ScreenManager.MenuScreen.Show(true);
             }
-            // TODO: Add your update code here
-            ParallaxBackground.Update(gameTime);
             base.Update(gameTime);
         }
 

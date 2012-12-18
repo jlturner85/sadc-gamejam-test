@@ -15,20 +15,15 @@ namespace GameJamTest.Screens
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class StoryScreen : Microsoft.Xna.Framework.DrawableGameComponent
+    public class StoryScreen : Screen
     {
-
-        
-        public static int screenNumber = 4;
-        Game game;
         SpriteFont titleFont;
         
         SpriteBatch spriteBatch;
-        public StoryScreen(Game game)
+        public StoryScreen(Game1 game)
             : base(game)
         {
             // TODO: Construct any child components here
-            this.game = game;
         }
         /// <summary>
         /// Allows the game component to perform any initialization it needs to before starting
@@ -36,10 +31,10 @@ namespace GameJamTest.Screens
         /// </summary>
         public override void Initialize()
         {
-            titleFont = this.game.Content.Load<SpriteFont>("Fonts/titlefont");
+            titleFont = this.Game.Content.Load<SpriteFont>("Fonts/titlefont");
             
             // TODO: Add your initialization code here
-            spriteBatch = spriteBatch = new SpriteBatch(this.game.GraphicsDevice);
+            spriteBatch = spriteBatch = new SpriteBatch(this.Game.GraphicsDevice);
             base.Initialize();
         }
 
@@ -49,14 +44,12 @@ namespace GameJamTest.Screens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            //if either enter of space is pressed, return to the main menu
-            if ((this.game as Game1).Keyboard.Fire.IsPressed()) {
-                (game as Game1).setCurrentScreen(2);
-            }
-
-            ParallaxBackground.Update(gameTime);
-
             base.Update(gameTime);
+            //if either enter of space is pressed, return to the main menu
+            if (this.Game.Keyboard.Fire.IsPressed()) {
+                Show(false);
+                Game.ScreenManager.GameScreen.Show(true);
+            }
         }
 
 

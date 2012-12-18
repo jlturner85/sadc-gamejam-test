@@ -9,7 +9,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-namespace GameJamTest.Assets
+
+namespace GameJamTest.Screens
 {
     class Backgrounds
     {
@@ -18,10 +19,10 @@ namespace GameJamTest.Assets
         public Rectangle rectangle;
 
         protected float fractionalPart;
-        
+
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, rectangle, new Color(255,255,255,255));
+            spriteBatch.Draw(texture, rectangle, new Color(255, 255, 255, 255));
         }
     }
 
@@ -42,47 +43,50 @@ namespace GameJamTest.Assets
         }
     }
 
-    public class ParallaxBackground
+    public class ParallaxBackground : Screen
     {
-        private static Scrolling scroll1, scroll2, scroll3, scroll4;
-        private static Texture2D staticBackground;
-        private static Scrolling galaxy1, planet1, planet2, planet3;
-        
-        public static float arsenalSpeed;
-        
-        private static int height;
-        private static int width;
-        private static Random random;
-        public static void Initialize(ContentManager content)
+        private Scrolling scroll1, scroll2, scroll3, scroll4;
+        private Texture2D staticBackground;
+        private Scrolling galaxy1, planet1, planet2, planet3;
+
+        public int gameSpeed;
+
+        public float arsenalSpeed;
+
+        private int height;
+        private int width;
+        private Random random;
+
+        public ParallaxBackground(Game1 game)
+            : base(game)
         {
-            
+            gameSpeed = 10;
+        }
+
+        public override void Initialize()
+        {
             height = Game1.SCREEN_HEIGHT;
             width = Game1.SCREEN_WIDTH;
             random = new Random();
-            
-            scroll1 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield1"), new Rectangle(0, 0, width, height));
-            scroll2 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield1"), new Rectangle(width, 0, width, height));
-            scroll3 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield2"), new Rectangle(0, 0, width, height));
-            scroll4 = new Scrolling(content.Load<Texture2D>("Backgrounds/starfield2"), new Rectangle(width, 0, width, height));
-            galaxy1 = new Scrolling(content.Load<Texture2D>("Sprites/galaxy"), new Rectangle(1200,500,80,80));
-            planet1 = new Scrolling(content.Load<Texture2D>("Sprites/planet"), new Rectangle(1600, 200, 100, 100));
-            planet2 = new Scrolling(content.Load<Texture2D>("Sprites/mars"), new Rectangle(2800, 500, 100, 100));
-            planet3 = new Scrolling(content.Load<Texture2D>("Sprites/saturn"), new Rectangle(4000, 200, 150, 150));
-            staticBackground = content.Load<Texture2D>("Backgrounds/black");
+
+            scroll1 = new Scrolling(Game.Content.Load<Texture2D>("Backgrounds/starfield1"), new Rectangle(0, 0, width, height));
+            scroll2 = new Scrolling(Game.Content.Load<Texture2D>("Backgrounds/starfield1"), new Rectangle(width, 0, width, height));
+            scroll3 = new Scrolling(Game.Content.Load<Texture2D>("Backgrounds/starfield2"), new Rectangle(0, 0, width, height));
+            scroll4 = new Scrolling(Game.Content.Load<Texture2D>("Backgrounds/starfield2"), new Rectangle(width, 0, width, height));
+            galaxy1 = new Scrolling(Game.Content.Load<Texture2D>("Sprites/galaxy"), new Rectangle(1200, 500, 80, 80));
+            planet1 = new Scrolling(Game.Content.Load<Texture2D>("Sprites/planet"), new Rectangle(1600, 200, 100, 100));
+            planet2 = new Scrolling(Game.Content.Load<Texture2D>("Sprites/mars"), new Rectangle(2800, 500, 100, 100));
+            planet3 = new Scrolling(Game.Content.Load<Texture2D>("Sprites/saturn"), new Rectangle(4000, 200, 150, 150));
+            staticBackground = Game.Content.Load<Texture2D>("Backgrounds/black");
         }
 
-        public static void Update(GameTime gameTime)
-        {
-            Update(gameTime, 10);
-        }
-
-        public static void Update(GameTime gameTime, int gameSpeed)
+        public override void Update(GameTime gameTime)
         {
             if (scroll1.rectangle.X + width <= 0)
             {
                 scroll1.rectangle.X = scroll2.rectangle.X + width;
             }
-            if (scroll2.rectangle.X + width<= 0)
+            if (scroll2.rectangle.X + width <= 0)
             {
                 scroll2.rectangle.X = scroll1.rectangle.X + width;
             }
@@ -97,7 +101,7 @@ namespace GameJamTest.Assets
             if (galaxy1.rectangle.X + width <= 0)
             {
                 galaxy1.rectangle.X = 1400;
-                galaxy1.rectangle.Y = random.Next(80, Game1.SCREEN_HEIGHT-80);
+                galaxy1.rectangle.Y = random.Next(80, Game1.SCREEN_HEIGHT - 80);
             }
 
             if (planet1.rectangle.X + width <= 0)
@@ -125,15 +129,14 @@ namespace GameJamTest.Assets
             planet1.Update(gameSpeed * 0.2f);
             planet2.Update(gameSpeed * 0.2f);
             planet3.Update(gameSpeed * 0.2f);
-            
+
         }
 
-        public static void Draw(Game game)
+        public override void Draw(GameTime gameTime)
         {
-            SpriteBatch spriteBatch = (game as Game1).SpriteBatch;
+            SpriteBatch spriteBatch = Game.SpriteBatch;
 
-            spriteBatch.Begin();
-            spriteBatch.Draw(staticBackground, new Rectangle(0, 0, game.GraphicsDevice.PresentationParameters.BackBufferWidth, game.GraphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
+            spriteBatch.Draw(staticBackground, new Rectangle(0, 0, Game.GraphicsDevice.PresentationParameters.BackBufferWidth, Game.GraphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
@@ -144,15 +147,11 @@ namespace GameJamTest.Assets
             galaxy1.Draw(spriteBatch);
             spriteBatch.End();
 
-            
-
             spriteBatch.Begin();
-            
+
             planet1.Draw(spriteBatch);
             planet2.Draw(spriteBatch);
             planet3.Draw(spriteBatch);
-
-            spriteBatch.End();
         }
     }
 }

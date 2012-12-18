@@ -14,21 +14,19 @@ using GameJamTest.GameObjects;
 using GameJamTest.GameObjects.Player;
 using GameJamTest.GameObjects.Zombie;
 using GameJamTest.Util;
+
 namespace GameJamTest.Screens
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
     /// 
-    public class GameScreen : DrawableGameComponent
+    public class GameScreen : Screen
     {
-        public static int screenNumber = 2;
         private bool initialized = false;
-        
 
         private Random random;
-
-        private Game game;
+        
         private ContentManager content;
         //private GameKeyboard keyboard;
         private PlayerShip player;
@@ -50,11 +48,9 @@ namespace GameJamTest.Screens
 
         Animation shipAnimationStatic;
 
-        public GameScreen(Game game)
+        public GameScreen(Game1 game)
             : base(game)
         {
-            this.game = game;
-            
         }
 
         public void AddComponent(GameComponent component)
@@ -99,12 +95,12 @@ namespace GameJamTest.Screens
         {
             if (!initialized)
             {
-                bossSong = game.Content.Load<Song>("Music/vengeance");
-                gameSong = game.Content.Load<Song>("Music/menumusic");
-                menuSong = game.Content.Load<Song>("Music/shadowforce");
+                bossSong = Game.Content.Load<Song>("Music/vengeance");
+                gameSong = Game.Content.Load<Song>("Music/menumusic");
+                menuSong = Game.Content.Load<Song>("Music/shadowforce");
                 this.components = new List<GameComponent>();
-                this.player = new PlayerShip(game, this);
-                this.arsenal = new Arsenal(game, this);
+                this.player = new PlayerShip(Game, this);
+                this.arsenal = new Arsenal(Game, this);
                 this.components.Add(this.Player);
                 this.components.Add(this.arsenal);
                 this.newComponents = new List<GameComponent>();
@@ -112,7 +108,7 @@ namespace GameJamTest.Screens
                 this.lose = -1;
 
                 this.random = new Random();
-                this.content = game.Content;
+                this.content = Game.Content;
 
                 this.gameSpeed = 10;
                 this.ResetSpeedTimer();
@@ -183,7 +179,9 @@ namespace GameJamTest.Screens
             {
                 AudioManager.stopMusic();
                 AudioManager.playMusic(menuSong);
-                (this.Game as Game1).setCurrentScreen(Game1.menuScreenID);
+                Show(false);
+                Game.ScreenManager.ParallaxBackground.gameSpeed = 10;
+                Game.ScreenManager.MenuScreen.Show(true);
                 this.initialized = false;
             }
 
@@ -241,7 +239,7 @@ namespace GameJamTest.Screens
                 }
             }
 
-            ParallaxBackground.Update(gameTime, this.GameSpeed);
+            Game.ScreenManager.ParallaxBackground.gameSpeed = gameSpeed;
 
             if (timeout <= 0 && this.intro <= 0)
             {
@@ -356,7 +354,7 @@ namespace GameJamTest.Screens
         private void UpdateNameInput() {
             #region Up/Down
             
-            if ((this.game as Game1).Keyboard.Up.IsPressed()) {
+            if (Game.Keyboard.Up.IsPressed()) {
                 // up was pressed, so go forward nameChar
                 if (nameCharPos == nameChars.Count() - 1) {
                     // last position, set to first.
@@ -366,7 +364,7 @@ namespace GameJamTest.Screens
                 }
                 name[pos] = nameChars[nameCharPos];
                 AudioManager.playSoundEffect(Player.shipFiringSound);
-            } else if ((this.game as Game1).Keyboard.Down.IsPressed()) {
+            } else if (Game.Keyboard.Down.IsPressed()) {
                 // down was pressed, go back a nameChar
                 if (nameCharPos == 0) {
                     // first position, set to last.
@@ -379,14 +377,14 @@ namespace GameJamTest.Screens
             }
             #endregion
             #region Left/Right
-            if ((this.game as Game1).Keyboard.Right.IsPressed()) {
+            if (Game.Keyboard.Right.IsPressed()) {
                 if (pos == 2) {
                     // last position, set to first.
                     pos = 0;
                 } else {
                     pos++;
                 }
-            } else if ((this.game as Game1).Keyboard.Left.IsPressed()) {
+            } else if (Game.Keyboard.Left.IsPressed()) {
                 if (pos == 0) {
                     // last position, set to first.
                     pos = 2;
@@ -395,9 +393,11 @@ namespace GameJamTest.Screens
                 }
             }
             #endregion
-            if ((this.game as Game1).Keyboard.Fire.IsPressed()) {
+            if (Game.Keyboard.Fire.IsPressed()) {
                 //save and go back to leaderboard
-                (this.Game as Game1).setCurrentScreen(Game1.leaderboardScreenID);
+                Show(false);
+                Game.ScreenManager.ParallaxBackground.gameSpeed = 10;
+                Game.ScreenManager.LeaderboardScreen.Show(true);
                 this.initialized = false;
             }
         }

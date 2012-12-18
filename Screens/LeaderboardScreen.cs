@@ -17,19 +17,16 @@ namespace GameJamTest.Screens {
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class LeaderboardScreen : Microsoft.Xna.Framework.DrawableGameComponent {
-
-        public static int screenNumber = 5;
-        Game game;
+    public class LeaderboardScreen : Screen
+    {
         private SpriteBatch spriteBatch;
         private SpriteFont titleFont;
 
         //Connection dataConnection;
 
-        public LeaderboardScreen(Game game)
-            : base(game) {
-            // TODO: Construct any child components here
-                this.game = game;
+        public LeaderboardScreen(Game1 game)
+            : base(game)
+        {
         }
 
         /**
@@ -45,8 +42,8 @@ namespace GameJamTest.Screens {
         /// </summary>
         public override void Initialize() {
             // TODO: Add your initialization code here
-            titleFont = this.game.Content.Load<SpriteFont>("Fonts/titlefont");
-            spriteBatch = spriteBatch = new SpriteBatch(this.game.GraphicsDevice);
+            titleFont = this.Game.Content.Load<SpriteFont>("Fonts/titlefont");
+            spriteBatch = spriteBatch = new SpriteBatch(this.Game.GraphicsDevice);
 
             leaderboard = new List<PlayerRecord>();
             //leaderboard = MysqlDatabaseUtil.connection.query(top10);
@@ -86,11 +83,11 @@ namespace GameJamTest.Screens {
         public override void Update(GameTime gameTime) {
 
             // TODO: Add your update code here
-            if ((this.game as Game1).Keyboard.Back.IsPressed()) { // if exit is pressed
-                (this.game as Game1).setCurrentScreen(1); // go to menu screen
+            if (Game.Keyboard.Back.IsPressed()) { // if exit is pressed
+                Show(false);
+                Game.ScreenManager.MenuScreen.Show(true);
             }
             //database.query(scoreQuery)
-            ParallaxBackground.Update(gameTime);
             base.Update(gameTime);
         }
 
