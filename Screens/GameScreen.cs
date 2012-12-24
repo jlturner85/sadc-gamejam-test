@@ -401,12 +401,7 @@ namespace GameJamTest.Screens
                 this.initialized = false;
             }
         }
-        private void DrawNameInput(SpriteBatch spriteBatch, SpriteFont font) {
-            //method for drawing name input
-            String initials = String.Format("NAME: {0}", new string(name));
-            float initialsLength = font.MeasureString(initials).X;
-            (this.Game as Game1).SpriteBatch.DrawString(font, initials, new Vector2((Game1.SCREEN_WIDTH - initialsLength * 1.7f) / 2 + 250, (Game1.SCREEN_HEIGHT / 2) + 50), Color.Chartreuse, 0f, new Vector2(0, 0), 1.7f, SpriteEffects.None, 0f);
-        }
+
         private void DrawHighScoreGet(SpriteBatch spriteBatch, SpriteFont font) {
             //Display high score get message
             String messageString = "HIGH SCORE GET!";
@@ -417,8 +412,11 @@ namespace GameJamTest.Screens
             String rankString = String.Format("RANK: {0}", "1ST");
             float rankLength = font.MeasureString(rankString).X;
             (this.Game as Game1).SpriteBatch.DrawString(font, rankString, new Vector2((Game1.SCREEN_WIDTH - rankLength * 1.7f) / 2 - 300, (Game1.SCREEN_HEIGHT / 2) + 50), Color.Chartreuse, 0f, new Vector2(0, 0), 1.7f, SpriteEffects.None, 0f);
-
-            DrawNameInput(spriteBatch, font);
+            
+            //method for drawing name input
+            String initials = String.Format("NAME: {0}", new string(name));
+            float initialsLength = font.MeasureString(initials).X;
+            (this.Game as Game1).SpriteBatch.DrawString(font, initials, new Vector2((Game1.SCREEN_WIDTH - initialsLength * 1.7f) / 2 + 250, (Game1.SCREEN_HEIGHT / 2) + 50), Color.Chartreuse, 0f, new Vector2(0, 0), 1.7f, SpriteEffects.None, 0f);
         }
 
         private void DrawGameOverText(SpriteBatch spriteBatch, SpriteFont font) {
